@@ -141,13 +141,15 @@ interface StickProps {
   holdB?: React.ReactNode;
   look: Look;
   eyesClosed?: boolean;
+  /** Facial expression (brows + mouth). Default: neutral (kit's original look). */
+  mood?: "worried" | "determined" | "scared" | "tired" | "relieved";
   lookAt?: number; // -1..1 eye shift
   lampAngle?: number; // headlamp cone direction (0 = horizontal forward, + = down)
   hideLegs?: boolean;
 }
 
 export const Stick: React.FC<StickProps> = ({
-  x, floor, hip: hipWorld, scale = 1, facing = 1, pose = STAND, reach = {}, holdF, holdB, look, eyesClosed, lookAt = 0.5, lampAngle = 0.12, hideLegs,
+  x, floor, hip: hipWorld, scale = 1, facing = 1, pose = STAND, reach = {}, holdF, holdB, look, eyesClosed, mood, lookAt = 0.5, lampAngle = 0.12, hideLegs,
 }) => {
   const f = facing;
   // Hip at origin; compute feet, then lift so the lowest foot touches the floor (unless hip is pinned).
@@ -255,6 +257,35 @@ export const Stick: React.FC<StickProps> = ({
           {[-1, 1].map((g) => <circle key={`g${g}`} cx={head[0] + eyeDX + g * r * 0.24} cy={head[1] + r * 0.02} r={r * 0.2} fill="none" stroke={C.ink} strokeWidth={5} />)}
           <line x1={head[0] + eyeDX - r * 0.04} y1={head[1]} x2={head[0] + eyeDX + r * 0.04} y2={head[1]} stroke={C.ink} strokeWidth={4} />
         </g>
+      ) : null}
+      {mood && mood !== "tired" ? (
+        <g stroke={C.ink} strokeWidth={5} fill="none" strokeLinecap="round">
+          {/* brows: worried = inner ends raised, determined = inner ends lowered, scared = raised arcs */}
+          {mood === "worried" ? (
+            <>
+              <path d={`M${head[0] - r * 0.42},${head[1] - r * 0.3} L${head[0] - r * 0.1},${head[1] - r * 0.42}`} />
+              <path d={`M${head[0] + r * 0.1},${head[1] - r * 0.42} L${head[0] + r * 0.42},${head[1] - r * 0.3}`} />
+            </>
+          ) : mood === "determined" ? (
+            <>
+              <path d={`M${head[0] - r * 0.42},${head[1] - r * 0.42} L${head[0] - r * 0.1},${head[1] - r * 0.3}`} />
+              <path d={`M${head[0] + r * 0.1},${head[1] - r * 0.3} L${head[0] + r * 0.42},${head[1] - r * 0.42}`} />
+            </>
+          ) : mood === "scared" ? (
+            <>
+              <path d={`M${head[0] - r * 0.42},${head[1] - r * 0.32} Q${head[0] - r * 0.26},${head[1] - r * 0.52} ${head[0] - r * 0.1},${head[1] - r * 0.34}`} />
+              <path d={`M${head[0] + r * 0.1},${head[1] - r * 0.34} Q${head[0] + r * 0.26},${head[1] - r * 0.52} ${head[0] + r * 0.42},${head[1] - r * 0.32}`} />
+            </>
+          ) : null}
+          {/* mouth: worried = frown, determined = flat, scared = open, relieved = smile */}
+          {mood === "worried" ? <path d={`M${head[0] - r * 0.19},${head[1] + r * 0.48} Q${head[0]},${head[1] + r * 0.34} ${head[0] + r * 0.19},${head[1] + r * 0.48}`} />
+            : mood === "determined" ? <path d={`M${head[0] - r * 0.19},${head[1] + r * 0.44} L${head[0] + r * 0.19},${head[1] + r * 0.44}`} />
+            : mood === "scared" ? <ellipse cx={head[0]} cy={head[1] + r * 0.46} rx={r * 0.13} ry={r * 0.17} fill={C.ink} stroke="none" />
+            : mood === "relieved" ? <path d={`M${head[0] - r * 0.19},${head[1] + r * 0.4} Q${head[0]},${head[1] + r * 0.54} ${head[0] + r * 0.19},${head[1] + r * 0.4}`} />
+            : null}
+        </g>
+      ) : mood === "tired" ? (
+        <path d={`M${head[0] - r * 0.19},${head[1] + r * 0.44} L${head[0] + r * 0.19},${head[1] + r * 0.44}`} stroke={C.ink} strokeWidth={5} strokeLinecap="round" />
       ) : null}
       {look.headlamp ? (
         <g>

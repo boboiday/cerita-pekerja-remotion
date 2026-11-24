@@ -2,7 +2,7 @@ import type { Caption } from "@remotion/captions";
 import React from "react";
 import { AbsoluteFill, interpolate, Sequence, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { Cam, Captions, type CapLine, RuleCard, Vignette } from "../../kit/Overlays";
-import { STAND, Stick, StickDefs, walk, walkCycle, type Look } from "../../kit/Stick";
+import { STAND, Stick, StickDefs, walk, walkCycle, type Look, type Pose } from "../../kit/Stick";
 import { C, FONT } from "../../kit/style";
 
 /**
@@ -101,7 +101,7 @@ const OfficeBoss: React.FC<{ dur: number }> = ({ dur }) => {
   const walkX = interpolate(frame, [0, arrive], [120, 470], { extrapolateRight: "clamp" });
   const walking = frame <= arrive;
   const tired = frame > 110; // "menyerah" lands near the end of the shot
-  const agusPose = walking
+  const agusPose: Pose = walking
     ? walk((walkX - 120) / walkCycle(0.9, 0.9), 0.9)
     : { ...STAND, lean: tired ? 0.22 : 0.06, armF: [0.35, 0.15], armB: [-0.15, 0.1] };
   return (
