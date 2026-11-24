@@ -152,7 +152,7 @@ export interface Reach {
  * - shocked: alis busur SANGAT naik + mulut oval terbuka BESAR
  * - angry: alis V curam + mulut datar (tegas)
  * - sad: alis curam naik ke dalam + cemberut dalam + air mata
- * - resigned: alis datar + mata setengah tertutup + cemberut tipis
+ * - resigned: alis naik TIPIS ke dalam + cemberut tipis (pasrah, bukan marah)
  * - hopeful: alis busur naik lembut + senyum kecil
  * - tired: mulut datar saja (biasanya dipasangkan dengan eyesClosed)
  * - relieved: senyum (tanpa alis)
@@ -315,12 +315,9 @@ export const Stick: React.FC<StickProps> = ({
             </>
           ) : mood === "resigned" ? (
             <>
-              <path d={`M${head[0] - r * 0.42},${head[1] - r * 0.34} L${head[0] - r * 0.1},${head[1] - r * 0.34}`} />
-              <path d={`M${head[0] + r * 0.1},${head[1] - r * 0.34} L${head[0] + r * 0.42},${head[1] - r * 0.34}`} />
-              {/* kelopak setengah tertutup */}
-              {[-1, 1].map((s) => (
-                <path key={s} d={`M${head[0] + eyeDX + s * r * 0.24 - 13},${head[1] - r * 0.08} L${head[0] + eyeDX + s * r * 0.24 + 13},${head[1] - r * 0.08}`} />
-              ))}
+              {/* alis naik tipis ke dalam (pasrah) — sengaja TANPA garis kelopak: garis kelopak terbaca sebagai marah */}
+              <path d={`M${head[0] - r * 0.42},${head[1] - r * 0.36} L${head[0] - r * 0.1},${head[1] - r * 0.44}`} />
+              <path d={`M${head[0] + r * 0.1},${head[1] - r * 0.44} L${head[0] + r * 0.42},${head[1] - r * 0.36}`} />
             </>
           ) : mood === "scared" ? (
             <>

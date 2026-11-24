@@ -5,7 +5,7 @@ import { Camera, Parallax, ParallaxLayer } from "../../kit/Camera";
 import { EmphasisLine, KineticText } from "../../kit/KineticText";
 import { CardboardBox, DuffelBag, Suitcase } from "../../kit/Props";
 import { CARRY, PACK, SIT, STAND, Stick, StickDefs, walk, walkCycle, type Look } from "../../kit/Stick";
-import { FONT } from "../../kit/style";
+import { C, FONT } from "../../kit/style";
 
 /**
  * KitDemo — komposisi QA 10 detik (30 fps) untuk kit Cerita Pekerja.
@@ -65,7 +65,7 @@ const Shot2: React.FC<{ dur: number }> = ({ dur }) => {
         <g transform={`translate(880,${FLOOR})`}>
           <CardboardBox label="BUKU" scale={0.7} />
         </g>
-        <Stick x={430} floor={FLOOR} scale={0.95} look={RANI} pose={PACK} mood={mood} lookAt={0.9} holdB={<DuffelBag />} />
+        <Stick x={430} floor={FLOOR} scale={0.95} look={RANI} pose={PACK} mood={mood} lookAt={0.9} holdB={<DuffelBag color="#7a2e2a" />} />
       </Canvas>
       <ShotLabel text="S2 RUMAH + KARDUS + RESIGNED→HOPEFUL" />
     </Camera>
@@ -99,6 +99,13 @@ const Shot4: React.FC<{ dur: number }> = ({ dur }) => {
   return (
     <Camera dur={dur} move="tracking-right" amount={60}>
       <Canvas bg="#f7d9a8">
+        {/* langit statis: matahari + awan (langit tidak ikut parallax) */}
+        <circle cx={880} cy={300} r={60} fill="#ffe9a8" stroke={C.ink} strokeWidth={4} />
+        <g fill="#f5f2e8" opacity={0.9}>
+          <circle cx={200} cy={260} r={34} />
+          <circle cx={244} cy={244} r={26} />
+          <circle cx={158} cy={250} r={22} />
+        </g>
         <Parallax dur={dur}>
           <ParallaxLayer speed={120}>
             <SkylineFar />
@@ -127,7 +134,7 @@ const Shot5: React.FC<{ dur: number }> = ({ dur }) => (
         <CardboardBox label="BARANG" scale={0.8} />
       </g>
     </Canvas>
-    <EmphasisLine text="DIPINDAHKAN KE KOTA LAIN" keyword="KOTA LAIN" at={8} top={380} fontSize={84} />
+    <EmphasisLine text="DIPINDAHKAN KE KOTA LAIN" keyword="KOTA LAIN" at={8} top={380} fontSize={68} />
     <KineticText words={["TIDAK", "ADA", "PILIHAN"]} at={30} stagger={3} top={560} fontSize={72} accent={["TIDAK"]} />
     <ShotLabel text="S5 DUDUK + KINETIC TEXT" />
   </Camera>

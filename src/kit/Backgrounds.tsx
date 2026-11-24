@@ -189,11 +189,11 @@ export const HomeInteriorBg: React.FC<{ floor?: number; night?: boolean }> = ({ 
     {[300, 480, 660, 840].map((x) => (
       <rect key={x} x={x - 18} y={1618} width={36} height={36} fill="#e2a748" stroke={C.ink} strokeWidth={3} transform={`rotate(45 ${x} 1636)`} />
     ))}
-    {/* lampu lantai */}
-    <rect x={950} y={1380} width={70} height={20} fill={C.ink} />
-    <rect x={978} y={900} width={14} height={480} fill={C.ink} />
-    <path d="M985,900 L930,810 L1040,810Z" fill="#ffe9a8" stroke={C.ink} strokeWidth={5} />
-    <circle cx={985} cy={890} r={18} fill="#ffe9a8" opacity={0.7} />
+    {/* lampu lantai (di kiri pintu supaya kap tidak menabrak pintu) */}
+    <rect x={805} y={1380} width={70} height={20} fill={C.ink} />
+    <rect x={833} y={900} width={14} height={480} fill={C.ink} />
+    <path d="M840,900 L785,810 L895,810Z" fill="#ffe9a8" stroke={C.ink} strokeWidth={5} />
+    <circle cx={840} cy={890} r={18} fill="#ffe9a8" opacity={0.7} />
   </g>
 );
 
@@ -254,9 +254,9 @@ export const StationBg: React.FC<{ floor?: number; train?: boolean }> = ({ floor
     <line x1={112} y1={474} x2={168} y2={474} stroke={C.ink} strokeWidth={3} transform="rotate(-2 140 480)" />
     <line x1={112} y1={492} x2={168} y2={492} stroke={C.ink} strokeWidth={3} transform="rotate(-2 140 480)" />
     <line x1={112} y1={510} x2={150} y2={510} stroke="#c0241c" strokeWidth={3} transform="rotate(-2 140 480)" />
-    <rect x={906} y={420} width={88} height={120} fill="#c0241c" stroke={C.ink} strokeWidth={4} transform="rotate(2 950 480)" />
-    <text x={950} y={478} fontFamily={FONT.mono} fontWeight={800} fontSize={24} fill="white" textAnchor="middle" transform="rotate(2 950 480)">KOPI</text>
-    <text x={950} y={508} fontFamily={FONT.mono} fontWeight={800} fontSize={16} fill="white" textAnchor="middle" transform="rotate(2 950 480)">PANAS</text>
+    <rect x={906} y={260} width={88} height={120} fill="#c0241c" stroke={C.ink} strokeWidth={4} transform="rotate(2 950 320)" />
+    <text x={950} y={318} fontFamily={FONT.mono} fontWeight={800} fontSize={24} fill="white" textAnchor="middle" transform="rotate(2 950 320)">KOPI</text>
+    <text x={950} y={348} fontFamily={FONT.mono} fontWeight={800} fontSize={16} fill="white" textAnchor="middle" transform="rotate(2 950 320)">PANAS</text>
     {/* papan nama stasiun gantung */}
     <line x1={420} y1={86} x2={420} y2={240} stroke={C.ink} strokeWidth={5} />
     <line x1={660} y1={86} x2={660} y2={240} stroke={C.ink} strokeWidth={5} />
@@ -293,7 +293,9 @@ export const StationBg: React.FC<{ floor?: number; train?: boolean }> = ({ floor
   </g>
 );
 
-/** Lapis jauh skyline: siluet gedung, antena, kubah — untuk parallax (speed kecil). */
+/** Lapis jauh skyline: siluet gedung, antena, kubah — untuk parallax (speed kecil).
+ *  Sengaja digambar LEBIH LEBAR dari 1080px (sampai x=1280) supaya saat
+ *  lapis bergeser ke kiri (parallax), sisi kanan frame tidak kosong. */
 export const SkylineFar: React.FC<{ floor?: number }> = ({ floor = FLOOR_DEF }) => (
   <g>
     <rect x={0} y={900} width={180} height={floor - 900} fill="#5d6280" stroke={C.ink} strokeWidth={4} />
@@ -305,14 +307,17 @@ export const SkylineFar: React.FC<{ floor?: number }> = ({ floor = FLOOR_DEF }) 
     <rect x={710} y={880} width={170} height={floor - 880} fill="#5d6280" stroke={C.ink} strokeWidth={4} />
     <rect x={870} y={780} width={210} height={floor - 780} fill="#545872" stroke={C.ink} strokeWidth={4} />
     <path d="M870,780 a105,70 0 0 1 210,0Z" fill="#545872" stroke={C.ink} strokeWidth={4} />
+    <rect x={1080} y={840} width={200} height={floor - 840} fill="#5d6280" stroke={C.ink} strokeWidth={4} />
     <circle cx={250} cy={820} r={7} fill="#ffc338" />
     <circle cx={560} cy={780} r={7} fill="#ffc338" />
     <circle cx={940} cy={860} r={7} fill="#ffc338" />
     <circle cx={90} cy={980} r={7} fill="#ffc338" />
+    <circle cx={1150} cy={920} r={7} fill="#ffc338" />
   </g>
 );
 
-/** Lapis dekat skyline: gedung detail + jendela menyala, menara air, crane, billboard. */
+/** Lapis dekat skyline: gedung detail + jendela menyala, menara air, crane, billboard.
+ *  Sengaja digambar LEBIH LEBAR dari 1080px (sampai x=1420) — lihat SkylineFar. */
 export const SkylineNear: React.FC<{ floor?: number }> = ({ floor = FLOOR_DEF }) => (
   <g>
     <rect x={60} y={1020} width={220} height={floor - 1020} fill="#2c3048" stroke={C.ink} strokeWidth={5} />
@@ -336,6 +341,11 @@ export const SkylineNear: React.FC<{ floor?: number }> = ({ floor = FLOOR_DEF })
     <line x1={980} y1={860} x2={1000} y2={780} stroke={C.ink} strokeWidth={5} />
     <ellipse cx={900} cy={760} rx={90} ry={34} fill="#8f969b" stroke={C.ink} strokeWidth={5} />
     <rect x={810} y={726} width={180} height={40} fill="#8f969b" stroke={C.ink} strokeWidth={5} />
+    {/* gedung ekstra di kanan (cadangan parallax) */}
+    <rect x={1020} y={980} width={220} height={floor - 980} fill="#2c3048" stroke={C.ink} strokeWidth={5} />
+    <Windows x={1044} y={1010} cols={5} rows={8} />
+    <rect x={1240} y={1020} width={180} height={floor - 1020} fill="#333752" stroke={C.ink} strokeWidth={5} />
+    <Windows x={1264} y={1050} cols={4} rows={7} />
   </g>
 );
 

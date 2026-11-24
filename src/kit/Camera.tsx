@@ -41,7 +41,10 @@ export const Camera: React.FC<{
     easing: ease ?? Easing.inOut(Easing.sin),
   });
   const amt = amount ?? (move === "push-in" || move === "pull-out" ? 0.06 : 120);
-  let scale = 1;
+  // Tracking/pan menggeser isi frame: tanpa kompensasi, tepi frame yang
+  // ditinggalkan akan menampilkan latar hitam. Skala dikompensasi otomatis
+  // sebesar jarak geser dibagi lebar/tinggi frame, jadi tepi tetap tertutup.
+  let scale = move === "tracking-left" || move === "tracking-right" ? 1 + amt / 1080 : move === "pan-up" || move === "pan-down" ? 1 + amt / 1920 : 1;
   let tx = 0;
   let ty = 0;
   switch (move) {
