@@ -19,8 +19,18 @@ Push ke `main` yang mengubah `src/` juga otomatis me-render `Sample10s`.
 | ID | Durasi | Isi |
 | --- | --- | --- |
 | `Sample10s` | 10 detik | Raka lembur tak dibayar — 3 shot: kantor malam, jalan pulang, kartu Pasal 116 |
+| `Cuti10s` | 10 detik | Agus cuti ditolak — demo 10 detik |
+| `EP12` | 55,9 detik | Sari disuruh kerja di hari Lebaran — Pasal 125 (24 fps) |
+| `KitDemo` | 10 detik | QA kit: stasiun + koper, rumah + kardus, kantor, parallax, kinetic text |
 
 Tambah episode baru di `src/stories/cerita-pekerja/`, daftarkan di `src/Root.tsx`.
+
+## Kit (`src/kit/`)
+
+Komponen reusable semua episode — kamera, ekspresi/pose, properti,
+teks kinetik, latar. Cara pakai: `src/kit/README.md`.
+Jangan menulis ulang gerakan kamera / ekspresi / latar sebagai one-off
+di file episode.
 
 ## Tidak ada secret
 

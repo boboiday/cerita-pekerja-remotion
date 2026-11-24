@@ -58,6 +58,19 @@ const INK = 7;
 
 export const STAND: Pose = { armF: [0.08, 0.05], armB: [-0.08, 0.05], legF: [0.06, 0], legB: [-0.06, 0], lean: 0 };
 
+/** Membawa koper/tas: tangan depan turun memegang gagang, badan sedikit condong. Pakai dengan holdF={<Suitcase/>} (lihat kit/Props.tsx). */
+export const CARRY: Pose = { armF: [0.45, 0.12], armB: [-0.3, 0.1], legF: [0.06, 0], legB: [-0.06, 0], lean: 0.05 };
+/** Mengepak kardus: kedua tangan ke depan-bawah, badan membungkuk. Kardus digambar terpisah di lantai (kit/Props.tsx). */
+export const PACK: Pose = { armF: [0.95, 0.5], armB: [0.75, 0.45], legF: [0.06, 0], legB: [-0.06, 0], lean: 0.22, headTilt: 0.15 };
+/**
+ * Duduk (bangku kereta/bus/stasiun): paha ke depan, betis vertikal.
+ * Bangku digambar di belakang karakter; dudukan bangku ~ lantai − 170px
+ * (lihat StationBg — bangkunya sudah di tinggi itu).
+ */
+export const SIT: Pose = { armF: [0.5, 0.6], armB: [0.35, 0.55], legF: [1.35, 1.35], legB: [1.15, 1.25], lean: 0.06, headTilt: 0.05 };
+/** Duduk bersandar lelah: seperti SIT tapi badan lebih rebah ke belakang. */
+export const SIT_LEAN: Pose = { ...SIT, lean: -0.12, headTilt: 0.18 };
+
 export const lerpPose = (a: Pose, b: Pose, t: number): Pose => {
   const m = (x: number, y: number) => x + (y - x) * t;
   const ml = (x: Limb, y: Limb): Limb => [m(x[0], y[0]), m(x[1], y[1])];
@@ -129,6 +142,23 @@ export interface Reach {
   footB?: P;
 }
 
+/**
+ * Ekspresi wajah (alis + mulut, digambar di dekat kepala).
+ * Setiap mood dibedakan oleh DUA ciri sekaligus (alis + mulut) supaya tetap
+ * terbaca jelas di frame kecil / thumbnail 120px:
+ * - worried: alis miring naik ke dalam + mulut cemberut
+ * - determined: alis miring turun ke dalam + mulut datar
+ * - scared: alis busur naik + mulut oval terbuka kecil
+ * - shocked: alis busur SANGAT naik + mulut oval terbuka BESAR
+ * - angry: alis V curam + mulut datar (tegas)
+ * - sad: alis curam naik ke dalam + cemberut dalam + air mata
+ * - resigned: alis datar + mata setengah tertutup + cemberut tipis
+ * - hopeful: alis busur naik lembut + senyum kecil
+ * - tired: mulut datar saja (biasanya dipasangkan dengan eyesClosed)
+ * - relieved: senyum (tanpa alis)
+ */
+export type Mood = "worried" | "determined" | "scared" | "tired" | "relieved" | "sad" | "resigned" | "hopeful" | "shocked" | "angry";
+
 interface StickProps {
   x: number; // feet center x (px)
   floor: number; // floor y (px) — feet are planted here
@@ -141,8 +171,8 @@ interface StickProps {
   holdB?: React.ReactNode;
   look: Look;
   eyesClosed?: boolean;
-  /** Facial expression (brows + mouth). Default: neutral (kit's original look). */
-  mood?: "worried" | "determined" | "scared" | "tired" | "relieved";
+  /** Ekspresi wajah (alis + mulut). Default: netral (tampilan kit lama). */
+  mood?: Mood;
   lookAt?: number; // -1..1 eye shift
   lampAngle?: number; // headlamp cone direction (0 = horizontal forward, + = down)
   hideLegs?: boolean;
@@ -258,9 +288,11 @@ export const Stick: React.FC<StickProps> = ({
           <line x1={head[0] + eyeDX - r * 0.04} y1={head[1]} x2={head[0] + eyeDX + r * 0.04} y2={head[1]} stroke={C.ink} strokeWidth={4} />
         </g>
       ) : null}
-      {mood && mood !== "tired" ? (
+      {mood === "tired" ? (
+        <path d={`M${head[0] - r * 0.19},${head[1] + r * 0.44} L${head[0] + r * 0.19},${head[1] + r * 0.44}`} stroke={C.ink} strokeWidth={5} strokeLinecap="round" />
+      ) : mood ? (
         <g stroke={C.ink} strokeWidth={5} fill="none" strokeLinecap="round">
-          {/* brows: worried = inner ends raised, determined = inner ends lowered, scared = raised arcs */}
+          {/* alis: worried/sad = ujung dalam naik, determined/angry = ujung dalam turun, scared/shocked/hopeful = busur naik */}
           {mood === "worried" ? (
             <>
               <path d={`M${head[0] - r * 0.42},${head[1] - r * 0.3} L${head[0] - r * 0.1},${head[1] - r * 0.42}`} />
@@ -271,21 +303,63 @@ export const Stick: React.FC<StickProps> = ({
               <path d={`M${head[0] - r * 0.42},${head[1] - r * 0.42} L${head[0] - r * 0.1},${head[1] - r * 0.3}`} />
               <path d={`M${head[0] + r * 0.1},${head[1] - r * 0.3} L${head[0] + r * 0.42},${head[1] - r * 0.42}`} />
             </>
+          ) : mood === "angry" ? (
+            <>
+              <path d={`M${head[0] - r * 0.44},${head[1] - r * 0.5} L${head[0] - r * 0.08},${head[1] - r * 0.26}`} />
+              <path d={`M${head[0] + r * 0.08},${head[1] - r * 0.26} L${head[0] + r * 0.44},${head[1] - r * 0.5}`} />
+            </>
+          ) : mood === "sad" ? (
+            <>
+              <path d={`M${head[0] - r * 0.44},${head[1] - r * 0.26} L${head[0] - r * 0.1},${head[1] - r * 0.46}`} />
+              <path d={`M${head[0] + r * 0.1},${head[1] - r * 0.46} L${head[0] + r * 0.44},${head[1] - r * 0.26}`} />
+            </>
+          ) : mood === "resigned" ? (
+            <>
+              <path d={`M${head[0] - r * 0.42},${head[1] - r * 0.34} L${head[0] - r * 0.1},${head[1] - r * 0.34}`} />
+              <path d={`M${head[0] + r * 0.1},${head[1] - r * 0.34} L${head[0] + r * 0.42},${head[1] - r * 0.34}`} />
+              {/* kelopak setengah tertutup */}
+              {[-1, 1].map((s) => (
+                <path key={s} d={`M${head[0] + eyeDX + s * r * 0.24 - 13},${head[1] - r * 0.08} L${head[0] + eyeDX + s * r * 0.24 + 13},${head[1] - r * 0.08}`} />
+              ))}
+            </>
           ) : mood === "scared" ? (
             <>
               <path d={`M${head[0] - r * 0.42},${head[1] - r * 0.32} Q${head[0] - r * 0.26},${head[1] - r * 0.52} ${head[0] - r * 0.1},${head[1] - r * 0.34}`} />
               <path d={`M${head[0] + r * 0.1},${head[1] - r * 0.34} Q${head[0] + r * 0.26},${head[1] - r * 0.52} ${head[0] + r * 0.42},${head[1] - r * 0.32}`} />
             </>
+          ) : mood === "shocked" ? (
+            <>
+              <path d={`M${head[0] - r * 0.42},${head[1] - r * 0.36} Q${head[0] - r * 0.26},${head[1] - r * 0.62} ${head[0] - r * 0.1},${head[1] - r * 0.38}`} />
+              <path d={`M${head[0] + r * 0.1},${head[1] - r * 0.38} Q${head[0] + r * 0.26},${head[1] - r * 0.62} ${head[0] + r * 0.42},${head[1] - r * 0.36}`} />
+            </>
+          ) : mood === "hopeful" ? (
+            <>
+              <path d={`M${head[0] - r * 0.42},${head[1] - r * 0.34} Q${head[0] - r * 0.26},${head[1] - r * 0.48} ${head[0] - r * 0.1},${head[1] - r * 0.36}`} />
+              <path d={`M${head[0] + r * 0.1},${head[1] - r * 0.36} Q${head[0] + r * 0.26},${head[1] - r * 0.48} ${head[0] + r * 0.42},${head[1] - r * 0.34}`} />
+            </>
           ) : null}
-          {/* mouth: worried = frown, determined = flat, scared = open, relieved = smile */}
+          {/* mulut: worried/sad/resigned = cemberut, determined/angry = datar, scared/shocked = oval terbuka, relieved/hopeful = senyum */}
           {mood === "worried" ? <path d={`M${head[0] - r * 0.19},${head[1] + r * 0.48} Q${head[0]},${head[1] + r * 0.34} ${head[0] + r * 0.19},${head[1] + r * 0.48}`} />
+            : mood === "sad" ? <path d={`M${head[0] - r * 0.19},${head[1] + r * 0.5} Q${head[0]},${head[1] + r * 0.3} ${head[0] + r * 0.19},${head[1] + r * 0.5}`} />
+            : mood === "resigned" ? <path d={`M${head[0] - r * 0.19},${head[1] + r * 0.44} Q${head[0]},${head[1] + r * 0.38} ${head[0] + r * 0.19},${head[1] + r * 0.44}`} />
             : mood === "determined" ? <path d={`M${head[0] - r * 0.19},${head[1] + r * 0.44} L${head[0] + r * 0.19},${head[1] + r * 0.44}`} />
+            : mood === "angry" ? <path d={`M${head[0] - r * 0.19},${head[1] + r * 0.46} L${head[0] + r * 0.19},${head[1] + r * 0.46}`} />
             : mood === "scared" ? <ellipse cx={head[0]} cy={head[1] + r * 0.46} rx={r * 0.13} ry={r * 0.17} fill={C.ink} stroke="none" />
+            : mood === "shocked" ? <ellipse cx={head[0]} cy={head[1] + r * 0.48} rx={r * 0.17} ry={r * 0.24} fill={C.ink} stroke="none" />
             : mood === "relieved" ? <path d={`M${head[0] - r * 0.19},${head[1] + r * 0.4} Q${head[0]},${head[1] + r * 0.54} ${head[0] + r * 0.19},${head[1] + r * 0.4}`} />
+            : mood === "hopeful" ? <path d={`M${head[0] - r * 0.17},${head[1] + r * 0.4} Q${head[0]},${head[1] + r * 0.52} ${head[0] + r * 0.17},${head[1] + r * 0.4}`} />
             : null}
         </g>
-      ) : mood === "tired" ? (
-        <path d={`M${head[0] - r * 0.19},${head[1] + r * 0.44} L${head[0] + r * 0.19},${head[1] + r * 0.44}`} stroke={C.ink} strokeWidth={5} strokeLinecap="round" />
+      ) : null}
+      {/* air mata (sad): tetes di bawah mata depan */}
+      {mood === "sad" ? (
+        <path
+          d={`M${head[0] + eyeDX + f * r * 0.24},${head[1] + r * 0.24} q10,13 0,23 q-10,-10 0,-23Z`}
+          fill={C.water}
+          stroke={C.ink}
+          strokeWidth={3}
+          strokeLinejoin="round"
+        />
       ) : null}
       {look.headlamp ? (
         <g>
