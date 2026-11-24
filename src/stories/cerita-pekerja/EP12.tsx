@@ -225,7 +225,7 @@ const Shot04: React.FC<{ dur: number }> = ({ dur }) => {
         <rect x={0} y={1400} width={1080} height={18} fill="#4a3f2e" />
         <Stick x={sariX} floor={FLOOR} scale={1.0} look={SARI} pose={sariPose} mood={mood} lookAt={1} />
         <Stick
-          x={840}
+          x={760}
           floor={FLOOR}
           scale={1.05}
           look={BOSS}
@@ -418,8 +418,11 @@ const Shot07: React.FC = () => {
         <LawItem at={0}>Tidak wajib kerja di hari libur resmi</LawItem>
         <LawItem at={19}>Kalau bekerja, wajib dibayar upah lembur</LawItem>
         <LawItem at={48}>
-          Jam 1–7 dibayar upah sejam
-          <span style={{ fontFamily: FONT.title, fontSize: 72, color: "#c0241c", lineHeight: 1 }}> 2×</span>
+          <div>Jam 1–7 dibayar</div>
+          <div>
+            <span style={{ fontFamily: FONT.title, fontSize: 72, color: "#c0241c", lineHeight: 1 }}>2×</span>
+            <span> upah sejam</span>
+          </div>
           <div style={{ fontSize: 26, color: "#6b675f", marginTop: 4 }}>(pola 6 hari kerja)</div>
         </LawItem>
         <LawItem at={77}>Upah 1 jam = upah pokok + tunjangan tetap ÷ 173</LawItem>
@@ -502,13 +505,13 @@ const Shot08: React.FC<{ dur: number }> = () => (
 export const EP12: React.FC = () => {
   const caps: CapLine[] = [
     { start: 0, end: 142, words: timedCaptions([["Hari", 0, 440], ["Raya.", 440, 1020], ["Semua", 1640, 2040], ["orang", 2040, 2400], ["pulang", 2400, 2800], ["kampung.", 2800, 3260], ["Sari", 3800, 4320], ["justru", 4320, 4880], ["disuruh", 4880, 5220], ["masuk", 5220, 5400], ["kerja.", 5400, 5880]], 0), yellow: ["RAYA", "MASUK", "KERJA"] },
-    { start: 142, end: 290, words: timedCaptions([["Sari", 420, 1020], ["kasir", 1020, 1760], ["minimarket", 1760, 2240], ["di", 2240, 2440], ["kota", 2440, 2620], ["ini.", 2620, 2880], ["Dua", 3500, 3740], ["tahun", 3740, 4020], ["bekerja", 4020, 4440], ["di sini,", 4440, 4800], ["tidak", 5180, 5400], ["pernah", 5400, 5680], ["sekalipun", 5680, 6180], ["absen.", 6180, 6580]], 5900), yellow: ["DUA", "TAHUN", "ABSEN"] },
-    { start: 290, end: 468, words: timedCaptions([["Sehari", 880, 1360], ["sebelum", 1360, 1720], ["lebaran,", 1720, 2180], ["atasannya", 2660, 3000], ["bilang.", 3000, 3300], ["Toko", 3920, 4300], ["tetap", 4300, 4540], ["buka,", 4540, 4860], ["dan", 5240, 5440], ["semua", 5440, 5720], ["kasir", 5720, 6120], ["wajib", 6120, 6440], ["masuk.", 6440, 6700], ["Sari", 7200, 7560]], 12100), yellow: ["LEBARAN", "WAJIB", "MASUK"] },
-    { start: 468, end: 607, words: timedCaptions([["protes.", 160, 660], ["Tapi", 1120, 1500], ["atasannya", 1500, 1980], ["mengancam.", 1980, 2480], ["Kalau", 3000, 3260], ["tidak", 3260, 3460], ["masuk,", 3460, 3820], ["gajinya", 4260, 4500], ["dipotong.", 4500, 4980], ["Sari", 5420, 5840]], 19500), yellow: ["PROTES", "DIPOTONG"] },
-    { start: 607, end: 828, words: timedCaptions([["masuk.", 40, 260], ["Gajian", 860, 1220], ["tiba,", 1220, 1540], ["upahnya", 2100, 2500], ["tetap", 2500, 2860], ["seperti", 2860, 3020], ["biasa.", 3020, 3480], ["Tidak", 3480, 4360], ["ada", 4360, 4500], ["upah", 4500, 4720], ["lembur", 4720, 5040], ["hari", 5040, 5260], ["Libur.", 5260, 5680], ["Padahal", 6120, 6660], ["ia", 6660, 6860], ["bekerja", 6860, 7320], ["di", 7320, 7440], ["hari", 7440, 7580], ["semua", 7580, 7840], ["orang", 7840, 8060], ["Libur.", 8060, 8500], ["Undang-Undang", 8920, 9560]], 25300), yellow: ["LEMBUR", "LIBUR"] },
-    { start: 828, end: 979, words: timedCaptions([["No.", 360, 500], ["27", 640, 1080], ["Tahun", 1080, 1640], ["2026.", 1640, 2560], ["Pasal", 3060, 3440], ["125", 3440, 3920], ["ayat", 3920, 4660], ["1.", 4660, 4940], ["Pekerja", 5540, 5940], ["tidak", 5940, 6100], ["wajib", 6100, 6480]], 34500), yellow: ["TIDAK", "WAJIB", "LIBUR"] },
-    { start: 979, end: 1130, words: timedCaptions([["bekerja", 180, 520], ["di", 520, 640], ["hari", 640, 740], ["Libur", 740, 1000], ["resmi.", 1000, 1280], ["Kalau", 1800, 2020], ["bekerja,", 2020, 2500], ["jam", 2840, 3040], ["pertama", 3040, 3280], ["sampai", 3280, 3600], ["ketujuh", 3600, 4080], ["dibayar", 4080, 4420], ["dua", 4420, 4600], ["kali", 4600, 4820], ["upah", 4820, 5080], ["sejam.", 5080, 5440], ["Sari", 5920, 6260], ["kembali", 6260, 6520]], 40800), yellow: ["DUA", "KALI"] },
-    { start: 1130, end: 1342, words: timedCaptions([["bekerja", 220, 640], ["keesokan", 640, 1040], ["harinya,", 1040, 1380], ["dengan", 1840, 2060], ["surat", 2060, 2420], ["undang-undang", 2420, 2900], ["di", 2900, 3040], ["tangannya.", 3040, 3360], ["Hari", 3940, 4140], ["Liburmu", 4140, 4560], ["bukan", 4560, 4800], ["gratis.", 4800, 5360], ["Karena", 5740, 6080], ["setiap", 6080, 6520], ["pekerja", 6520, 6920], ["punya", 6920, 7200], ["cerita.", 7200, 7580]], 47100), yellow: ["GRATIS", "CERITA"] },
+    { start: 142, end: 290, words: timedCaptions([["Sari", 6320, 6920], ["kasir", 6920, 7660], ["minimarket", 7660, 8140], ["di", 8140, 8340], ["kota", 8340, 8520], ["ini.", 8520, 8780], ["Dua", 9400, 9640], ["tahun", 9640, 9920], ["bekerja", 9920, 10340], ["di sini,", 10340, 10700], ["tidak", 11080, 11300], ["pernah", 11300, 11580], ["sekalipun", 11580, 12080], ["absen.", 12080, 12480]], 5900), yellow: ["DUA", "TAHUN", "ABSEN"] },
+    { start: 290, end: 468, words: timedCaptions([["Sehari", 12980, 13460], ["sebelum", 13460, 13820], ["lebaran,", 13820, 14280], ["atasannya", 14760, 15100], ["bilang.", 15100, 15400], ["Toko", 16020, 16400], ["tetap", 16400, 16640], ["buka,", 16640, 16960], ["dan", 17340, 17540], ["semua", 17540, 17820], ["kasir", 17820, 18220], ["wajib", 18220, 18540], ["masuk.", 18540, 18800], ["Sari", 19300, 19660]], 12100), yellow: ["LEBARAN", "WAJIB", "MASUK"] },
+    { start: 468, end: 607, words: timedCaptions([["protes.", 19660, 20160], ["Tapi", 20620, 21000], ["atasannya", 21000, 21480], ["mengancam.", 21480, 21980], ["Kalau", 22500, 22760], ["tidak", 22760, 22960], ["masuk,", 22960, 23320], ["gajinya", 23760, 24000], ["dipotong.", 24000, 24480], ["Sari", 24920, 25340]], 19500), yellow: ["PROTES", "DIPOTONG"] },
+    { start: 607, end: 828, words: timedCaptions([["masuk.", 25340, 25560], ["Gajian", 26160, 26520], ["tiba,", 26520, 26840], ["upahnya", 27400, 27800], ["tetap", 27800, 28160], ["seperti", 28160, 28320], ["biasa.", 28320, 28780], ["Tidak", 28780, 29660], ["ada", 29660, 29800], ["upah", 29800, 30020], ["lembur", 30020, 30340], ["hari", 30340, 30560], ["Libur.", 30560, 30980], ["Padahal", 31420, 31960], ["ia", 31960, 32160], ["bekerja", 32160, 32620], ["di", 32620, 32740], ["hari", 32740, 32880], ["semua", 32880, 33140], ["orang", 33140, 33360], ["Libur.", 33360, 33800], ["Undang-Undang", 34220, 34860]], 25300), yellow: ["LEMBUR", "LIBUR"] },
+    { start: 828, end: 979, words: timedCaptions([["No.", 34860, 35000], ["27", 35140, 35580], ["Tahun", 35580, 36140], ["2026.", 36140, 37060], ["Pasal", 37560, 37940], ["125", 37940, 38420], ["ayat", 38420, 39160], ["1.", 39160, 39440], ["Pekerja", 40040, 40440], ["tidak", 40440, 40600], ["wajib", 40600, 40980]], 34500), yellow: ["TIDAK", "WAJIB", "LIBUR"] },
+    { start: 979, end: 1130, words: timedCaptions([["bekerja", 40980, 41320], ["di", 41320, 41440], ["hari", 41440, 41540], ["Libur", 41540, 41800], ["resmi.", 41800, 42080], ["Kalau", 42600, 42820], ["bekerja,", 42820, 43300], ["jam", 43640, 43840], ["pertama", 43840, 44080], ["sampai", 44080, 44400], ["ketujuh", 44400, 44880], ["dibayar", 44880, 45220], ["dua", 45220, 45400], ["kali", 45400, 45620], ["upah", 45620, 45880], ["sejam.", 45880, 46240], ["Sari", 46720, 47060], ["kembali", 47060, 47320]], 40800), yellow: ["DUA", "KALI"] },
+    { start: 1130, end: 1342, words: timedCaptions([["bekerja", 47320, 47740], ["keesokan", 47740, 48140], ["harinya,", 48140, 48480], ["dengan", 48940, 49160], ["surat", 49160, 49520], ["undang-undang", 49520, 50000], ["di", 50000, 50140], ["tangannya.", 50140, 50460], ["Hari", 51040, 51240], ["Liburmu", 51240, 51660], ["bukan", 51660, 51900], ["gratis.", 51900, 52460], ["Karena", 52840, 53180], ["setiap", 53180, 53620], ["pekerja", 53620, 54020], ["punya", 54020, 54300], ["cerita.", 54300, 54680]], 47100), yellow: ["GRATIS", "CERITA"] },
   ];
   return (
     <AbsoluteFill style={{ background: "black" }}>
