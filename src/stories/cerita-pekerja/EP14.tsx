@@ -133,7 +133,7 @@ const Shot01: React.FC<{ dur: number }> = ({ dur }) => {
   const bossX = frame < 120 ? 1080 : interpolate(frame, [120, 156], [1080, 780], { extrapolateRight: "clamp" });
   const bossPose: Pose = frame < 156
     ? walk((1080 - bossX) / walkCycle(0.9, 1.0), 0.9)
-    : { ...STAND, armF: [1.25, 0.2], armB: [0.3, 0.1], lean: -0.06, headTilt: -0.05 };
+    : { ...STAND, armF: [-1.5, -0.15], armB: [0.3, 0.1], lean: -0.06, headTilt: -0.05 };
   return (
     <Camera dur={dur} move="push-in" amount={0.06} origin="50% 55%">
       <Canvas bg="#f7f1e3">
@@ -210,9 +210,9 @@ const Shot03: React.FC<{ dur: number }> = ({ dur }) => {
   const bossX = interpolate(frame, [0, 36], [1020, 760], { extrapolateRight: "clamp" });
   const bossPose: Pose = frame < 36
     ? walk((1020 - bossX) / walkCycle(0.9, 1.0), 0.9)
-    : { ...STAND, armF: [1.5, 0.15], armB: [0.3, 0.1], lean: -0.06, headTilt: -0.05 };
+    : { ...STAND, armF: [-1.5, -0.15], armB: [0.3, 0.1], lean: -0.06, headTilt: -0.05 };
   const mood = frame < 72 ? "shocked" : "humiliated";
-  const ekoPose: Pose = { ...STAND, headTilt: frame >= 72 ? 0.2 : 0.1, lean: frame >= 72 ? -0.03 : 0 };
+  const ekoPose: Pose = { ...STAND, headTilt: frame >= 72 ? 0.26 : 0.1, lean: frame >= 72 ? -0.03 : 0 };
   return (
     <Camera dur={dur} move="push-in" amount={0.05} origin="50% 50%" shake={2}>
       <Canvas bg="#f7f1e3">
@@ -241,7 +241,7 @@ const Shot03: React.FC<{ dur: number }> = ({ dur }) => {
 const Shot04: React.FC<{ dur: number }> = ({ dur }) => {
   const frame = useCurrentFrame();
   const mood = frame < 56 ? "humiliated" : "sad";
-  const headTilt = frame < 56 ? 0.22 : 0.08;
+  const headTilt = frame < 56 ? 0.28 : 0.12;
   return (
     <Camera dur={dur} move="push-in" amount={0.08} origin="50% 45%" shake={1.5}>
       <Canvas bg="#f7f1e3">
@@ -261,7 +261,7 @@ const Shot04: React.FC<{ dur: number }> = ({ dur }) => {
           floor={FLOOR}
           scale={0.95}
           look={RUDI}
-          pose={{ ...STAND, armF: [1.5, 0.15], armB: [0.3, 0.1], lean: -0.06, headTilt: -0.05 }}
+          pose={{ ...STAND, armF: [-1.5, -0.15], armB: [0.3, 0.1], lean: -0.06, headTilt: -0.05 }}
           mood="determined"
           lookAt={-0.7}
         />
@@ -316,7 +316,7 @@ const Shot05c: React.FC = () => {
           <LongReceipt />
         </g>
         <Stick x={300} floor={FLOOR} scale={0.95} look={EKO} pose={SIT} mood={mood} lookAt={0.9} />
-        <Stick x={820} floor={FLOOR} scale={0.95} look={ISTRI} pose={{ ...STAND, armF: [0.9, 0.2], armB: [-0.1, 0.1], headTilt: 0.12, lean: 0.04 }} mood="worried" lookAt={-0.8} />
+        <Stick x={820} floor={FLOOR} scale={0.95} look={ISTRI} pose={{ ...STAND, armF: [-0.9, -0.2], armB: [-0.1, 0.1], headTilt: 0.12, lean: 0.04 }} mood="worried" lookAt={-0.8} />
       </Canvas>
     </Camera>
   );
@@ -349,6 +349,7 @@ const Shot06: React.FC<{ dur: number }> = ({ dur }) => {
   return (
     <Camera dur={dur} move="push-in" amount={0.06} origin="50% 45%">
       <Canvas bg="#2f2122">
+        <HomeInteriorBg night />
         {/* meja + lampu meja + salinan pasal */}
         <rect x={180} y={1150} width={720} height={26} fill="#6b4a38" stroke={C.ink} strokeWidth={5} />
         <rect x={200} y={1176} width={680} height={224} fill="#4a3428" />
@@ -467,7 +468,7 @@ const Shot08a: React.FC = () => {
           look={EKO}
           pose={walk((x - 120) / walkCycle(0.9, 0.95), 0.9)}
           mood="hopeful"
-          holdF={<PasalFolder />}
+          holdF={<g transform="translate(40,10)"><PasalFolder /></g>}
         />
       </Canvas>
     </Camera>
@@ -478,9 +479,9 @@ const Shot08a: React.FC = () => {
 const Shot08b: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const title = frame < 4 ? 0 : spring({ frame: frame - 4, fps, config: { stiffness: 260, damping: 13 } });
-  const line = frame < 30 ? 0 : spring({ frame: frame - 30, fps, config: { stiffness: 260, damping: 13 } });
-  const q = frame < 60 ? 0 : spring({ frame: frame - 60, fps, config: { stiffness: 260, damping: 13 } });
+  const title = frame < 2 ? 0 : spring({ frame: frame - 2, fps, config: { stiffness: 260, damping: 13 } });
+  const line = frame < 18 ? 0 : spring({ frame: frame - 18, fps, config: { stiffness: 260, damping: 13 } });
+  const q = frame < 36 ? 0 : spring({ frame: frame - 36, fps, config: { stiffness: 260, damping: 13 } });
   return (
     <AbsoluteFill style={{ background: "#1e2436", alignItems: "center" }}>
       <div style={{ position: "absolute", top: 480, width: "100%", textAlign: "center", transform: `scale(${title})`, opacity: title }}>
