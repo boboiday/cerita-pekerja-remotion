@@ -87,7 +87,7 @@ const MutationLetter: React.FC<{ stamp?: boolean }> = ({ stamp = true }) => (
 
 /** Surat "PENGUNDURAN DIRI" kosong di tangan atasan (S04). */
 const ResignPaper: React.FC<{ swing: number }> = ({ swing }) => (
-  <g transform={`rotate(${swing * 57})`}>
+  <g transform={`translate(30,40) rotate(${swing * 57})`}>
     <rect x={-50} y={-70} width={100} height={140} fill="#fdf8ea" stroke={C.ink} strokeWidth={5} />
     <text x={0} y={-28} fontFamily={FONT.mono} fontWeight={800} fontSize={19} fill={C.ink} textAnchor="middle">PENGUNDURAN</text>
     <text x={0} y={-4} fontFamily={FONT.mono} fontWeight={800} fontSize={19} fill={C.ink} textAnchor="middle">DIRI</text>
@@ -124,8 +124,8 @@ const JavaMap: React.FC<{ x: number; y: number; scale?: number }> = ({ x, y, sca
     <circle cx={240} cy={148} r={10} fill="#c0241c" stroke={C.ink} strokeWidth={4} />
     <line x1={232} y1={150} x2={112} y2={152} stroke="#c0241c" strokeWidth={6} />
     <path d="M112,152 L132,142 L132,162 Z" fill="#c0241c" />
-    <text x={95} y={190} fontFamily={FONT.mono} fontWeight={800} fontSize={20} fill={C.ink} textAnchor="middle">SEMARANG</text>
-    <text x={240} y={186} fontFamily={FONT.mono} fontWeight={800} fontSize={20} fill={C.ink} textAnchor="middle">SURABAYA</text>
+    <text x={95} y={216} fontFamily={FONT.mono} fontWeight={800} fontSize={20} fill={C.ink} textAnchor="middle">SEMARANG</text>
+    <text x={240} y={214} fontFamily={FONT.mono} fontWeight={800} fontSize={20} fill={C.ink} textAnchor="middle">SURABAYA</text>
     <text x={165} y={250} fontFamily={FONT.mono} fontWeight={700} fontSize={20} fill="#6b675f" textAnchor="middle">DIPINDAH KE SEMARANG</text>
   </g>
 );
@@ -155,6 +155,7 @@ const Shot01: React.FC<{ dur: number }> = ({ dur }) => {
         <g transform="translate(150,1400)"><CardboardBox label="GUDANG" scale={0.8} /></g>
         <g transform="translate(320,1400)"><CardboardBox label="BARANG" scale={0.7} /></g>
         <g transform="translate(210,700)"><CardboardBox label="STOK" scale={0.6} /></g>
+        <g transform="translate(300,960)"><CardboardBox label="ARSIP" scale={0.6} /></g>
         {/* meja kerja Hendra + surat mutasi */}
         <rect x={620} y={1180} width={400} height={22} fill="#6b4a38" stroke={C.ink} strokeWidth={5} />
         <rect x={640} y={1202} width={360} height={198} fill="#5c4033" />
@@ -383,7 +384,7 @@ const Shot06: React.FC<{ dur: number }> = ({ dur }) => {
         <path d="M787,980 L700,930 L874,930 Z" fill="#ffe9a8" stroke={C.ink} strokeWidth={5} />
         <circle cx={787} cy={975} r={26} fill="#ffe9a8" opacity={0.85} />
         <g transform="translate(560,1090)">
-          <ContractFolder big />
+          {frame < 36 ? <ContractFolder big /> : null}
         </g>
         <rect x={0} y={1400} width={1080} height={520} fill="#1c130d" />
         <rect x={0} y={1400} width={1080} height={18} fill="#120b06" />
@@ -479,7 +480,6 @@ const Shot08a: React.FC = () => {
   return (
     <Camera dur={72} move="push-in" amount={0.03} origin="50% 50%">
       <Canvas bg="#f7f1e3">
-        <MorningSky />
         <CitySkylineBg variant="day" />
         <Stick
           x={x}
