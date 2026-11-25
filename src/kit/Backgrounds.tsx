@@ -349,6 +349,90 @@ export const SkylineNear: React.FC<{ floor?: number }> = ({ floor = FLOOR_DEF })
   </g>
 );
 
+/** Minimarket: pintu kaca + papan nama, meja kasir + mesin kasir + struk,
+ *  rak produk warna-warni + label harga, banner promo miring, keranjang.
+ *  Latar EP14 (Eko kasir). Sengaja ASIMETRIS: rak kanan penuh, kiri lowong
+ *  untuk antrean; satu produk miring, satu label harga jatuh. */
+export const MinimarketBg: React.FC<{ floor?: number }> = ({ floor = FLOOR_DEF }) => (
+  <g>
+    {/* lantai keramik + strip gelap */}
+    <rect x={0} y={floor} width={1080} height={1920 - floor} fill="#cfc8b8" />
+    <rect x={0} y={floor} width={1080} height={14} fill="#8a877f" />
+    <rect x={0} y={floor + 120} width={1080} height={10} fill="#b9b6ae" />
+    {[140, 420, 700, 980].map((x) => (
+      <line key={x} x1={x} y1={floor} x2={x} y2={1920} stroke="#b9b6ae" strokeWidth={4} />
+    ))}
+    {/* lampu plafon */}
+    <rect x={120} y={60} width={300} height={40} fill="#fdf8ea" stroke={C.ink} strokeWidth={5} />
+    <rect x={660} y={60} width={300} height={40} fill="#fdf8ea" stroke={C.ink} strokeWidth={5} />
+    {/* papan nama MINIMARKET */}
+    <rect x={260} y={140} width={560} height={92} rx={10} fill="#c0241c" stroke={C.ink} strokeWidth={7} />
+    <text x={540} y={206} fontFamily={FONT.mono} fontWeight={800} fontSize={52} fill="white" textAnchor="middle">MINIMARKET</text>
+    {/* pintu kaca geser kiri (pagi terang) */}
+    <rect x={60} y={300} width={330} height={820} fill="#bfe3f2" stroke={C.ink} strokeWidth={7} />
+    <line x1={225} y1={300} x2={225} y2={1120} stroke={C.ink} strokeWidth={5} />
+    <line x1={60} y1={710} x2={390} y2={710} stroke={C.ink} strokeWidth={5} />
+    <circle cx={330} cy={400} r={40} fill="#ffe9a8" stroke={C.ink} strokeWidth={4} />
+    <rect x={90} y={760} width={110} height={150} fill="#fdf8ea" stroke={C.ink} strokeWidth={4} transform="rotate(-3 145 835)" />
+    <text x={145} y={800} fontFamily={FONT.mono} fontWeight={800} fontSize={22} fill={C.ink} textAnchor="middle" transform="rotate(-3 145 835)">BUKA</text>
+    <text x={145} y={830} fontFamily={FONT.mono} fontWeight={700} fontSize={18} fill="#6b675f" textAnchor="middle" transform="rotate(-3 145 835)">07.00–22.00</text>
+    {/* banner promo miring */}
+    <rect x={620} y={300} width={300} height={90} fill="#e2a748" stroke={C.ink} strokeWidth={5} transform="rotate(3 770 345)" />
+    <text x={770} y={356} fontFamily={FONT.mono} fontWeight={800} fontSize={34} fill={C.ink} textAnchor="middle" transform="rotate(3 770 345)">PROMO HARI INI</text>
+    {/* rak kanan: 2 unit + produk warna-warni + label harga */}
+    <g>
+      <rect x={700} y={520} width={320} height={20} fill="#6b4a38" stroke={C.ink} strokeWidth={5} />
+      <rect x={700} y={760} width={320} height={20} fill="#6b4a38" stroke={C.ink} strokeWidth={5} />
+      <rect x={700} y={1000} width={320} height={20} fill="#6b4a38" stroke={C.ink} strokeWidth={5} />
+      {/* botol minuman baris atas */}
+      {[726, 786, 846, 906, 966].map((x, i) => (
+        <g key={x}>
+          <rect x={x} y={440 + (i % 2) * 8} width={34} height={80} rx={8} fill={["#3f7a4a", "#28518b", "#c0241c", "#e2a748", "#8a5bb5"][i]} stroke={C.ink} strokeWidth={4} />
+          <rect x={x + 8} y={424 + (i % 2) * 8} width={18} height={18} fill="#1d1d1f" stroke={C.ink} strokeWidth={3} />
+        </g>
+      ))}
+      {/* kotak snack baris tengah (satu miring) */}
+      {[726, 806, 886, 966].map((x, i) => (
+        <rect key={x} x={x} y={676} width={64} height={84} fill={["#e2a748", "#c0241c", "#28518b", "#3f7a4a"][i]} stroke={C.ink} strokeWidth={4} transform={i === 2 ? "rotate(8 918 718)" : undefined} />
+      ))}
+      {/* kaleng baris bawah */}
+      {[726, 786, 846, 906, 966].map((x, i) => (
+        <circle key={x} cx={x + 17} cy={968} r={24} fill={["#8f969b", "#e2a748", "#c0241c", "#28518b", "#3f7a4a"][i]} stroke={C.ink} strokeWidth={4} />
+      ))}
+      {/* label harga gantung (satu jatuh di lantai) */}
+      <rect x={740} y={540} width={90} height={34} fill="#fdf8ea" stroke={C.ink} strokeWidth={3} />
+      <text x={785} y={564} fontFamily={FONT.mono} fontWeight={800} fontSize={20} fill={C.ink} textAnchor="middle">12.500</text>
+      <rect x={880} y={780} width={90} height={34} fill="#fdf8ea" stroke={C.ink} strokeWidth={3} />
+      <text x={925} y={804} fontFamily={FONT.mono} fontWeight={800} fontSize={20} fill={C.ink} textAnchor="middle">8.000</text>
+      <rect x={620} y={1290} width={90} height={34} fill="#fdf8ea" stroke={C.ink} strokeWidth={3} transform="rotate(-12 665 1307)" />
+      <text x={665} y={1314} fontFamily={FONT.mono} fontWeight={800} fontSize={20} fill={C.ink} textAnchor="middle" transform="rotate(-12 665 1307)">5.500</text>
+    </g>
+    {/* jam dinding kecil + CCTV sudut */}
+    <circle cx={560} cy={330} r={42} fill="#fdf8ea" stroke={C.ink} strokeWidth={5} />
+    <line x1={560} y1={330} x2={548} y2={306} stroke={C.ink} strokeWidth={5} strokeLinecap="round" />
+    <line x1={560} y1={330} x2={580} y2={340} stroke={C.ink} strokeWidth={4} strokeLinecap="round" />
+    <rect x={980} y={180} width={70} height={50} rx={8} fill="#3a3a3f" stroke={C.ink} strokeWidth={4} transform="rotate(18 1015 205)" />
+    <circle cx={1010} cy={212} r={12} fill="#28518b" stroke={C.ink} strokeWidth={3} transform="rotate(18 1015 205)" />
+    {/* meja kasir (kiri-tengah) + mesin kasir + scanner + keranjang lantai */}
+    <rect x={60} y={1150} width={460} height={24} fill="#6b4a38" stroke={C.ink} strokeWidth={5} />
+    <rect x={80} y={1174} width={420} height={226} fill="#5c4033" />
+    <rect x={120} y={1050} width={150} height={100} fill="#3a3a3f" stroke={C.ink} strokeWidth={5} />
+    <rect x={136} y={1064} width={118} height={72} fill="#7fb3d5" stroke={C.ink} strokeWidth={3} />
+    <text x={195} y={1110} fontFamily={FONT.mono} fontWeight={800} fontSize={26} fill={C.ink} textAnchor="middle">50.000</text>
+    <rect x={300} y={1090} width={90} height={60} fill="#fdf8ea" stroke={C.ink} strokeWidth={4} />
+    <path d="M310,1150 L380,1150 L370,1210 L320,1210 Z" fill="#fdf8ea" stroke={C.ink} strokeWidth={4} />
+    <line x1={322} y1={1168} x2={368} y2={1168} stroke="#b9b6ae" strokeWidth={3} />
+    <line x1={322} y1={1184} x2={368} y2={1184} stroke="#b9b6ae" strokeWidth={3} />
+    <rect x={420} y={1100} width={70} height={50} rx={8} fill="#c0241c" stroke={C.ink} strokeWidth={4} />
+    <text x={455} y={1134} fontFamily={FONT.mono} fontWeight={800} fontSize={24} fill="white" textAnchor="middle">KASIR</text>
+    {/* keranjang belanja di lantai kanan */}
+    <path d="M860,1400 L880,1300 L1000,1300 L1020,1400 Z" fill="#28518b" stroke={C.ink} strokeWidth={5} />
+    <line x1={900} y1={1330} x2={980} y2={1330} stroke={C.ink} strokeWidth={4} />
+    <circle cx={900} cy={1350} r={14} fill="#e2a748" stroke={C.ink} strokeWidth={3} />
+    <circle cx={950} cy={1346} r={14} fill="#3f7a4a" stroke={C.ink} strokeWidth={3} />
+  </g>
+);
+
 /** Skyline kota lengkap (jauh + dekat + jalan). `variant`: day | dusk | night. */
 export const CitySkylineBg: React.FC<{ floor?: number; variant?: "day" | "dusk" | "night" }> = ({ floor = FLOOR_DEF, variant = "dusk" }) => (
   <g>

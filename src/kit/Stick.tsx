@@ -1,5 +1,5 @@
 import React from "react";
-import { C } from "./style";
+import { C, FONT } from "./style";
 
 /**
  * Stick-figure rig (flat SVG).
@@ -34,6 +34,7 @@ export interface Look {
   flatCap?: string; // flat cap color (Walt)
   hearingAid?: boolean;
   hood?: string; // hoodie hood color (rim behind the head)
+  nameTag?: string; // name tag on the chest (e.g. cashier "EKO")
 }
 
 export const YOU: Look = { body: C.skin, band: true };
@@ -153,11 +154,13 @@ export interface Reach {
  * - angry: alis V curam + mulut datar (tegas)
  * - sad: alis curam naik ke dalam + cemberut dalam + air mata
  * - resigned: alis naik TIPIS ke dalam + cemberut tipis (pasrah, bukan marah)
+ * - humiliated: alis ujung dalam TURUN sedang + mulut datar kecil (menunduk malu;
+ *   kepala menunduk dipasok lewat pose.headTilt, bukan wajah)
  * - hopeful: alis busur naik lembut + senyum kecil
  * - tired: mulut datar saja (biasanya dipasangkan dengan eyesClosed)
  * - relieved: senyum (tanpa alis)
  */
-export type Mood = "worried" | "determined" | "scared" | "tired" | "relieved" | "sad" | "resigned" | "hopeful" | "shocked" | "angry";
+export type Mood = "worried" | "determined" | "scared" | "tired" | "relieved" | "sad" | "resigned" | "hopeful" | "shocked" | "angry" | "humiliated";
 
 interface StickProps {
   x: number; // feet center x (px)
@@ -243,6 +246,12 @@ export const Stick: React.FC<StickProps> = ({
       {look.tie ? (
         <path d={`M${neck[0]},${neck[1] + 6} L${neck[0] - 9},${neck[1] + 30} L${neck[0] + (hip[0] - neck[0]) * 0.45},${neck[1] + (hip[1] - neck[1]) * 0.55} L${neck[0] + 9},${neck[1] + 30}Z`} fill={look.tie} stroke={C.ink} strokeWidth={3} strokeLinejoin="round" />
       ) : null}
+      {look.nameTag ? (
+        <g>
+          <rect x={neck[0] * 0.55 - 34} y={neck[1] * 0.55 - 13} width={68} height={26} rx={4} fill="#fdf8ea" stroke={C.ink} strokeWidth={3} />
+          <text x={neck[0] * 0.55} y={neck[1] * 0.55 + 5} fontFamily={FONT.mono} fontWeight={800} fontSize={15} fill={C.ink} textAnchor="middle">{look.nameTag}</text>
+        </g>
+      ) : null}
       <line x1={neck[0]} y1={neck[1]} x2={head[0]} y2={head[1]} stroke={C.ink} strokeWidth={LIMB_W + INK * 2} strokeLinecap="round" />
       <line x1={neck[0]} y1={neck[1]} x2={head[0]} y2={head[1]} stroke={look.body} strokeWidth={LIMB_W - 4} strokeLinecap="round" />
       {/* head */}
@@ -319,6 +328,12 @@ export const Stick: React.FC<StickProps> = ({
               <path d={`M${head[0] - r * 0.42},${head[1] - r * 0.36} L${head[0] - r * 0.1},${head[1] - r * 0.44}`} />
               <path d={`M${head[0] + r * 0.1},${head[1] - r * 0.44} L${head[0] + r * 0.42},${head[1] - r * 0.36}`} />
             </>
+          ) : mood === "humiliated" ? (
+            <>
+              {/* alis ujung dalam turun sedang (malu, bukan marah) + mulut datar kecil */}
+              <path d={`M${head[0] - r * 0.42},${head[1] - r * 0.4} L${head[0] - r * 0.1},${head[1] - r * 0.3}`} />
+              <path d={`M${head[0] + r * 0.1},${head[1] - r * 0.3} L${head[0] + r * 0.42},${head[1] - r * 0.4}`} />
+            </>
           ) : mood === "scared" ? (
             <>
               <path d={`M${head[0] - r * 0.42},${head[1] - r * 0.32} Q${head[0] - r * 0.26},${head[1] - r * 0.52} ${head[0] - r * 0.1},${head[1] - r * 0.34}`} />
@@ -339,6 +354,7 @@ export const Stick: React.FC<StickProps> = ({
           {mood === "worried" ? <path d={`M${head[0] - r * 0.19},${head[1] + r * 0.48} Q${head[0]},${head[1] + r * 0.34} ${head[0] + r * 0.19},${head[1] + r * 0.48}`} />
             : mood === "sad" ? <path d={`M${head[0] - r * 0.19},${head[1] + r * 0.5} Q${head[0]},${head[1] + r * 0.3} ${head[0] + r * 0.19},${head[1] + r * 0.5}`} />
             : mood === "resigned" ? <path d={`M${head[0] - r * 0.19},${head[1] + r * 0.44} Q${head[0]},${head[1] + r * 0.38} ${head[0] + r * 0.19},${head[1] + r * 0.44}`} />
+            : mood === "humiliated" ? <path d={`M${head[0] - r * 0.13},${head[1] + r * 0.44} L${head[0] + r * 0.13},${head[1] + r * 0.44}`} />
             : mood === "determined" ? <path d={`M${head[0] - r * 0.19},${head[1] + r * 0.44} L${head[0] + r * 0.19},${head[1] + r * 0.44}`} />
             : mood === "angry" ? <path d={`M${head[0] - r * 0.19},${head[1] + r * 0.46} L${head[0] + r * 0.19},${head[1] + r * 0.46}`} />
             : mood === "scared" ? <ellipse cx={head[0]} cy={head[1] + r * 0.46} rx={r * 0.13} ry={r * 0.17} fill={C.ink} stroke="none" />
