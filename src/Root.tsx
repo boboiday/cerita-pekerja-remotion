@@ -9,6 +9,7 @@ import { EP16, EP16_TOTAL } from "./stories/cerita-pekerja/EP16";
 import { EP17, EP17_TOTAL } from "./stories/cerita-pekerja/EP17";
 import { EP18, EP18_TOTAL } from "./stories/cerita-pekerja/EP18";
 import { EP19, EP19_TOTAL } from "./stories/cerita-pekerja/EP19";
+import { EP19Test, EP19TEST_TOTAL } from "./stories/cerita-pekerja/EP19Test";
 import { KitDemo, KIT_TOTAL } from "./stories/cerita-pekerja/KitDemo";
 
 /** Every episode is a 1080x1920 (9:16) composition. Samples are 30 fps; full episodes are 24 fps (EP15 is 12 fps). */
@@ -26,6 +27,8 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="EP17" component={EP17} durationInFrames={EP17_TOTAL} fps={24} width={1080} height={1920} />
     <Composition id="EP18" component={EP18} durationInFrames={EP18_TOTAL} fps={24} width={1080} height={1920} />
     <Composition id="EP19" component={EP19} durationInFrames={EP19_TOTAL} fps={24} width={1080} height={1920} />
+    {/* EP19Test = salinan uji EP19 (bukti upgrade kit). Bukan episode tayang. */}
+    <Composition id="EP19Test" component={EP19Test} durationInFrames={EP19TEST_TOTAL} fps={24} width={1080} height={1920} />
     <Composition id="KitDemo" component={KitDemo} durationInFrames={KIT_TOTAL} {...SHORT} />
   </>
 );

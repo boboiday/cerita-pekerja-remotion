@@ -18,6 +18,11 @@ import { Camera, Parallax, ParallaxLayer } from "../../kit/Camera";
 <Camera dur={dur} move="tracking-right" amount={120}>...</Camera>
 // Tanpa gerakan / pan-up / pan-down / tracking-left — lihat CameraMove.
 // shake={2} = guncangan halus yang mereda (adegan tegang, seperti EP12 S03).
+
+// Motion blur: ON otomatis untuk gerakan kamera, OFF untuk move="static".
+// Shot kamera-statis yang isinya bergerak (tracking parallax) perlu blur eksplisit:
+<Camera dur={dur} move="static" blur>...</Camera>
+// blur={false} mematikan blur di shot bergerak (teks harus super tajam).
 ```
 
 Parallax (di dalam `<svg>` shot, lapis jauh = speed kecil):

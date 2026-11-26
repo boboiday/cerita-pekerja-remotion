@@ -8,17 +8,19 @@
     "dev": "remotion studio src/index.ts",
     "render": "remotion render src/index.ts",
     "still": "remotion still src/index.ts",
+    "stills": "node scripts/stills.mjs",
     "typecheck": "tsc --noEmit",
     "sfx": "python3 scripts/audio/decide_sfx.py && python3 scripts/audio/freshco_audio.py"
   },
   "dependencies": {
-    "@remotion/captions": "4.0.539",
-    "@remotion/cli": "4.0.539",
-    "@remotion/google-fonts": "4.0.539",
-    "@remotion/media": "4.0.539",
+    "@remotion/captions": "4.0.543",
+    "@remotion/cli": "4.0.543",
+    "@remotion/google-fonts": "4.0.543",
+    "@remotion/media": "4.0.543",
+    "@remotion/motion-blur": "4.0.543",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "remotion": "4.0.539"
+    "remotion": "4.0.543"
   },
   "devDependencies": {
     "@types/react": "^19.2.0",

@@ -1,5 +1,6 @@
 import React from "react";
-import { AbsoluteFill, Easing, interpolate, random, useCurrentFrame } from "remotion";
+import { AbsoluteFill, Easing, interpolate, random, useCurrentFrame, useVideoConfig } from "remotion";
+import { HtmlInCanvasMotionBlur } from "@remotion/motion-blur";
 
 /**
  * Primitif gerakan kamera kit Cerita Pekerja.
@@ -16,6 +17,18 @@ import { AbsoluteFill, Easing, interpolate, random, useCurrentFrame } from "remo
  *   tracking/pan = jarak geser px (default 120).
  * - <Cam> lama di Overlays.tsx tetap ada untuk EP12/Cuti10s/Sample10s;
  *   shot baru sebaiknya memakai <Camera> (nama gerakan eksplisit).
+ *
+ * Motion blur (Remotion 4.0.543, @remotion/motion-blur):
+ * - `blur` default = ON untuk semua gerakan kamera (push-in, pull-out,
+ *   tracking, pan) dan OFF untuk `move="static"` — shot statis (kartu
+ *   hukum, end card) harus tetap tajam dan terbaca.
+ * - Shot yang kameranya statis TAPI isinya bergerak (mis. tracking shot
+ *   parallax S02 EP19: karakter jalan + latar bergeser) tetap perlu blur:
+ *   beri `blur` eksplisit di shot itu.
+ * - Blur membungkus SELURUH shot (termasuk gerakan kameranya sendiri),
+ *   tapi TIDAK menyentuh <Captions> / <Vignette> di luar <Camera> —
+ *   teks caption tetap tajam.
+ * - shutterAngle 180 (= setengah frame) + samples 8 = default Remotion.
  */
 export type CameraMove =
   | "push-in" // mendekat: skala 1 -> 1+amount (fokus ke wajah / emosi)
@@ -33,9 +46,18 @@ export const Camera: React.FC<{
   origin?: string; // titik tumpu zoom, "%" dari frame (default "50% 50%")
   shake?: number; // guncangan halus yang mereda (px, default 0 = stabil)
   ease?: (t: number) => number;
+  /**
+   * Motion blur untuk shot ini. Default: ON kalau kamera bergerak
+   * (push-in / pull-out / tracking / pan), OFF kalau `move="static"`.
+   * Isi `blur` eksplisit untuk shot kamera-statis yang isinya bergerak
+   * (mis. parallax + karakter jalan) — atau `blur={false}` untuk
+   * mematikan blur di shot bergerak (mis. teks harus super tajam).
+   */
+  blur?: boolean;
   children: React.ReactNode;
-}> = ({ dur, move = "push-in", amount, origin = "50% 50%", shake = 0, ease, children }) => {
+}> = ({ dur, move = "push-in", amount, origin = "50% 50%", shake = 0, ease, blur, children }) => {
   const frame = useCurrentFrame();
+  const { width, height } = useVideoConfig();
   const t = interpolate(frame, [0, dur], [0, 1], {
     extrapolateRight: "clamp",
     easing: ease ?? Easing.inOut(Easing.sin),
@@ -71,10 +93,19 @@ export const Camera: React.FC<{
   }
   const sx = shake ? (random(`cam-sx${frame}`) - 0.5) * shake * Math.exp(-frame / 20) : 0;
   const sy = shake ? (random(`cam-sy${frame}`) - 0.5) * shake * Math.exp(-frame / 20) : 0;
-  return (
+  const shot = (
     <AbsoluteFill style={{ transform: `translate(${tx + sx}px,${ty + sy}px) scale(${scale})`, transformOrigin: origin }}>
       {children}
     </AbsoluteFill>
+  );
+  // Motion blur hanya untuk shot yang bergerak. Shot statis (kartu hukum,
+  // end card) tidak dibungkus — teksnya harus tetap tajam.
+  const useBlur = blur ?? move !== "static";
+  if (!useBlur) return shot;
+  return (
+    <HtmlInCanvasMotionBlur width={width} height={height} shutterAngle={180} samples={8}>
+      {shot}
+    </HtmlInCanvasMotionBlur>
   );
 };
 
