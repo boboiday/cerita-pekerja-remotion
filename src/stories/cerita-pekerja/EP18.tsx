@@ -11,7 +11,7 @@ import { PASSENGERS } from "../../kit/Stick";
 
 /**
  * EP18 — "Bekerja Saat Cuti" (24 fps, 1080x1920, 56.8 detik).
- * Arif, staf gudang di Sidoarjo 3 tahun: cuti 5 hari sudah disetujui,
+ * Arif, staf gudang di Semarang 3 tahun: cuti 5 hari sudah disetujui,
  * hari ke-2 ditelepon masuk kerja (stok opname mendesak), masuk 2 hari,
  * lalu HRD bilang jatah 5 harinya sudah habis terpakai.
  * Hukum: UU 27/2026 Pasal 118 ayat (5) — cuti tahunan paling sedikit
@@ -30,7 +30,7 @@ import { PASSENGERS } from "../../kit/Stick";
  * 8 shot, 3 beat per shot, match cuts, 3-second hook gate di S01,
  * tracking shot penuh di S02, arc 5 tahap. Render: GitHub Actions.
  * Perbaikan gambar kecil vs EP17: set gudang BARU yang detail
- * (rak + kardus + forklift + palet + papan GUDANG SIDOARJO) +
+ * (rak + kardus + forklift + palet + papan GUDANG SEMARANG) +
  * prop koper + surat cuti sebagai prop kunci cerita.
  */
 
@@ -135,7 +135,7 @@ const Nightstand: React.FC = () => (
   </g>
 );
 
-/** Set gudang: rak + kardus + forklift + palet + papan GUDANG SIDOARJO. */
+/** Set gudang: rak + kardus + forklift + palet + papan GUDANG SEMARANG. */
 const WarehouseBg: React.FC = () => (
   <g>
     {/* dinding + jendela tinggi */}
@@ -146,7 +146,7 @@ const WarehouseBg: React.FC = () => (
     <circle cx={900} cy={280} r={70} fill="#ffe9a8" opacity={0.8} />
     {/* papan nama gudang */}
     <rect x={360} y={200} width={660} height={110} fill="#23282e" stroke={C.ink} strokeWidth={5} />
-    <text x={690} y={275} fontFamily={FONT.mono} fontWeight={800} fontSize={52} fill="#fdf8ea" textAnchor="middle">GUDANG SIDOARJO</text>
+    <text x={690} y={275} fontFamily={FONT.mono} fontWeight={800} fontSize={52} fill="#fdf8ea" textAnchor="middle">GUDANG SEMARANG</text>
     {/* rak kiri: tiang + balok + kardus */}
     <rect x={80} y={420} width={16} height={780} fill="#6b4a38" stroke={C.ink} strokeWidth={3} />
     <rect x={380} y={420} width={16} height={780} fill="#6b4a38" stroke={C.ink} strokeWidth={3} />
@@ -546,14 +546,14 @@ const Shot08: React.FC<{ dur: number }> = () => (
 
 export const EP18: React.FC = () => {
   const caps: CapLine[] = [
-    { start: 0, end: 204, words: timedCaptions([["Cuti", 0, 560], ["lima", 560, 1100], ["hari", 1100, 1300], ["Arif", 1300, 1680], ["sudah", 1680, 2140], ["disetujui,", 2140, 2860], ["tas", 3400, 3700], ["sudah", 3700, 4020], ["dikemas,", 4020, 4480], ["besok", 4880, 5300], ["ia", 5300, 5540], ["pulang", 5540, 5940], ["kampung", 5940, 6380], ["menemui", 6380, 6980], ["ibunya.", 6980, 7500]], 0), yellow: ["CUTI", "LIMA", "HARI", "ARIF", "DISETUJUI"] },
-    { start: 204, end: 391, words: timedCaptions([["Arif,", 8500, 9260], ["staf", 9400, 9720], ["gudang", 9720, 10100], ["di", 10100, 10280], ["Sidoarjo,", 10280, 10760], ["tiga", 11260, 11500], ["tahun", 11500, 11800], ["bekerja", 11800, 12180], ["di", 12180, 12300], ["sini,", 12300, 12500], ["belum", 12960, 13160], ["pernah", 13160, 13460], ["sekalipun", 13460, 14080], ["mengambil", 14080, 14520], ["cuti.", 14520, 14800]], 8500), yellow: ["GUDANG", "SIDOARJO", "TIGA", "CUTI"] },
-    { start: 391, end: 533, words: timedCaptions([["Hari", 16280, 16700], ["kedua", 16700, 16980], ["cuti,", 16980, 17300], ["telepon", 17620, 17880], ["berdering.", 17880, 18340], ["Stok", 18860, 19080], ["opname", 19080, 19360], ["memendesak,", 19360, 19880], ["masuk", 20100, 20340], ["kerja", 20340, 20680], ["sekarang.", 20680, 21040]], 16280), yellow: ["CUTI", "TELEPON", "STOK", "OPNAME"] },
-    { start: 533, end: 604, words: timedCaptions([["Dua", 22220, 22500], ["hari", 22500, 22800], ["Arif", 22800, 23120], ["kembali", 23120, 23520], ["ke", 23520, 23700], ["gudang.", 23700, 24080]], 22220), yellow: ["DUA", "HARI", "GUDANG"] },
-    { start: 604, end: 826, words: timedCaptions([["Sepulang", 25160, 25920], ["cuti,", 25920, 26240], ["HRD", 26480, 26960], ["berkata,", 26960, 27340], ["jatah", 27780, 28160], ["lima", 28160, 28380], ["harimu", 28380, 28760], ["sudah", 28760, 28980], ["habis", 28980, 29320], ["terpakai.", 29320, 29840], ["Arif", 30760, 31340], ["menatap", 31340, 31760], ["surat", 31760, 32040], ["cutinya,", 32040, 32420], ["tak", 32720, 32820], ["percaya.", 32820, 33200]], 25160), yellow: ["HRD", "HABIS", "TERPAKAI", "SURAT", "CUTI"] },
-    { start: 826, end: 969, words: timedCaptions([["Undang-Undang", 34420, 35360], ["Nomor", 35360, 35660], ["27", 35660, 36100], ["Tahun", 36100, 36640], ["2026", 36640, 37560], ["Pasal", 37560, 38140], ["118", 38140, 38920], ["ayat", 38920, 39300], ["lima.", 39300, 39680]], 34420), yellow: ["UNDANG-UNDANG", "PASAL", "118"] },
-    { start: 969, end: 1113, words: timedCaptions([["Cuti", 40380, 40780], ["tahunan", 40780, 41260], ["paling", 41260, 41480], ["sedikit", 41480, 41820], ["dua", 41820, 41950], ["belas", 41950, 42080], ["hari", 42080, 42480], ["kerja.", 42480, 42840], ["Hak", 43360, 43580], ["pekerja", 43580, 44040], ["untuk", 44040, 44400], ["tidak", 44400, 44740], ["bekerja.", 44740, 45240]], 40380), yellow: ["CUTI", "DUA", "BELAS", "HAK"] },
-    { start: 1113, end: 1364, words: timedCaptions([["Arif", 46380, 47140], ["kembali", 47140, 47500], ["keesokan", 47500, 48020], ["harinya,", 48020, 48360], ["dengan", 48720, 48880], ["salinan", 48880, 49300], ["pasal", 49300, 49660], ["di", 49660, 49780], ["tangannya.", 49780, 50100], ["Dua", 51260, 51980], ["harinya", 51980, 52320], ["dijadwal", 52320, 52740], ["ulang,", 52740, 53040], ["karena", 53280, 53620], ["setiap", 53620, 54040], ["pekerja", 54040, 54420], ["punya", 54420, 54840], ["cerita.", 54840, 55260]], 46380), yellow: ["SALINAN", "PASAL", "DIJADWAL", "CERITA"] },
+    { start: 0, end: 204, words: timedCaptions([["Cuti", 0, 594], ["lima", 594, 1069], ["hari", 1069, 1347], ["Arif", 1347, 1842], ["sudah", 1842, 2079], ["disetujui.", 2079, 2752], ["tas", 3366, 3703], ["sudah", 3703, 3980], ["dikemas,", 3980, 4594], ["besok", 5069, 5465], ["ia", 5465, 5683], ["pulang", 5683, 6020], ["kampung", 6020, 6495], ["menemui", 6495, 6970], ["ibunya.", 6970, 7426]], 0), yellow: ["CUTI", "LIMA", "HARI", "ARIF", "DISETUJUI"] },
+    { start: 204, end: 394, words: timedCaptions([["Arif,", 8485, 9079], ["staf", 9416, 9752], ["gudang", 9752, 10149], ["di", 10149, 10327], ["Semarang.", 10327, 10861], ["Tiga", 11436, 11733], ["tahun", 11733, 12109], ["bekerja", 12109, 12604], ["di", 12604, 12723], ["sini,", 12723, 13040], ["belum", 13535, 13792], ["pernah", 13792, 14089], ["sekalipun", 14089, 14723], ["mengambil", 14723, 15158], ["cuti.", 15158, 15495]], 8485), yellow: ["GUDANG", "SEMARANG", "TIGA", "CUTI"] },
+    { start: 394, end: 551, words: timedCaptions([["Hari", 16426, 16743], ["kedua", 16743, 17079], ["cuti,", 17079, 17535], ["telepon", 17970, 18228], ["berdering.", 18228, 18802], ["Stok", 19416, 19733], ["opname", 19733, 20149], ["mendesak,", 20149, 20743], ["masuk", 21099, 21416], ["kerja", 21416, 21792], ["sekarang.", 21792, 22168]], 16426), yellow: ["CUTI", "TELEPON", "STOK", "OPNAME"] },
+    { start: 551, end: 621, words: timedCaptions([["Dua", 22960, 23178], ["hari,", 23178, 23574], ["Arif", 23792, 24050], ["kembali", 24050, 24446], ["ke", 24446, 24604], ["gudang.", 24604, 25000]], 22960), yellow: ["DUA", "HARI", "GUDANG"] },
+    { start: 621, end: 852, words: timedCaptions([["Sepulang", 25871, 26307], ["cuti,", 26307, 26703], ["HRD", 27119, 27554], ["berkata,", 27554, 28030], ["jatah", 28030, 29297], ["lima", 29297, 29594], ["harimu", 29594, 30089], ["sudah", 30089, 30287], ["habis", 30287, 30624], ["terpakai.", 30624, 31238], ["Arif", 31812, 32267], ["menatap", 32267, 32762], ["surat", 32762, 33020], ["cutinya,", 33020, 33475], ["tak", 33891, 34129], ["percaya.", 34129, 34584]], 25871), yellow: ["HRD", "HABIS", "TERPAKAI", "SURAT", "CUTI"] },
+    { start: 852, end: 1013, words: timedCaptions([["Undang-Undang", 35495, 36188], ["Nomor", 36188, 36505], ["27", 36505, 37119], ["Tahun", 37119, 37713], ["2026,", 37713, 38921], ["Pasal", 39455, 39812], ["118", 39812, 40822], ["ayat", 40822, 41238], ["5.", 41238, 41515]], 35495), yellow: ["UNDANG-UNDANG", "PASAL", "118"] },
+    { start: 1013, end: 1147, words: timedCaptions([["Cuti", 42228, 42564], ["tahunan", 42564, 43059], ["paling", 43059, 43297], ["sedikit", 43297, 43792], ["dua", 43792, 43930], ["belas", 43930, 44069], ["hari", 44069, 44465], ["kerja,", 44465, 44921], ["hak", 45376, 45574], ["pekerja", 45574, 46089], ["untuk", 46089, 46347], ["tidak", 46347, 46663], ["bekerja.", 46663, 47178]], 42228), yellow: ["CUTI", "DUA", "BELAS", "HAK"] },
+    { start: 1147, end: 1364, words: timedCaptions([["Arif", 47812, 48208], ["kembali", 48208, 48624], ["keesokan", 48624, 49158], ["harinya,", 49158, 49515], ["dengan", 49990, 50248], ["salinan", 50248, 50762], ["pasal", 50762, 51158], ["di", 51158, 51297], ["tangannya.", 51297, 51693], ["Dua", 52327, 52604], ["harinya", 52604, 53020], ["dijadwal", 53020, 53594], ["ulang,", 53594, 53950], ["karena", 54465, 54881], ["setiap", 54881, 55455], ["bekerja", 55455, 55871], ["punya", 55871, 56248], ["cerita.", 56248, 56683]], 47812), yellow: ["SALINAN", "PASAL", "DIJADWAL", "CERITA"] },
   ];
   return (
     <AbsoluteFill style={{ background: "black" }}>
