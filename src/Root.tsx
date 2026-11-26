@@ -8,6 +8,7 @@ import { EP15, EP15_TOTAL } from "./stories/cerita-pekerja/EP15";
 import { EP16, EP16_TOTAL } from "./stories/cerita-pekerja/EP16";
 import { EP17, EP17_TOTAL } from "./stories/cerita-pekerja/EP17";
 import { EP18, EP18_TOTAL } from "./stories/cerita-pekerja/EP18";
+import { EP19, EP19_TOTAL } from "./stories/cerita-pekerja/EP19";
 import { KitDemo, KIT_TOTAL } from "./stories/cerita-pekerja/KitDemo";
 
 /** Every episode is a 1080x1920 (9:16) composition. Samples are 30 fps; full episodes are 24 fps (EP15 is 12 fps). */
@@ -24,6 +25,7 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="EP16" component={EP16} durationInFrames={EP16_TOTAL} fps={24} width={1080} height={1920} />
     <Composition id="EP17" component={EP17} durationInFrames={EP17_TOTAL} fps={24} width={1080} height={1920} />
     <Composition id="EP18" component={EP18} durationInFrames={EP18_TOTAL} fps={24} width={1080} height={1920} />
+    <Composition id="EP19" component={EP19} durationInFrames={EP19_TOTAL} fps={24} width={1080} height={1920} />
     <Composition id="KitDemo" component={KitDemo} durationInFrames={KIT_TOTAL} {...SHORT} />
   </>
 );
