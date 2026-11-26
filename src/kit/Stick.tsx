@@ -23,7 +23,7 @@ export interface Look {
   band?: boolean; // red forearm band (YOU)
   headlamp?: boolean;
   bun?: boolean;
-  helmet?: boolean;
+  helmet?: boolean | string; // true = kit olive; string = warna helm (mis. "#e2a748" kuning)
   cap?: string; // peaked uniform cap color
   hair?: string; // hair/bun color (default brown)
   glasses?: boolean;
@@ -156,11 +156,13 @@ export interface Reach {
  * - resigned: alis naik TIPIS ke dalam + cemberut tipis (pasrah, bukan marah)
  * - humiliated: alis ujung dalam TURUN sedang + mulut datar kecil (menunduk malu;
  *   kepala menunduk dipasok lewat pose.headTilt, bukan wajah)
+ * - indignant: alis miring ke dalam CURAM + mulut garis tegas (protes;
+ *   dagu terangkat dipasok lewat pose.headTilt, bukan wajah)
  * - hopeful: alis busur naik lembut + senyum kecil
  * - tired: mulut datar saja (biasanya dipasangkan dengan eyesClosed)
  * - relieved: senyum (tanpa alis)
  */
-export type Mood = "worried" | "determined" | "scared" | "tired" | "relieved" | "sad" | "resigned" | "hopeful" | "shocked" | "angry" | "humiliated";
+export type Mood = "worried" | "determined" | "scared" | "tired" | "relieved" | "sad" | "resigned" | "hopeful" | "shocked" | "angry" | "humiliated" | "indignant";
 
 interface StickProps {
   x: number; // feet center x (px)
@@ -280,7 +282,7 @@ export const Stick: React.FC<StickProps> = ({
       ) : null}
       {look.hearingAid ? <circle cx={head[0] - r * 0.55 * f} cy={head[1] + r * 0.12} r={r * 0.13} fill="#d9b38c" stroke={C.ink} strokeWidth={3} /> : null}
       {look.helmet ? (
-        <path d={`M${head[0] - r * 1.08},${head[1] - r * 0.08} A${r * 1.08},${r * 1.08} 0 0 1 ${head[0] + r * 1.08},${head[1] - r * 0.08}Z`} fill={C.oliveDark} stroke={C.ink} strokeWidth={INK} />
+        <path d={`M${head[0] - r * 1.08},${head[1] - r * 0.08} A${r * 1.08},${r * 1.08} 0 0 1 ${head[0] + r * 1.08},${head[1] - r * 0.08}Z`} fill={typeof look.helmet === "string" ? look.helmet : C.oliveDark} stroke={C.ink} strokeWidth={INK} />
       ) : null}
       {eyesClosed ? (
         [-1, 1].map((s) => (
@@ -334,6 +336,12 @@ export const Stick: React.FC<StickProps> = ({
               <path d={`M${head[0] - r * 0.42},${head[1] - r * 0.4} L${head[0] - r * 0.1},${head[1] - r * 0.3}`} />
               <path d={`M${head[0] + r * 0.1},${head[1] - r * 0.3} L${head[0] + r * 0.42},${head[1] - r * 0.4}`} />
             </>
+          ) : mood === "indignant" ? (
+            <>
+              {/* alis miring ke dalam curam (protes) + mulut garis tegas */}
+              <path d={`M${head[0] - r * 0.44},${head[1] - r * 0.48} L${head[0] - r * 0.08},${head[1] - r * 0.28}`} />
+              <path d={`M${head[0] + r * 0.08},${head[1] - r * 0.28} L${head[0] + r * 0.44},${head[1] - r * 0.48}`} />
+            </>
           ) : mood === "scared" ? (
             <>
               <path d={`M${head[0] - r * 0.42},${head[1] - r * 0.32} Q${head[0] - r * 0.26},${head[1] - r * 0.52} ${head[0] - r * 0.1},${head[1] - r * 0.34}`} />
@@ -355,6 +363,7 @@ export const Stick: React.FC<StickProps> = ({
             : mood === "sad" ? <path d={`M${head[0] - r * 0.19},${head[1] + r * 0.5} Q${head[0]},${head[1] + r * 0.3} ${head[0] + r * 0.19},${head[1] + r * 0.5}`} />
             : mood === "resigned" ? <path d={`M${head[0] - r * 0.19},${head[1] + r * 0.44} Q${head[0]},${head[1] + r * 0.38} ${head[0] + r * 0.19},${head[1] + r * 0.44}`} />
             : mood === "humiliated" ? <path d={`M${head[0] - r * 0.13},${head[1] + r * 0.44} L${head[0] + r * 0.13},${head[1] + r * 0.44}`} />
+            : mood === "indignant" ? <path d={`M${head[0] - r * 0.21},${head[1] + r * 0.45} L${head[0] + r * 0.21},${head[1] + r * 0.45}`} />
             : mood === "determined" ? <path d={`M${head[0] - r * 0.19},${head[1] + r * 0.44} L${head[0] + r * 0.19},${head[1] + r * 0.44}`} />
             : mood === "angry" ? <path d={`M${head[0] - r * 0.19},${head[1] + r * 0.46} L${head[0] + r * 0.19},${head[1] + r * 0.46}`} />
             : mood === "scared" ? <ellipse cx={head[0]} cy={head[1] + r * 0.46} rx={r * 0.13} ry={r * 0.17} fill={C.ink} stroke="none" />
