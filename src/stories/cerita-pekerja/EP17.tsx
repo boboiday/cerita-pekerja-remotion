@@ -439,7 +439,7 @@ const Shot07: React.FC = () => {
           boxShadow: "10px 12px 0 rgba(0,0,0,0.45)", padding: "28px 32px 36px", transform: `scale(${cardIn})`, opacity: cardIn,
         }}
       >
-        <div style={{ fontFamily: FONT.mono, fontWeight: 800, fontSize: 38, letterSpacing: 2, color: C.alertRed }}>PASAL 149 AYAT 2 HURUF A</div>
+        <div style={{ fontFamily: FONT.mono, fontWeight: 800, fontSize: 34, letterSpacing: 2, color: C.alertRed }}>PASAL 149 AYAT 2 HURUF A</div>
         <div style={{ fontFamily: FONT.mono, fontWeight: 700, fontSize: 25, letterSpacing: 2, color: "#6b675f", marginTop: 6 }}>UU 27/2026 · SAKIT &amp; UPAH</div>
         <div style={{ height: 4, background: C.ink, marginTop: 18, opacity: 0.85 }} />
         <LawItem at={0}>
