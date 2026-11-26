@@ -503,7 +503,8 @@ const Shot06: React.FC<{ dur: number }> = ({ dur }) => {
           holdF={frame >= 18 ? <PasalFolder /> : undefined}
         />
       </Canvas>
-      <KineticText words={["KESALAHAN", "ATAU", "KELALAIANNYA", "SENDIRI"]} at={18} stagger={2} top={420} fontSize={96} accent={["SENDIRI"]} />
+      <KineticText words={["KESALAHAN", "ATAU"]} at={18} stagger={2} top={400} fontSize={76} />
+      <KineticText words={["KELALAIANNYA", "SENDIRI"]} at={22} stagger={2} top={510} fontSize={76} accent={["SENDIRI"]} />
     </Camera>
   );
 };
