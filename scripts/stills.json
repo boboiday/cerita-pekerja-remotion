@@ -133,5 +133,50 @@
    }
   ],
   "title": "EP21 — Kompensasi Resign Tidak Dibayar"
+ },
+ "EP22": {
+  "cover": {
+   "frame": 200,
+   "hook": [
+    "3 TAHUN",
+    "TANPA BPJS"
+   ],
+   "pill": "PASAL 155 AYAT 2"
+  },
+  "shots": [
+   {
+    "frame": 120,
+    "label": "S01 · Kuitansi klinik Rp875.000"
+   },
+   {
+    "frame": 380,
+    "label": "S02 · Jalan ke toko grosir"
+   },
+   {
+    "frame": 640,
+    "label": "S03 · 3 tahun di gudang"
+   },
+   {
+    "frame": 820,
+    "label": "S04 · Klinik: bayar sendiri"
+   },
+   {
+    "frame": 1030,
+    "label": "S05 · Laras juga sama"
+   },
+   {
+    "frame": 1192,
+    "label": "S06 · Salinan Pasal 155"
+   },
+   {
+    "frame": 1400,
+    "label": "S07 · Kartu hukum Pasal 155"
+   },
+   {
+    "frame": 1660,
+    "label": "S08 · End card"
+   }
+  ],
+  "title": "EP22 — Tidak Didaftarkan BPJS"
  }
 }
