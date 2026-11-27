@@ -400,7 +400,6 @@ const Shot07: React.FC = () => {
         </LawItem>
         <LawItem at={90}>
           Mira: gaji Rp4.500.000 → uang pisah minimal Rp4.500.000 + sisa cuti 5 hari diganti uang
-          <span style={{ fontFamily: FONT.title, fontSize: 64, color: "#c0241c", lineHeight: 1 }}>Rp4.500.000</span>
         </LawItem>
         <LawItem at={120}>
           Pesangon/UPMK TIDAK berlaku untuk resign — yang dibayar hanya UPH + uang pisah
