@@ -147,10 +147,6 @@ const Shot01: React.FC<{ dur: number }> = ({ dur }) => {
         <g transform="translate(540,1010)">
           <ChatPhone />
         </g>
-        {/* kartu nama di meja dekat */}
-        <g transform="translate(480,1130)">
-          <NameCard />
-        </g>
         <rect x={0} y={1400} width={1080} height={520} fill="#7a7568" />
         <rect x={0} y={1400} width={1080} height={14} fill="#5c564a" />
         <Stick x={320} floor={FLOOR} scale={0.95} look={NADIA} pose={{ ...STAND, armF: [0.5, 0.5], armB: [0.2, 0.1], lean: 0.02, headTilt: 0.06 }} mood={frame < 100 ? "worried" : "shocked"} lookAt={0.5} holdF={showPhone ? <ChatPhone mini /> : undefined} />
