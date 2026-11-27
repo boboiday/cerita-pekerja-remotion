@@ -362,15 +362,15 @@ const Shot06: React.FC<{ dur: number }> = ({ dur }) => {
 };
 
 /** Item kartu hukum: centang muncul progresif mengikuti narasi. */
-const LawItem: React.FC<{ at: number; children: React.ReactNode; big?: React.ReactNode }> = ({ at, children, big }) => {
+  const LawItem: React.FC<{ at: number; children: React.ReactNode; big?: React.ReactNode }> = ({ at, children, big }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   if (frame < at) return null;
   const s = spring({ frame: frame - at, fps, config: { stiffness: 300, damping: 14 } });
   return (
-    <div style={{ display: "flex", alignItems: "flex-start", gap: 18, marginTop: 24, transform: `scale(${interpolate(s, [0, 1], [0.9, 1])})`, opacity: s }}>
+    <div style={{ display: "flex", alignItems: "flex-start", gap: 18, marginTop: 18, transform: `scale(${interpolate(s, [0, 1], [0.9, 1])})`, opacity: s }}>
       <div style={{ flexShrink: 0, width: 50, height: 50, borderRadius: "50%", background: "#c0241c", color: "white", fontFamily: FONT.title, fontSize: 34, display: "flex", alignItems: "center", justifyContent: "center", marginTop: 2 }}>✓</div>
-      <div style={{ fontFamily: FONT.mono, fontWeight: 700, fontSize: 30, lineHeight: 1.3, color: C.ink }}>
+      <div style={{ fontFamily: FONT.mono, fontWeight: 700, fontSize: 28, lineHeight: 1.25, color: C.ink }}>
         {children}
         {big}
       </div>
@@ -404,31 +404,31 @@ const Shot07: React.FC = () => {
       {/* kartu hukum krem */}
       <div
         style={{
-          position: "absolute", left: 400, top: 240, width: 620, background: C.paper, border: `5px solid ${C.ink}`,
-          boxShadow: "10px 12px 0 rgba(0,0,0,0.45)", padding: "28px 32px 36px", transform: `scale(${cardIn})`, opacity: cardIn,
+          position: "absolute", left: 400, top: 60, width: 620, background: C.paper, border: `5px solid ${C.ink}`,
+          boxShadow: "10px 12px 0 rgba(0,0,0,0.45)", padding: "20px 32px 24px", transform: `scale(${cardIn})`, opacity: cardIn,
         }}
       >
-        <div style={{ fontFamily: FONT.mono, fontWeight: 800, fontSize: 34, letterSpacing: 2, color: C.alertRed }}>PASAL 155 AYAT 2</div>
-        <div style={{ fontFamily: FONT.mono, fontWeight: 700, fontSize: 25, letterSpacing: 2, color: "#6b675f", marginTop: 6 }}>UU 27/2026 · JAMINAN SOSIAL</div>
-        <div style={{ height: 4, background: C.ink, marginTop: 18, opacity: 0.85 }} />
+        <div style={{ fontFamily: FONT.mono, fontWeight: 800, fontSize: 30, letterSpacing: 2, color: C.alertRed }}>PASAL 155 AYAT 2</div>
+        <div style={{ fontFamily: FONT.mono, fontWeight: 700, fontSize: 22, letterSpacing: 2, color: "#6b675f", marginTop: 6 }}>UU 27/2026 · JAMINAN SOSIAL</div>
+        <div style={{ height: 4, background: C.ink, marginTop: 12, opacity: 0.85 }} />
         <LawItem at={0}>
           Setiap pekerja + keluarga berhak atas jaminan sosial
-          <div style={{ fontSize: 24, color: "#6b675f", marginTop: 4 }}>(Pasal 155 ayat 1)</div>
+          <div style={{ fontSize: 22, color: "#6b675f", marginTop: 4 }}>(Pasal 155 ayat 1)</div>
         </LawItem>
         <LawItem at={30}>
           Pemberi kerja WAJIB mengikutsertakan pekerja — 6 program: JKN, JKK, JKM, JHT, JP, JKP
-          <div style={{ fontSize: 24, color: "#6b675f", marginTop: 4 }}>(Pasal 155 ayat 2–3)</div>
+          <div style={{ fontSize: 22, color: "#6b675f", marginTop: 4 }}>(Pasal 155 ayat 2–3)</div>
         </LawItem>
         <LawItem at={60}>
           Jaminan sosial wajib sejak masa percobaan — &quot;nanti kalau sudah tetap&quot; bukan alasan
-          <div style={{ fontSize: 24, color: "#6b675f", marginTop: 4 }}>(Pasal 92 ayat 2 huruf b)</div>
+          <div style={{ fontSize: 22, color: "#6b675f", marginTop: 4 }}>(Pasal 92 ayat 2 huruf b)</div>
         </LawItem>
         <LawItem at={90}>
-          Rizal: 3 tahun tidak didaftarkan → berobat Rp875.000 bayar sendiri; Laras Rp650.000. Kalau terdaftar, JKN yang menanggung
+          Rizal: 3 tahun tidak didaftarkan → Rp875.000 bayar sendiri; Laras Rp650.000. Kalau terdaftar, JKN yang menanggung
         </LawItem>
         <LawItem at={120}>
-          Sanksi: penjara paling lama 4 tahun dan/atau denda kategori IV bila sanksi administratif tidak dipatuhi; usaha mikro/kecil: peringatan tertulis dan/atau denda administratif
-          <div style={{ fontSize: 24, color: "#6b675f", marginTop: 4 }}>(Pasal 290 ayat 1+3; Pasal 156 ayat 1)</div>
+          Sanksi: penjara paling lama 4 tahun dan/atau denda kategori IV; usaha mikro/kecil: peringatan tertulis/denda administratif
+          <div style={{ fontSize: 22, color: "#6b675f", marginTop: 4 }}>(Pasal 290 ayat 1+3; Pasal 156 ayat 1)</div>
         </LawItem>
       </div>
     </AbsoluteFill>
