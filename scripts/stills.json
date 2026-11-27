@@ -178,5 +178,38 @@
    }
   ],
   "title": "EP22 — Tidak Didaftarkan BPJS"
+ },
+ "CharacterModels": {
+  "cover": {
+   "frame": 30,
+   "hook": [
+    "5 KARAKTER",
+    "CERITA PEKERJA"
+   ],
+   "pill": "DRAFT PREVIEW"
+  },
+  "shots": [
+   {
+    "frame": 30,
+    "label": "Dedi · Operator pabrik, Bekasi"
+   },
+   {
+    "frame": 90,
+    "label": "Wulan · Kasir minimarket, Yogyakarta"
+   },
+   {
+    "frame": 150,
+    "label": "Bambang · Kuli bangunan, Jakarta"
+   },
+   {
+    "frame": 210,
+    "label": "Putri · Staf admin, Bandung"
+   },
+   {
+    "frame": 270,
+    "label": "Yanto · Driver ojol, Surabaya"
+   }
+  ],
+  "title": "CharacterModels — 5 Karakter Cerita Pekerja (DRAFT)"
  }
 }
