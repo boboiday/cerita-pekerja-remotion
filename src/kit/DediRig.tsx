@@ -1,32 +1,28 @@
 import React from "react";
 
 /**
- * DediRig v3 — rig vektor DETAIL Dedi Santoso, DITRACING dari sheet modular
- * (dedi-modular-breakdown.jpg, 28 Nov 2026). Ronde 1: perbaikan SEMUA
- * mismatch v2.4 (MISMATCH-v2.4.md, skor 53% -> target >=95%).
+ * DediRig v4 — ronde 2 (MISMATCH-v3.md, skor 61% -> target >=95%).
  *
- * Perubahan vs v2.4:
- *  - Rambut DIGAMBAR ULANG: messy tersapu, strand panjang jatuh melewati
- *    telinga di kedua sisi, fringe zigzag TIDAK beraturan (titik & lembah
- *    bervariasi), coklat medium #6b4226 + highlight strand coklat muda.
- *    Tidak ada lagi mahkota segitiga simetris; tidak ada garis putih di
- *    puncak (rambut menutup penuh sampai y -606, di atas puncak kepala).
- *  - Kepala OVAL TEGAK: rx 80 / ry 92 (rasio 1.15:1), bukan bulat lebar.
- *  - Mata oval vertikal TINGGI (rx 8.5 / ry 19), hitam solid TANPA highlight.
- *  - Alis MIRING (garis lurus) di SEMUA ekspresi, termasuk neutral.
- *  - Happy = mata TERBUKA + alis miring + mulut terbuka; blush DIHAPUS.
- *  - Rompi DIPERSempit: lebar 116 (~72% lebar kepala 160), taper ringan,
- *    dasi hitam PANJANG sampai tengah dada, lengan pendek putih jelas,
- *    kantong flap halus.
- *  - Jempol DIGAMBAR ULANG: kepalan + 3 alur jari + jempol TEBAL tegak di
- *    sisi kepalan, bersih dari lengan bawah (tpl-thumb.png).
- *  - Sepatu sneaker CHUNKY: toe bulat, sol putih TEBAL membungkus, 3 garis
- *    tali, tongue + kerah ankle (tpl-sneaker.png).
- *  - Proporsi: total ~606; kaki dipanjangkan (pinggul -236 -> tanah 0 =
- *    236), torso dipersempit; figur langsing, bukan chibi gemuk.
- *  - Outline DITIPISKAN di mana-mana (wajah 6->4, rompi 5->3.5, dst).
- *  - Helm: dome bulat PENUH (bukan setengah mangkuk miring).
- *
+ * Perubahan vs v3:
+ *  - FRAMING: demo scale 1.35 -> 1.15 (0.85x) supaya kepala+rambut utuh.
+ *  - Alis DIGAMBAR ULANG: batang TEBAL berisi (poligon 36x8, bukan garis
+ *    4px), miring ke dalam, di y -500..-492 — DI BAWAH fringe (ujung
+ *    fringe terdalam -508) dan DI ATAS mata (puncak -477).
+ *  - Rambut DIGAMBAR ULANG 3 lapis: mahkota lebar berspike lebar, 2
+ *    helaian samping LEBAR (26-32) berujung runcing melewati telinga,
+ *    fringe tersapu tak beraturan (ujung -508..-530). Telinga digambar
+ *    SETELAH rambut supaya mengintip di bawah helaian, seperti sheet.
+ *  - Dasi DIPINDAH ke ATAS rompi (digambar setelah rompi+stripes):
+ *    hitam solid dari kerah sampai tengah dada (ujung -300).
+ *  - Jempol DIGAMBAR ULANG: kepalan LEBAR (30) + jempol TEBAL (15)
+ *    miring -14° di sisi kepalan, alur jari kontras (fill kepalan
+ *    #2e2e33, alur #101010 — sebelumnya alur INK di atas fill
+ *    nyaris-hitam sehingga tak terlihat).
+ *  - Lengan baju putih DIKECILKAN: menempel bahu (keluar 14, bukan 26).
+ *  - Sendi bahu r 9->6, siku r 7->5, pinggul r 9->7, lutut r 7->5.
+ *  - Sepatu: toe dipersempit (36->30) supaya dua sepatu tak menyatu.
+ *  - Outline wajah 4->3.5.
+ */
  * Sendi (pivot transform): bahu, siku, pinggul, lutut. Prop mood ganti
  * bagian wajah; prop hand ganti pose tangan; prop held ganti barang di tangan.
  *
@@ -78,56 +74,37 @@ const TONGUE = "#e86a6a";
 
 /* ---------------- wajah ---------------- */
 
-/** Alis MIRING (garis lurus) di SEMUA ekspresi — sesuai sheet: ujung dalam
- *  lebih rendah (neutral/smile/determined/angry/surprised), kecuali
- *  worried yang ujung dalamnya terangkat. */
+/** Alis BATANG TEBAL berisi (poligon 36x8) — sesuai sheet Normal/Happy:
+ *  batang hitam tebal miring ke dalam (ujung dalam lebih rendah), BUKAN
+ *  garis tipis. Posisi y -500..-492: di bawah fringe (ujung terdalam
+ *  -508) dan di atas mata (puncak -477). Digambar SETELAH rambut supaya
+ *  tidak tertutup. */
+const browBar = (mirror: boolean, y0: number, drop: number) => {
+  const s = mirror ? -1 : 1;
+  const pts: [number, number][] = [
+    [-52, y0],
+    [-16, y0 + drop],
+    [-16, y0 + drop + 8],
+    [-52, y0 + 8],
+  ];
+  return <polygon points={pts.map(([x, y]) => `${s * x},${y}`).join(" ")} fill={INK} />;
+};
+
 const Brows: React.FC<{ mood: DediMood }> = ({ mood }) => {
-  const s = { stroke: INK, strokeWidth: 4, strokeLinecap: "round" as const, fill: "none" };
-  if (mood === "smile") {
-    return (
-      <g {...s}>
-        <path d="M -48,-494 L -14,-487" />
-        <path d="M 14,-487 L 48,-494" />
-      </g>
-    );
-  }
-  if (mood === "determined") {
-    return (
-      <g {...s}>
-        <path d="M -50,-494 L -14,-480" />
-        <path d="M 14,-480 L 50,-494" />
-      </g>
-    );
-  }
-  if (mood === "angry") {
-    return (
-      <g {...s}>
-        <path d="M -50,-486 L -14,-476" />
-        <path d="M 14,-476 L 50,-486" />
-      </g>
-    );
-  }
-  if (mood === "worried") {
-    return (
-      <g {...s}>
-        <path d="M -48,-482 L -14,-492" />
-        <path d="M 14,-492 L 48,-482" />
-      </g>
-    );
-  }
-  if (mood === "surprised") {
-    return (
-      <g {...s}>
-        <path d="M -48,-500 L -14,-494" />
-        <path d="M 14,-494 L 48,-500" />
-      </g>
-    );
-  }
-  // neutral: miring ke dalam (ujung dalam lebih rendah) — seperti sheet Normal
+  // [y0, drop] per mood — drop>0: ujung dalam lebih rendah
+  const cfg: Record<DediMood, [number, number]> = {
+    smile: [-500, 7],
+    determined: [-502, 10],
+    angry: [-500, 11],
+    worried: [-498, -8],
+    surprised: [-504, 4],
+    neutral: [-500, 7],
+  };
+  const [y0, drop] = cfg[mood];
   return (
-    <g {...s}>
-      <path d="M -48,-490 L -14,-482" />
-      <path d="M 14,-482 L 48,-490" />
+    <g>
+      {browBar(false, y0, drop)}
+      {browBar(true, y0, drop)}
     </g>
   );
 };
@@ -197,34 +174,47 @@ const Mouth: React.FC<{ mood: DediMood }> = ({ mood }) => {
   );
 };
 
-/** Kepala lengkap: telinga + wajah oval tegak + rambut messy tersapu.
- *  Pusat kepala (0,-478). Rambut menutup puncak sampai y -606. */
+/** Kepala lengkap: wajah oval tegak + rambut 3 lapis + telinga + wajah.
+ *  Pusat kepala (0,-478). Rambut menutup puncak sampai y -610.
+ *  Urutan: wajah -> mahkota -> helaian samping -> fringe -> highlight
+ *  -> TELINGA (mengintip di bawah helaian, seperti sheet) -> alis/mata/mulut. */
 const Head: React.FC<{ mood: DediMood }> = ({ mood }) => (
   <g>
-    {/* telinga */}
-    <ellipse cx={-80} cy={-462} rx={8} ry={12} fill={SKIN} stroke={INK} strokeWidth={3} />
-    <ellipse cx={80} cy={-462} rx={8} ry={12} fill={SKIN} stroke={INK} strokeWidth={3} />
     {/* wajah: oval tegak 160 x 184 (rasio 1.15:1) */}
-    <ellipse cx={0} cy={-478} rx={80} ry={92} fill={SKIN} stroke={INK} strokeWidth={4} />
-    {/* rambut messy tersapu — ditracing dari tpl-hair.png / tpl-front.png:
-        massa menyapu ke samping, spike luar tidak beraturan, strand panjang
-        jatuh melewati telinga (ujung -400/-408), fringe zigzag bervariasi
-        (titik -496..-500, lembah -516..-520). */}
+    <ellipse cx={0} cy={-478} rx={80} ry={92} fill={SKIN} stroke={INK} strokeWidth={3.5} />
+    {/* rambut — mahkota: dome lebar dengan spike ATAS beralas lebar
+        (bukan segitiga tipis); alas bawah melengkung di y ~-532 */}
     <path
-      d="M -88,-400 L -102,-434 L -90,-442 L -112,-466 L -88,-468 L -108,-498 L -82,-492 L -90,-524 L -66,-508 L -68,-544 L -44,-524 L -40,-604 L -12,-572 L 0,-606 L 22,-576 L 46,-596 L 60,-574 L 78,-594 L 88,-566 L 104,-574 L 96,-542 L 108,-522 L 96,-508 L 104,-482 L 92,-472 L 100,-448 L 86,-440 L 90,-408 L 78,-434 L 68,-458 L 60,-502 L 48,-516 L 34,-492 L 22,-518 L 8,-504 L -6,-520 L -20,-494 L -34,-518 L -48,-503 L -62,-516 L -74,-494 L -84,-448 Z"
+      d="M -92,-486 L -98,-528 L -86,-540 L -98,-566 L -72,-554 L -66,-594 L -40,-572 L -30,-606 L -8,-580 L 2,-610 L 22,-582 L 42,-602 L 54,-576 L 76,-594 L 84,-568 L 100,-574 L 92,-542 L 98,-514 Q 0,-550 -92,-514 L -92,-486 Z"
       fill={HAIR}
       stroke={INK}
-      strokeWidth={3.5}
+      strokeWidth={3}
       strokeLinejoin="round"
     />
-    {/* highlight strand coklat muda mengikuti arah sapuan — dijaga tetap
-        di dalam massa rambut (di atas garis fringe, y <= -528) supaya
-        tidak tercetak di atas kulit wajah */}
+    {/* helaian samping LEBAR berlapis (lebar 26-32, ujung runcing),
+        mengalir ke bawah melewati telinga sampai y -396/-410 */}
+    <path d="M -102,-522 L -74,-522 L -70,-446 L -83,-396 L -96,-446 L -106,-498 Z" fill={HAIR} stroke={INK} strokeWidth={3} strokeLinejoin="round" />
+    <path d="M -84,-512 L -60,-512 L -58,-442 L -71,-410 L -83,-446 Z" fill={HAIR} stroke={INK} strokeWidth={3} strokeLinejoin="round" />
+    <path d="M 74,-522 L 102,-522 L 106,-498 L 96,-446 L 83,-396 L 70,-446 Z" fill={HAIR} stroke={INK} strokeWidth={3} strokeLinejoin="round" />
+    <path d="M 60,-512 L 84,-512 L 83,-446 L 71,-410 L 58,-442 Z" fill={HAIR} stroke={INK} strokeWidth={3} strokeLinejoin="round" />
+    {/* fringe tersapu ke satu sisi, zigzag TIDAK beraturan:
+        ujung -508..-530 (terdalam -508, di atas alis -500) */}
+    <path
+      d="M -88,-538 L -88,-518 L -72,-530 L -58,-512 L -42,-532 L -26,-510 L -8,-530 L 8,-508 L 26,-528 L 42,-510 L 58,-526 L 72,-512 L 88,-524 L 88,-538 Q 0,-554 -88,-538 Z"
+      fill={HAIR}
+      stroke={INK}
+      strokeWidth={3}
+      strokeLinejoin="round"
+    />
+    {/* highlight strand coklat muda — di dalam mahkota (y <= -552) */}
     <g stroke={HAIR_HI} strokeWidth={3} strokeLinecap="round" fill="none" opacity={0.75}>
-      <path d="M -66,-540 Q -20,-570 34,-564" />
-      <path d="M -52,-528 Q 0,-552 56,-540" />
-      <path d="M 16,-578 Q 56,-560 86,-536" />
+      <path d="M -64,-562 Q -18,-582 36,-578" />
+      <path d="M -50,-552 Q 0,-574 54,-562" />
+      <path d="M 14,-592 Q 52,-576 84,-556" />
     </g>
+    {/* telinga — setelah rambut supaya mengintip di bawah helaian */}
+    <ellipse cx={-80} cy={-462} rx={8} ry={12} fill={SKIN} stroke={INK} strokeWidth={3} />
+    <ellipse cx={80} cy={-462} rx={8} ry={12} fill={SKIN} stroke={INK} strokeWidth={3} />
     <Brows mood={mood} />
     <Eyes mood={mood} />
     <Mouth mood={mood} />
@@ -241,12 +231,16 @@ const Head: React.FC<{ mood: DediMood }> = ({ mood }) => (
 /* ---------------- tangan (5 pose, HITAM solid sesuai sheet) ---------------- */
 
 /** Tangan digambar menghadap penonton, jari mengarah +y (menjauhi pergelangan).
- *  Kepalan sheet: 3 alur jari melengkung di depan kepalan. */
+ *  Kepalan sheet: 3 alur jari melengkung di depan kepalan. Alur harus
+ *  KONTRAS: kepalan diisi #2e2e33 (lebih terang dari lengan #1b1b1b),
+ *  alur digambar #101010 — di v3 alur INK di atas fill nyaris-hitam
+ *  sehingga tidak terlihat sama sekali. */
+const FIST_FILL = "#2e2e33";
 const FistGrooves: React.FC = () => (
-  <g stroke={INK} strokeWidth={2.5} strokeLinecap="round" fill="none">
-    <path d="M -8,10 Q 0,13 8,10" />
-    <path d="M -8,17 Q 0,20 8,17" />
-    <path d="M -8,24 Q 0,27 8,24" />
+  <g stroke="#101010" strokeWidth={3} strokeLinecap="round" fill="none">
+    <path d="M -10,10 Q 0,13 10,10" />
+    <path d="M -10,17 Q 0,20 10,17" />
+    <path d="M -10,24 Q 0,27 10,24" />
   </g>
 );
 
@@ -254,8 +248,8 @@ const Hand: React.FC<{ pose: DediHand }> = ({ pose }) => {
   const s = { fill: LIMB, stroke: INK, strokeWidth: 3, strokeLinejoin: "round" as const };
   if (pose === "kepal") {
     return (
-      <g {...s}>
-        <rect x={-12} y={2} width={24} height={26} rx={9} />
+      <g stroke={INK} strokeWidth={3} strokeLinejoin="round" fill={FIST_FILL}>
+        <rect x={-15} y={0} width={30} height={28} rx={10} />
         <FistGrooves />
       </g>
     );
@@ -282,14 +276,17 @@ const Hand: React.FC<{ pose: DediHand }> = ({ pose }) => {
     );
   }
   if (pose === "jempol") {
-    // Ditracing dari tpl-thumb.png: kepalan + jempol TEBAL tegak di SISI
-    // kepalan (x -21..-9, bersih dari lengan bawah yang lebarnya -6..6),
-    // menjulang 32 unit di atas kepalan, ujung membulat, sedikit miring
-    // ke luar supaya terbaca sebagai jempol, bukan tonjolan.
+    // Ditracing dari tpl-thumb.png / sheet jempol: kepalan LEBAR (30)
+    // dengan 3 alur jari + SATU jempol TEBAL (lebar 15, jelas lebih lebar
+    // dari lengan bawah 12) yang miring -14° menjauhi sumbu lengan,
+    // menjulang 38 unit di atas kepalan, pangkal menyatu dengan kepalan.
+    // Di v3 jempol setipis lengan bawah dan sejajar dengannya sehingga
+    // terbaca sebagai dua pil vertikal + bola.
     return (
-      <g {...s}>
-        <rect x={-21} y={-32} width={12} height={36} rx={6} transform="rotate(-10 -15 -14)" />
-        <rect x={-12} y={2} width={24} height={26} rx={9} />
+      <g stroke={INK} strokeWidth={3} strokeLinejoin="round" fill={FIST_FILL}>
+        <rect x={-26} y={-38} width={15} height={46} rx={7.5} transform="rotate(-14 -18 -15)" />
+        <rect x={-15} y={0} width={30} height={28} rx={10} />
+        <path d="M -11,0 Q -17,-10 -15,-22" stroke="#101010" strokeWidth={2.5} fill="none" strokeLinecap="round" />
         <FistGrooves />
       </g>
     );
@@ -387,8 +384,8 @@ const Arm: React.FC<{
   held: DediHeld;
 }> = ({ shoulder, elbow, wrist, hand, held }) => (
   <g transform={`rotate(${shoulder})`}>
-    {/* lengan atas: bahu (0,0) -> siku (0,72), sendi bola di bahu */}
-    <circle cx={0} cy={0} r={9} fill={LIMB} stroke={INK} strokeWidth={3} />
+    {/* lengan atas: bahu (0,0) -> siku (0,72), sendi bola KECIL di bahu */}
+    <circle cx={0} cy={0} r={6} fill={LIMB} stroke={INK} strokeWidth={2.5} />
     <path
       d="M -6.5,0 L 6.5,0 L 6.5,58 Q 6.5,72 0,72 Q -6.5,72 -6.5,58 Z"
       fill={LIMB}
@@ -397,8 +394,8 @@ const Arm: React.FC<{
       strokeLinejoin="round"
     />
     <g transform={`translate(0,72) rotate(${elbow})`}>
-      {/* lengan bawah: siku (0,0) -> pergelangan (0,66), sendi bola di siku */}
-      <circle cx={0} cy={0} r={7} fill={LIMB} stroke={INK} strokeWidth={3} />
+      {/* lengan bawah: siku (0,0) -> pergelangan (0,66), sendi bola KECIL di siku */}
+      <circle cx={0} cy={0} r={5} fill={LIMB} stroke={INK} strokeWidth={2.5} />
       <path
         d="M -6,0 L 6,0 L 6,54 Q 6,66 0,66 Q -6,66 -6,54 Z"
         fill={LIMB}
@@ -420,7 +417,7 @@ const Arm: React.FC<{
 const Leg: React.FC<{ hip: number; knee: number; flip?: boolean }> = ({ hip, knee, flip }) => (
   <g transform={`rotate(${hip})`}>
     {/* paha: pinggul (0,0) -> lutut (0,108), sendi bola di pinggul */}
-    <circle cx={0} cy={0} r={9} fill={LIMB} stroke={INK} strokeWidth={3} />
+    <circle cx={0} cy={0} r={7} fill={LIMB} stroke={INK} strokeWidth={2.5} />
     <path
       d="M -7,0 L 7,0 L 7,96 Q 7,108 0,108 Q -7,108 -7,96 Z"
       fill={PANTS}
@@ -430,7 +427,7 @@ const Leg: React.FC<{ hip: number; knee: number; flip?: boolean }> = ({ hip, kne
     />
     <g transform={`translate(0,108) rotate(${knee})`}>
       {/* betis: lutut (0,0) -> pergelangan (0,108), sendi bola di lutut */}
-      <circle cx={0} cy={0} r={7} fill={LIMB} stroke={INK} strokeWidth={3} />
+      <circle cx={0} cy={0} r={5} fill={LIMB} stroke={INK} strokeWidth={2.5} />
       <path
         d="M -7,0 L 7,0 L 7,96 Q 7,108 0,108 Q -7,108 -7,96 Z"
         fill={PANTS}
@@ -445,9 +442,10 @@ const Leg: React.FC<{ hip: number; knee: number; flip?: boolean }> = ({ hip, kne
         <path d="M -15,-6 Q 0,-18 15,-6 L 15,4 L -15,4 Z" fill="#262626" stroke={INK} strokeWidth={3} strokeLinejoin="round" />
         {/* tongue */}
         <rect x={-3} y={-16} width={14} height={14} rx={4} fill="#333333" stroke={INK} strokeWidth={2.5} />
-        {/* badan atas: toe bulat membesar ke depan */}
+        {/* badan atas: toe lebih ramping (ujung x 30, bukan 36) supaya
+            dua sepatu berdampingan tidak terlihat menyatu */}
         <path
-          d="M -16,-4 L 10,-4 C 30,-4 38,3 36,12 L 34,14 L -18,14 C -24,8 -22,0 -16,-4 Z"
+          d="M -16,-4 L 8,-4 C 26,-4 32,2 30,11 L 28,14 L -18,14 C -24,8 -22,0 -16,-4 Z"
           fill="#262626"
           stroke={INK}
           strokeWidth={3}
@@ -455,13 +453,13 @@ const Leg: React.FC<{ hip: number; knee: number; flip?: boolean }> = ({ hip, kne
         />
         {/* 3 garis tali putih */}
         <g stroke="#fff" strokeWidth={3} strokeLinecap="round">
-          <line x1={0} y1={-1} x2={14} y2={-1} />
-          <line x1={0} y1={4} x2={16} y2={4} />
-          <line x1={2} y1={9} x2={18} y2={9} />
+          <line x1={0} y1={-1} x2={12} y2={-1} />
+          <line x1={0} y1={4} x2={14} y2={4} />
+          <line x1={2} y1={9} x2={16} y2={9} />
         </g>
         {/* sol putih TEBAL membungkus bawah */}
         <path
-          d="M -20,12 L 36,12 C 39,12 39,20 34,20 L -18,20 C -24,20 -24,14 -20,12 Z"
+          d="M -20,12 L 30,12 C 33,12 33,20 28,20 L -18,20 C -24,20 -24,14 -20,12 Z"
           fill="#f2f2f2"
           stroke={INK}
           strokeWidth={3}
@@ -476,16 +474,14 @@ const Leg: React.FC<{ hip: number; knee: number; flip?: boolean }> = ({ hip, kne
 
 const Torso: React.FC = () => (
   <g>
-    {/* kemeja putih + lengan pendek (jelas terlihat di luar rompi) */}
+    {/* kemeja putih + lengan pendek KECIL menempel bahu (keluar 14,
+        bukan 26 — di v3 seperti sayap segitiga besar) */}
     <path d="M -56,-366 L 56,-366 L 54,-236 L -54,-236 Z" fill="#fff" stroke={INK} strokeWidth={3.5} strokeLinejoin="round" />
-    <path d="M -54,-364 L -80,-340 L -74,-310 L -52,-322 Z" fill="#fff" stroke={INK} strokeWidth={3.5} strokeLinejoin="round" />
-    <path d="M 54,-364 L 80,-340 L 74,-310 L 52,-322 Z" fill="#fff" stroke={INK} strokeWidth={3.5} strokeLinejoin="round" />
+    <path d="M -56,-366 L -70,-352 L -66,-326 L -52,-332 Z" fill="#fff" stroke={INK} strokeWidth={3.5} strokeLinejoin="round" />
+    <path d="M 56,-366 L 70,-352 L 66,-326 L 52,-332 Z" fill="#fff" stroke={INK} strokeWidth={3.5} strokeLinejoin="round" />
     {/* kerah kemeja */}
     <path d="M -18,-366 L -2,-346 L -2,-360 L -16,-368 Z" fill="#fff" stroke={INK} strokeWidth={3} strokeLinejoin="round" />
     <path d="M 18,-366 L 2,-346 L 2,-360 L 16,-368 Z" fill="#fff" stroke={INK} strokeWidth={3} strokeLinejoin="round" />
-    {/* dasi hitam PANJANG sampai tengah dada (ujung runcing y -284) */}
-    <path d="M -8,-364 L 8,-364 L 5,-348 L -5,-348 Z" fill={INK} />
-    <path d="M -5,-348 L 5,-348 L 8,-300 L 0,-284 L -8,-300 Z" fill={INK} />
     {/* rompi abu-abu: lebar 116 (~72% lebar kepala 160), taper ringan
         ke hem 108, bukaan V di dada, belahan V kecil di hem bawah */}
     <path
@@ -498,8 +494,15 @@ const Torso: React.FC = () => (
     {/* garis reflektif putih (2) */}
     <rect x={-55} y={-302} width={110} height={9} fill={STRIPE} />
     <rect x={-54} y={-274} width={108} height={9} fill={STRIPE} />
+    {/* dasi hitam PANJANG — digambar DI ATAS rompi (setelah rompi +
+        stripes). Di v3 dasi digambar SEBELUM rompi sehingga rompi
+        menutupnya dan hanya tersisa V kecil di leher. Hitam solid,
+        dari kerah sampai tengah dada (ujung runcing y -300, tepat di
+        atas garis reflektif pertama). */}
+    <path d="M -8,-364 L 8,-364 L 5,-348 L -5,-348 Z" fill={INK} />
+    <path d="M -6,-348 L 6,-348 L 8,-308 L 0,-300 L -8,-308 Z" fill={INK} />
     {/* resleting tengah (di bawah ujung dasi) */}
-    <line x1={0} y1={-284} x2={0} y2={-236} stroke="#6e747a" strokeWidth={2} />
+    <line x1={0} y1={-300} x2={0} y2={-236} stroke="#6e747a" strokeWidth={2} />
     {/* kantong flap halus */}
     <rect x={-48} y={-254} width={26} height={9} rx={2} fill={VEST_DARK} stroke={INK} strokeWidth={3} />
     <rect x={22} y={-254} width={26} height={9} rx={2} fill={VEST_DARK} stroke={INK} strokeWidth={3} />
