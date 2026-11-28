@@ -1,25 +1,24 @@
 import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
-import { DediRig, type DediHand, type DediMood } from "../../kit/DediRig";
+import { DediRig, type DediHand, type DediHeld, type DediMood } from "../../kit/DediRig";
 import { C, FONT } from "../../kit/style";
 
 /**
- * DediRigDemo — DRAFT PREVIEW demo gerak rig vektor Dedi (PILOT).
+ * DediRigDemo v2 — DRAFT PREVIEW demo gerak rig vektor Dedi (ditracing dari
+ * sheet modular BARU dedi-modular-breakdown.jpg).
  *
  * BUKAN episode tayang dan BELUM dipakai episode mana pun. Bukti rig bekerja:
  *  0–90   jalan masuk (kaki mengayun di pinggul + lutut, lengan mengayun)
- *  90–120 berhenti
+ *  90–120 berhenti + senyum
  *  120–180 melambai (bahu + siku + pergelangan tangan)
- *  180–210 jempol + ekspresi senyum -> tegas
- *  210–300 tahan + angguk kecil
+ *  180–240 jempol + ekspresi senyum -> tegas
+ *  240–300 pegang helm (hero pose) + angguk kecil
  *
  * 30 fps, 300 frame (10 detik). Stills via workflow Stills
  * (scripts/stills.json -> "DediRigDemo").
  */
 
 export const DEDI_RIG_DEMO_TOTAL = 300;
-
-const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
 
 const Demo: React.FC = () => {
   const f = useCurrentFrame();
@@ -41,13 +40,18 @@ const Demo: React.FC = () => {
     * (1 - interpolate(f, [165, 180], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }));
   const waveWrist = 18 * Math.sin(((f - 120) / 5) * Math.PI) * wave;
 
-  // --- jempol + tegas 180..210 ---
+  // --- jempol + tegas 180..240 ---
   const thumb = interpolate(f, [180, 195], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const mood: DediMood = f < 195 ? "smile" : "determined";
+  const mood: DediMood = f < 100 ? "neutral" : f < 195 ? "smile" : "determined";
   const handR: DediHand = wave > 0.5 ? "telapak" : thumb > 0.5 ? "jempol" : "kepal";
 
-  // --- angguk 210..300 ---
-  const nod = f >= 210 ? 3 * Math.sin(((f - 210) / 12) * Math.PI) : 0;
+  // --- pegang helm 240..300 ---
+  const helm = interpolate(f, [240, 255], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const heldL: DediHeld = helm > 0.5 ? "helm" : "none";
+  const handL: DediHand = helm > 0.5 ? "kepal" : "telapak";
+
+  // --- angguk 240..300 ---
+  const nod = f >= 240 ? 3 * Math.sin(((f - 240) / 12) * Math.PI) : 0;
 
   const shoulderR =
     shoulderRWalk * (1 - wave) * (1 - thumb)
@@ -55,19 +59,22 @@ const Demo: React.FC = () => {
     + -35 * thumb * (1 - wave);
   const elbowR =
     8 * walk * (1 - wave) * (1 - thumb)
-    + -30 * wave
+    + -25 * wave
     + -10 * thumb * (1 - wave);
+
+  const shoulderL = shoulderLWalk * (1 - helm) + 20 * helm;
+  const elbowL = 8 * walk * (1 - helm) + 30 * helm;
 
   const label =
     f < 90
       ? "JALAN MASUK · pinggul + lutut mengayun"
       : f < 120
-        ? "BERHENTI"
+        ? "BERHENTI · SENYUM"
         : f < 180
           ? "MELAMBAI · bahu + siku + pergelangan"
-          : f < 210
+          : f < 240
             ? "JEMPOL + EKSPRESI TEGAS"
-            : "TAHAN · angguk kecil";
+            : "PEGANG HELM · HERO POSE";
 
   return (
     <AbsoluteFill style={{ background: "#fbf6e9" }}>
@@ -91,11 +98,12 @@ const Demo: React.FC = () => {
           floor={1500}
           scale={1.35}
           mood={mood}
-          handL="kepal"
+          handL={handL}
           handR={handR}
-          shoulderL={shoulderLWalk}
+          heldL={heldL}
+          shoulderL={shoulderL}
           shoulderR={shoulderR}
-          elbowL={8 * walk}
+          elbowL={elbowL}
           elbowR={elbowR}
           wristR={waveWrist}
           hipL={hipL}
@@ -111,7 +119,7 @@ const Demo: React.FC = () => {
         {label}
       </div>
       <div style={{ position: "absolute", top: 1700, width: "100%", textAlign: "center", fontFamily: FONT.mono, fontWeight: 500, fontSize: 22, letterSpacing: 2, color: "#6b675f" }}>
-        RIG VEKTOR DITRACING · PILOT DEDI
+        RIG VEKTOR DITRACING · SHEET MODULAR BARU
       </div>
     </AbsoluteFill>
   );
