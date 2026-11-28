@@ -57,11 +57,11 @@ const Demo: React.FC = () => {
   const shoulderR =
     shoulderRWalk * (1 - wave) * (1 - thumbActive)
     + -150 * wave
-    + -72 * thumbActive * (1 - wave);
+    + -130 * thumbActive * (1 - wave);
   const elbowR =
     8 * walk * (1 - wave) * (1 - thumbActive)
     + -25 * wave
-    + -18 * thumbActive * (1 - wave);
+    + 130 * thumbActive * (1 - wave);
 
   const shoulderL = shoulderLWalk * (1 - helm) + 20 * helm;
   const elbowL = 8 * walk * (1 - helm) + 30 * helm;
