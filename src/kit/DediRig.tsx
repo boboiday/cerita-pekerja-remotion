@@ -4,15 +4,12 @@ import React from "react";
  * DediRig v14 — ronde 12 (MISMATCH-v13.md, skor 92% -> target >=95%).
  *
  * Perubahan vs v13:
- *  - EKOR SILUET KIRI DIPOTONG (a): ujung bawah kiri -458 -> -502
- *    (44 unit lebih pendek, berakhir setinggi pelipis, bukan pipi)
- *    dan tonjolan luar maks -97 -> -91 — pita tipis yang menjuntai
- *    bebas di samping wajah kini jadi massa samping yang mengikuti
- *    lekuk kepala. Penutup fringe kiri ikut dipendekkan ke -502.
- *  - STRAND 3 (sliver kiri) DITATA ULANG: dari daun kecil menunjuk
- *    ke bawah-kiri menjadi helaian pendek yang berbaring mengikuti
- *    garis fringe (pangkal -50,-540, ujung -64,-528), terselip di
- *    dalam massa rambut, tidak lagi terbaca sebagai daun terpisah.
+ *  - EKOR SILUET KIRI DIPOTONG (a): ujung bawah kiri -458 -> -528,
+ *    berakhir TEPAT di garis fringe (gigi paling kiri -80,-528),
+ *    tonjolan luar maks -97 -> -89 — tidak ada lagi pita tipis
+ *    yang menjuntai di samping wajah; massa samping kini berakhir
+ *    setinggi pelipis dan mengikuti lekuk kepala. Sliver kiri v13
+ *    DIHAPUS (terbaca sebagai daun terpisah di dalam fringe).
  *  - 2 HELAIAN BERLAPIS BARU di ubun-ubun (b): S4 lapis tengah-kanan
  *    (ujung runcing 70,-561, di dalam siluet) + S3 lapis bawah-kiri
  *    (ujung runcing 26,-546, di atas gigi fringe) — keduanya
@@ -201,17 +198,16 @@ const Head: React.FC<{ mood: DediMood }> = ({ mood }) => (
         UBUN-UBUN BER-SPIKE v14: apex -633 di x 16 (v13 -631),
         spike puncak sedikit condong ke kanan — massa tersapu ke
         satu sisi, siluet atas lebih dome; EKOR KIRI DIPOTONG
-        (ujung -502, v13 -458; tonjolan luar maks -91, v13 -97)
-        supaya tidak ada lagi pita tipis menjuntai di samping
-        wajah — massa samping kini berakhir setinggi pelipis dan
-        mengikuti lekuk kepala; sisi kiri 3 strand MENGALIR
-        kurva-S lembut, sisi kanan 2 strand pendek + 1 strand
+        (ujung -528, v13 -458; tonjolan luar maks -89, v13 -97)
+        berakhir tepat di gigi fringe paling kiri — tidak ada lagi
+        pita tipis menjuntai di samping wajah; sisi kiri 3 strand
+        MENGALIR kurva-S lembut, sisi kanan 2 strand pendek + 1 strand
         samping membulat sampai y -440, fringe SCALLOP BERVARIASI
         (gigi -524..-544; gigi x 38 di sisi sapuan DIPANJANGKAN ke
         -544, gigi terpanjang; gigi x 24 -> -538, x -28 -> -540;
         lembah -500..-516). Outline 0.6 (v13 0.75). */}
     <path
-      d="M -82,-502 Q -91,-506 -88,-520 Q -86,-532 -76,-530 Q -82,-542 -71,-536 Q -82,-552 -74,-562 Q -69,-570 -61,-565 Q -55,-573 -48,-573 Q -57,-596 -50,-608 Q -44,-614 -37,-608 Q -31,-598 -28,-588 Q -26,-608 -20,-617 Q -14,-625 -7,-612 Q -2,-602 2,-590 Q 4,-612 9,-624 Q 16,-633 23,-617 Q 27,-605 29,-588 Q 33,-610 37,-617 Q 42,-624 49,-612 Q 52,-601 54,-584 Q 68,-580 80,-571 Q 88,-560 92,-546 Q 100,-532 94,-520 Q 88,-510 80,-512 Q 88,-496 86,-482 Q 84,-470 76,-466 Q 72,-452 66,-442 Q 60,-436 56,-448 Q 52,-462 48,-470 Q 43,-548 38,-544 Q 30,-502 24,-538 Q 18,-514 12,-528 Q 4,-500 0,-534 Q -8,-516 -14,-526 Q -22,-503 -28,-540 Q -36,-512 -42,-530 Q -50,-505 -56,-524 Q -64,-514 -70,-532 Q -76,-506 -80,-528 Q -82,-516 -80,-510 Q -81,-505 -82,-502 Z"
+      d="M -80,-528 Q -89,-532 -86,-544 Q -83,-554 -73,-550 Q -79,-560 -70,-560 Q -69,-570 -61,-565 Q -55,-573 -48,-573 Q -57,-596 -50,-608 Q -44,-614 -37,-608 Q -31,-598 -28,-588 Q -26,-608 -20,-617 Q -14,-625 -7,-612 Q -2,-602 2,-590 Q 4,-612 9,-624 Q 16,-633 23,-617 Q 27,-605 29,-588 Q 33,-610 37,-617 Q 42,-624 49,-612 Q 52,-601 54,-584 Q 68,-580 80,-571 Q 88,-560 92,-546 Q 100,-532 94,-520 Q 88,-510 80,-512 Q 88,-496 86,-482 Q 84,-470 76,-466 Q 72,-452 66,-442 Q 60,-436 56,-448 Q 52,-462 48,-470 Q 43,-548 38,-544 Q 30,-502 24,-538 Q 18,-514 12,-528 Q 4,-500 0,-534 Q -8,-516 -14,-526 Q -22,-503 -28,-540 Q -36,-512 -42,-530 Q -50,-505 -56,-524 Q -64,-514 -70,-532 Q -76,-506 -80,-528 Z"
       fill={HAIR}
       stroke={INK}
       strokeWidth={0.6}
@@ -225,9 +221,8 @@ const Head: React.FC<{ mood: DediMood }> = ({ mood }) => (
         S3 lapis bawah-kiri (ujung runcing 26,-546, di atas gigi
         fringe) — keduanya lebih pendek dari strand 1 & 2 dan
         ujungnya staggered supaya terbaca sebagai lapisan yang
-        saling tumpang tindih, bukan pita sejajar. Sliver kiri
-        (S5) DITATA ULANG: helaian pendek berbaring mengikuti
-        garis fringe (ujung -64,-528), terselip di dalam massa.
+        saling tumpang tindih, bukan pita sejajar. Sliver kiri v13
+        DIHAPUS (di crop v14 terbaca sebagai daun terpisah).
         Garis INK sejajar panjang v12 TETAP dihapus; tersisa
         3 garis pemisah PENDEK di celah antar-strand + 3 highlight
         pendek di dalam badan strand. */}
@@ -236,7 +231,6 @@ const Head: React.FC<{ mood: DediMood }> = ({ mood }) => (
       <path d="M -46,-562 Q -4,-572 52,-560 Q 74,-554 88,-546 Q 64,-542 32,-547 Q -10,-553 -46,-562 Z" />
       <path d="M -8,-574 Q 24,-580 54,-572 Q 66,-568 70,-561 Q 44,-562 16,-567 Q -2,-570 -8,-574 Z" />
       <path d="M -58,-554 Q -24,-561 12,-554 Q 24,-551 26,-546 Q 2,-546 -22,-550 Q -44,-552 -58,-554 Z" />
-      <path d="M -50,-540 Q -60,-540 -64,-528 Q -58,-522 -52,-526 Q -48,-534 -50,-540 Z" />
     </g>
     <g stroke={INK} strokeWidth={2.5} strokeLinecap="round" fill="none" opacity={1}>
       <path d="M -50,-566 Q -14,-572 22,-568" />
