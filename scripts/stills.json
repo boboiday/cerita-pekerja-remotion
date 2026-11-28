@@ -277,5 +277,50 @@
    }
   ],
   "title": "DediSpriteDemo — Rig sprite Dedi (aset modular asli, DRAFT)"
+ },
+ "StickyTrial": {
+  "cover": {
+   "frame": 460,
+   "hook": [
+    "PENJARA",
+    "BINTANG LIMA"
+   ],
+   "pill": "TRIAL"
+  },
+  "shots": [
+   {
+    "frame": 75,
+    "label": "L1 · Sipir: bebas, boleh pulang"
+   },
+   {
+    "frame": 180,
+    "label": "L2 · Udin: mau di sini aja"
+   },
+   {
+    "frame": 270,
+    "label": "L3 · Sipir bingung, Udin duduk"
+   },
+   {
+    "frame": 390,
+    "label": "L4 · Udin: makan gratis"
+   },
+   {
+    "frame": 525,
+    "label": "L5 · Sipir marah"
+   },
+   {
+    "frame": 645,
+    "label": "L6 · Udin: pelayanan lebih bagus"
+   },
+   {
+    "frame": 745,
+    "label": "L7 · Sipir nunjuk: keluar sana"
+   },
+   {
+    "frame": 815,
+    "label": "L8 · Udin ketawa"
+   }
+  ],
+  "title": "StickyTrial — Penjara Bintang Lima (TRIAL gaya The Sticky)"
  }
 }

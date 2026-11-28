@@ -16,6 +16,7 @@ import { EP22, EP22_TOTAL } from "./stories/cerita-pekerja/EP22";
 import { CharacterModels, CHARACTER_MODELS_TOTAL } from "./stories/cerita-pekerja/CharacterModels";
 import { DediRigDemo, DEDI_RIG_DEMO_TOTAL } from "./stories/cerita-pekerja/DediRigDemo";
 import { DediSpriteDemo, DEDI_SPRITE_DEMO_TOTAL } from "./stories/cerita-pekerja/DediSpriteDemo";
+import { StickyTrial, STICKY_TRIAL_TOTAL } from "./stories/cerita-pekerja/StickyTrial";
 import { KitDemo, KIT_TOTAL } from "./stories/cerita-pekerja/KitDemo";
 
 /** Every episode is a 1080x1920 (9:16) composition. Samples are 30 fps; full episodes are 24 fps (EP15 is 12 fps). */
@@ -44,6 +45,8 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="DediRigDemo" component={DediRigDemo} durationInFrames={DEDI_RIG_DEMO_TOTAL} {...SHORT} />
     {/* DediSpriteDemo = DRAFT PREVIEW rig sprite Dedi (crop sheet modular ASLI, bukan gambar ulang). Bukan episode tayang. */}
     <Composition id="DediSpriteDemo" component={DediSpriteDemo} durationInFrames={DEDI_SPRITE_DEMO_TOTAL} {...SHORT} />
+    {/* StickyTrial = TRIAL gaya The Sticky ("Penjara Bintang Lima"). Preview saja, bukan untuk diposting. */}
+    <Composition id="StickyTrial" component={StickyTrial} durationInFrames={STICKY_TRIAL_TOTAL} {...SHORT} />
     <Composition id="KitDemo" component={KitDemo} durationInFrames={KIT_TOTAL} {...SHORT} />
   </>
 );
