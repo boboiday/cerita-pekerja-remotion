@@ -94,6 +94,7 @@ interface FigureProps {
   topColor: string;
   sleeveColor: string;
   shoe?: "sneakers" | "flats" | "boots";
+  ears?: boolean; // false = telinga disembunyikan (hijab Wulan menutupinya)
   back?: React.ReactNode; // di belakang segalanya (tas, rambut panjang)
   hair?: React.ReactNode; // di kepala, sesudah wajah dasar, sebelum topi
   hat?: React.ReactNode;
@@ -106,7 +107,7 @@ interface FigureProps {
 
 /** Rig chibi bersama: kaki → badan → lengan → kepala → wajah → gestur. */
 const ChibiFigure: React.FC<FigureProps> = ({
-  mood = "neutral", topColor, sleeveColor, shoe = "sneakers",
+  mood = "neutral", topColor, sleeveColor, shoe = "sneakers", ears = true,
   back, hair, hat, faceExtra, topDetail, armR, armL, held,
 }) => {
   const arm = (side: 1 | -1) => (
@@ -148,9 +149,13 @@ const ChibiFigure: React.FC<FigureProps> = ({
       {/* lengan gantung (hanya yang tidak diganti gestur) */}
       {!armL && arm(-1)}
       {!armR && arm(1)}
-      {/* kepala */}
-      <circle cx={-112} cy={-415} r={14} fill={SKIN} stroke={C.ink} strokeWidth={6} />
-      <circle cx={112} cy={-415} r={14} fill={SKIN} stroke={C.ink} strokeWidth={6} />
+      {/* kepala (telinga hanya bila tidak tertutup hijab) */}
+      {ears && (
+        <>
+          <circle cx={-112} cy={-415} r={14} fill={SKIN} stroke={C.ink} strokeWidth={6} />
+          <circle cx={112} cy={-415} r={14} fill={SKIN} stroke={C.ink} strokeWidth={6} />
+        </>
+      )}
       <ellipse cx={0} cy={-420} rx={110} ry={105} fill={SKIN} stroke={C.ink} strokeWidth={8} />
       {hair}
       {hat}
@@ -193,24 +198,26 @@ const HelmetYellow: React.FC = () => (
 
 /* ------------------------------ rambut ------------------------------ */
 
-/** Rambut spike Yanto. */
+/** Rambut spike Yanto — tepi bawah bergerigi (bukan garis lurus) supaya
+ *  terbaca sebagai rambut, bukan mahkota/headband. */
 const SpikyHair: React.FC = () => (
   <path
-    d="M-108,-440 L-96,-500 L-64,-466 L-46,-510 L-12,-470 L10,-512 L40,-472 L68,-506 L90,-468 L108,-440 Q0,-470 -108,-440 Z"
+    d="M-110,-428 L-98,-502 L-68,-464 L-50,-514 L-16,-470 L6,-516 L36,-472 L64,-508 L88,-466 L110,-428 Q88,-462 66,-446 Q44,-470 22,-452 Q0,-472 -22,-452 Q-44,-470 -66,-446 Q-88,-462 -110,-428 Z"
     fill={HAIR_DARK} stroke={C.ink} strokeWidth={6} strokeLinejoin="round"
   />
 );
 
-/** Rambut panjang Putri — massa belakang (di belakang badan). */
+/** Rambut panjang Putri — massa belakang (di belakang badan). Cokelat hangat
+ *  #4a3220 supaya terpisah dari blazer hitam #23282e. */
 const LongHairBack: React.FC = () => (
-  <path d="M-122,-420 A122,122 0 1,1 122,-420 L128,-150 Q128,-110 92,-110 L-92,-110 Q-128,-110 -128,-150 Z" fill="#241a12" stroke={C.ink} strokeWidth={7} strokeLinejoin="round" />
+  <path d="M-122,-420 A122,122 0 1,1 122,-420 L128,-150 Q128,-110 92,-110 L-92,-110 Q-128,-110 -128,-150 Z" fill="#4a3220" stroke={C.ink} strokeWidth={7} strokeLinejoin="round" />
 );
 
 /** Helaian rambut depan Putri (di sisi wajah, jatuh ke dada). */
 const LongHairFront: React.FC = () => (
   <g>
-    <path d="M-88,-440 Q-104,-320 -96,-180 L-70,-180 Q-80,-320 -64,-436 Z" fill="#241a12" stroke={C.ink} strokeWidth={5} strokeLinejoin="round" />
-    <path d="M64,-436 Q80,-320 96,-180 L70,-180 Q80,-320 88,-440 Z" fill="#241a12" stroke={C.ink} strokeWidth={5} strokeLinejoin="round" />
+    <path d="M-88,-440 Q-104,-320 -96,-180 L-70,-180 Q-80,-320 -64,-436 Z" fill="#4a3220" stroke={C.ink} strokeWidth={5} strokeLinejoin="round" />
+    <path d="M64,-436 Q80,-320 96,-180 L70,-180 Q80,-320 88,-440 Z" fill="#4a3220" stroke={C.ink} strokeWidth={5} strokeLinejoin="round" />
   </g>
 );
 
@@ -229,12 +236,12 @@ const HijabDrape: React.FC = () => (
 
 /* ------------------------------ gestur ------------------------------ */
 
-/** Jempol Dedi (tangan kanan terangkat). */
+/** Jempol Dedi (tangan kanan terangkat) — kepalan + jempol dibesarkan. */
 const ThumbArm: React.FC = () => (
   <g>
     <path d="M70,-278 L98,-306 L110,-340" fill="none" stroke="#f5f2e8" strokeWidth={30} strokeLinecap="round" strokeLinejoin="round" />
-    <circle cx={110} cy={-340} r={16} fill={SKIN} stroke={C.ink} strokeWidth={5} />
-    <rect x={103} y={-370} width={14} height={26} rx={7} fill={SKIN} stroke={C.ink} strokeWidth={5} />
+    <circle cx={110} cy={-340} r={18} fill={SKIN} stroke={C.ink} strokeWidth={5} />
+    <rect x={101} y={-374} width={18} height={30} rx={9} fill={SKIN} stroke={C.ink} strokeWidth={5} />
     <Burst x={140} y={-368} />
   </g>
 );
@@ -320,8 +327,9 @@ export const Dedi: React.FC<ChibiCharProps> = ({ x, floor, scale = 1, mood = "ne
           <path d="M-9,-296 L9,-296 L6,-246 L0,-226 L-6,-246 Z" fill="#1d1d1f" stroke={C.ink} strokeWidth={3} strokeLinejoin="round" />
           <rect x={-64} y={-200} width={20} height={16} rx={3} fill="#7c838a" stroke={C.ink} strokeWidth={3} />
           <rect x={44} y={-200} width={20} height={16} rx={3} fill="#7c838a" stroke={C.ink} strokeWidth={3} />
-          <rect x={-68} y={-268} width={46} height={26} rx={3} fill="#fdf8ea" stroke={C.ink} strokeWidth={3} />
-          <text x={-45} y={-250} fontFamily={FONT.mono} fontWeight={800} fontSize={14} fill={C.ink} textAnchor="middle">DEDI</text>
+          {/* name tag di panel KANAN — panel kiri tertutup lengan gantung */}
+          <rect x={22} y={-268} width={46} height={26} rx={3} fill="#fdf8ea" stroke={C.ink} strokeWidth={3} />
+          <text x={45} y={-250} fontFamily={FONT.mono} fontWeight={800} fontSize={14} fill={C.ink} textAnchor="middle">DEDI</text>
         </g>
       }
       armR={<ThumbArm />}
@@ -334,6 +342,7 @@ export const Wulan: React.FC<ChibiCharProps> = ({ x, floor, scale = 1, mood = "n
   <Wrap x={x} floor={floor} scale={scale}>
     <ChibiFigure
       mood={mood} topColor="#f5f2e8" sleeveColor="#f5f2e8" shoe="flats"
+      ears={false}
       back={<HijabBack />}
       hair={<HijabDrape />}
       topDetail={

@@ -61,7 +61,8 @@ const Sheet: React.FC<{ def: SheetDef; index: number }> = ({ def, index }) => {
         <g transform="translate(185,1120)">{def.propL}</g>
         <g transform="translate(895,1120)">{def.propR}</g>
         {/* full-body, ekspresi netral seperti model sheet */}
-        <Char x={540} floor={FLOOR} scale={0.95} />
+        {/* model utama — skala 1,3 supaya mengisi panel (judul di atas, inset di bawah) */}
+        <Char x={540} floor={FLOOR} scale={1.3} />
         {/* 3 inset ekspresi: kepala di dalam lingkaran */}
         {INSET_MOODS.map(({ mood, cx }) => (
           <g key={mood}>
