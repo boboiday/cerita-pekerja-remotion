@@ -108,10 +108,10 @@ const FACES: Record<DediSpriteMood, { file: string; cropW: number; cropH: number
 };
 
 const HANDS: Record<DediSpriteHand, { file: string; cropW: number; cropH: number; scale: number }> = {
-  palm: { file: "hand-palm.png", cropW: 64, cropH: 58, scale: 0.22 },
-  fist: { file: "hand-fist.png", cropW: 49, cropH: 51, scale: 0.29 },
-  point: { file: "hand-point.png", cropW: 50, cropH: 54, scale: 0.28 },
-  thumb: { file: "hand-thumb-a.png", cropW: 44, cropH: 56, scale: 0.32 },
+  palm: { file: "hand-palm.png", cropW: 64, cropH: 58, scale: 0.34 },
+  fist: { file: "hand-fist.png", cropW: 49, cropH: 51, scale: 0.42 },
+  point: { file: "hand-point.png", cropW: 50, cropH: 54, scale: 0.4 },
+  thumb: { file: "hand-thumb-a.png", cropW: 44, cropH: 56, scale: 0.45 },
 };
 
 export type DediSpriteProps = {
@@ -185,8 +185,8 @@ export const DediSprite: React.FC<DediSpriteProps> = ({
   };
   const wL = rotVec(wristOffL.x, wristOffL.y, shoulderL);
   const wR = rotVec(wristOffR.x, wristOffR.y, shoulderR);
-  const wristLFig = { x: 24 + wL.x, y: 128 + wL.y };
-  const wristRFig = { x: 114 + wR.x, y: 128 + wR.y };
+  const wristLFig = { x: 28 + wL.x, y: 130 + wL.y };
+  const wristRFig = { x: 110 + wR.x, y: 130 + wR.y };
 
   // Lengan bengkok: siku mengarah ke kiri di crop — di lengan kanan dibalik.
   const flipArmR = armR !== "straight";
@@ -202,6 +202,13 @@ export const DediSprite: React.FC<DediSpriteProps> = ({
       <Part {...base} src={staticFile(`dedi-sprite/${legSpecR.file}`)}
         cropW={legSpecR.cropW} cropH={legSpecR.cropH} scaleX={legSpecR.scale} scaleY={legSpecR.scale}
         pivotCropX={legSpecR.hip[0]} pivotCropY={legSpecR.hip[1]} anchorX={82} anchorY={216} rot={hipR} flip={flipLegR} />
+      {/* lengan (di belakang rompi — bola bahu tertutup setengah oleh rompi) */}
+      <Part {...base} src={staticFile(`dedi-sprite/${armSpecL.file}`)}
+        cropW={armSpecL.cropW} cropH={armSpecL.cropH} scaleX={armSpecL.scale} scaleY={armSpecL.scale}
+        pivotCropX={armSpecL.top[0]} pivotCropY={armSpecL.top[1]} anchorX={28} anchorY={130} rot={shoulderL} />
+      <Part {...base} src={staticFile(`dedi-sprite/${armSpecR.file}`)}
+        cropW={armSpecR.cropW} cropH={armSpecR.cropH} scaleX={armSpecR.scale} scaleY={armSpecR.scale}
+        pivotCropX={armSpecR.top[0]} pivotCropY={armSpecR.top[1]} anchorX={110} anchorY={130} rot={shoulderR} flip={flipArmR} />
       {/* rompi + dasi */}
       <Part {...base} src={staticFile("dedi-sprite/vest-front.png")}
         cropW={93} cropH={147} scaleX={1.01} scaleY={0.79}
@@ -213,13 +220,6 @@ export const DediSprite: React.FC<DediSpriteProps> = ({
       <Part {...base} src={staticFile(`dedi-sprite/${face.file}`)}
         cropW={face.cropW} cropH={face.cropH} scaleX={0.8} scaleY={0.8}
         pivotCropX={face.cropW / 2} pivotCropY={135} anchorX={69} anchorY={112} rot={headTilt} />
-      {/* lengan */}
-      <Part {...base} src={staticFile(`dedi-sprite/${armSpecL.file}`)}
-        cropW={armSpecL.cropW} cropH={armSpecL.cropH} scaleX={armSpecL.scale} scaleY={armSpecL.scale}
-        pivotCropX={armSpecL.top[0]} pivotCropY={armSpecL.top[1]} anchorX={24} anchorY={128} rot={shoulderL} />
-      <Part {...base} src={staticFile(`dedi-sprite/${armSpecR.file}`)}
-        cropW={armSpecR.cropW} cropH={armSpecR.cropH} scaleX={armSpecR.scale} scaleY={armSpecR.scale}
-        pivotCropX={armSpecR.top[0]} pivotCropY={armSpecR.top[1]} anchorX={114} anchorY={128} rot={shoulderR} flip={flipArmR} />
       {/* tangan (di pergelangan) */}
       <Part {...base} src={staticFile(`dedi-sprite/${handSpecL.file}`)}
         cropW={handSpecL.cropW} cropH={handSpecL.cropH} scaleX={handSpecL.scale} scaleY={handSpecL.scale}

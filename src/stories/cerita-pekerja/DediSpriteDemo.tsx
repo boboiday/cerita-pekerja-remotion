@@ -33,9 +33,9 @@ const Demo: React.FC = () => {
   const swing = Math.sin(phase);
   const hipL = 16 * swing * walk;
   const hipR = -16 * swing * walk;
-  // Kaki yang terangkat pakai kaki bengkok (lutut tertekuk).
-  const legL: DediSpriteLeg = swing > 0 ? "bent" : "straightL";
-  const legR: DediSpriteLeg = swing > 0 ? "straightR" : "bent";
+  // Kaki yang terangkat pakai kaki bengkok (lutut tertekuk) — hanya saat jalan.
+  const legL: DediSpriteLeg = walk && swing > 0 ? "bent" : "straightL";
+  const legR: DediSpriteLeg = walk && swing > 0 ? "straightR" : "bent";
   const shoulderLWalk = -10 * swing * walk;
   const shoulderRWalk = 10 * swing * walk;
   const bounce = walk ? -5 * Math.abs(Math.sin(phase)) : 0;
@@ -52,8 +52,8 @@ const Demo: React.FC = () => {
     shoulderRWalk * (1 - wave) * (1 - thumb) * (1 - helm)
     + -150 * wave
     + -120 * thumb * (1 - wave)
-    + 35 * helm;
-  const armR = wave > 0.5 ? "straight" : thumb > 0.5 ? "bent1" : helm > 0.5 ? "bent2" : "straight";
+    + 8 * helm;
+  const armR = thumb > 0.5 ? "bent1" : "straight";
   const handR = wave > 0.5 ? "palm" : thumb > 0.5 ? "thumb" : "fist";
   const wristR = 12 * Math.sin(f * 0.5) * wave;
 
