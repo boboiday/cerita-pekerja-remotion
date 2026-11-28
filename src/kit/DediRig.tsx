@@ -1,39 +1,36 @@
 import React from "react";
 
 /**
- * DediRig v18 — ronde 16 (MISMATCH-v17.md, skor 94,6% -> target >=95%).
+ * DediRig v19 — ronde 17 (Avenir tolak v18: "Kok jadi kurus bro?").
  *
- * Perubahan vs v17:
- *  - SILUET ATAS JADI WEDGE TERSAPU (a): bentuk dasar bukan lagi
- *    dome bergelombang — lembah antar-spike NAIK PROGRESIF ke kanan
- *    (-578 -> -599 -> -613 -> -623 -> -629 -> -631) dan puncak
- *    spike juga naik progresif (-590 -> -612 -> -627 -> -641 ->
- *    -645 -> -647, tertinggi di ujung kanan); tonjolan kiri atas
- *    DIRENDAHKAN lagi (-596 -> ~-592, lembah sebelum spike 1
- *    -584 -> -578); tepi atas kini diagonal naik ke kanan.
- *  - SPIKE CONDONG KE KANAN (b): tiap puncak digeser ke kanan dari
- *    titik tengah lembahnya + kontrol kanan diletakkan di kanan
- *    puncak hampir setinggi puncak, sehingga ujung spike menunjuk
- *    ke kanan (flank kiri landai panjang, flank kanan curam pendek),
- *    bukan tegak ke atas. Jumlah spike TETAP 5, strand TETAP 7 —
- *    tidak ada strand baru.
- *  - Strand 1 diturunkan sedikit di kiri + ujung kirinya ditarik
- *    masuk ke titik sudut siluet (-48,-573, v17 -60,-578) supaya
- *    tetap DI DALAM siluet yang hump kirinya direndahkan —
- *    ujung runcingnya tidak lagi menjorok keluar tepi kiri.
- *  - Rompi: hem 29 -> 28 tiap sisi, sisi lebih melengkung ke dalam
- *    (kontrol 39 -> 38), stripes + kantong ikut menyempit — kurang
- *    boxy.
- *  - Sepatu: toe kurang bulat lagi (tonjolan ke x 11, v17 12, muka
- *    depan datar vertikal; sol depan ikut 11), tiap sepatu digeser
- *    1 unit lagi ke luar (16, celah 34 -> 36, kurangi tumpang tindih).
- *  - Outline rambut ditipiskan: strokeWidth 0.4 -> 0.35.
- *  - Wajah/proporsi/warna: tidak diubah (sudah 95, sisa minor tidak
- *    terisolasi ke satu koordinat — dibiarkan agar tidak merusak
- *    yang sudah dekat).
- *  - Sehelai tipis di samping wajah TETAP tidak ada: ekor kiri
- *    berakhir di -80,-528 (garis fringe), telinga kiri terlihat.
- *  - Fringe TIDAK diubah (kiri+kanan sudah tersapu, sudah dekat).
+ * Perubahan vs v18 — HANYA lebar badan (kepala/rambut/wajah, leher,
+ * dasi, resleting, kerah, dan ukuran tangan TIDAK disentuh):
+ *  - ROMPI: atas -58..58 (116) -> -92..92 (184); hem -28..28 (56) ->
+ *    -68..68 (136); sisi hampir lurus, sedikit melengkung ke dalam
+ *    saja (kontrol 76, bukan taper lagi). Path baru:
+ *    M -92,-366 L -16,-366 L 0,-336 L 16,-366 L 92,-366
+ *    Q 76,-300 68,-236 L 3,-236 L 0,-244 L -3,-236 L -68,-236
+ *    Q -76,-300 -92,-366 Z.
+ *  - Stripes reflektif: lebar 66/64 -> 112/110 (x -56 dan -55).
+ *  - Kantong: x -29 -> -50 (lebar 23 -> 26), x 7 -> 24 (lebar 26).
+ *  - Tag DEDI: x 8 -> 32, teks x 24 -> 48.
+ *  - KEMEJA: -56..56 -> -92..92; lengan pendek kiri
+ *    M -92,-366 L -103,-354 L -99,-330 L -88,-332 Z (kanan cermin).
+ *  - BAHU (titik tempel lengan): ±50 -> ±82, y -342 tetap.
+ *  - LENGAN: lebar ±6.5/±6 -> ±9.5/±9; sendi bola bahu r 6 -> 8,
+ *    siku r 5 -> 7. Panjang lengan tetap. Tangan tidak diubah.
+ *  - PINGGUL (titik tempel kaki): ±22 -> ±30, y -236 tetap.
+ *  - KAKI: lebar ±7 -> ±10; sendi bola pinggul r 7 -> 9, lutut
+ *    r 5 -> 7. Panjang paha/betis tetap (108+108).
+ *  - SEPATU (lebih besar chunky): badan M -22,-4 L 12,-4
+ *    C 14,-5 16,-2 16,6 L 16,15 L -24,15 C -30,9 -28,0 -22,-4 Z;
+ *    kerah M -20,-6 Q 0,-20 20,-6 L 20,4 L -20,4 Z; tongue x -4
+ *    w 18; tali putih ke x 0..13; sol M -26,13 L 16,13 C 19,13
+ *    19,22 16,22 L -24,22 C -30,22 -30,15 -26,13 Z; offset
+ *    sepatu dari pergelangan 16 -> 20.
+ *  - Bayangan lantai rx 92 -> 120.
+ *  - Rasio target (sheet): lebar rompi / lebar rambut = 1,02–1,06
+ *    (rompi selebar kepala, badan kekar); v18 cuma ~0,61–0,85.
  *
  * Sendi (pivot transform): bahu, siku, pinggul, lutut. Prop mood ganti
  * bagian wajah; prop hand ganti pose tangan; prop held ganti barang di tangan.
@@ -445,20 +442,20 @@ const Arm: React.FC<{
   held: DediHeld;
 }> = ({ shoulder, elbow, wrist, hand, held }) => (
   <g transform={`rotate(${shoulder})`}>
-    {/* lengan atas: bahu (0,0) -> siku (0,72), sendi bola KECIL di bahu */}
-    <circle cx={0} cy={0} r={6} fill={LIMB} stroke={INK} strokeWidth={2.5} />
+    {/* lengan atas: bahu (0,0) -> siku (0,72), sendi bola di bahu (v19 r 8, lebar ±9.5) */}
+    <circle cx={0} cy={0} r={8} fill={LIMB} stroke={INK} strokeWidth={2.5} />
     <path
-      d="M -6.5,0 L 6.5,0 L 6.5,58 Q 6.5,72 0,72 Q -6.5,72 -6.5,58 Z"
+      d="M -9.5,0 L 9.5,0 L 9.5,58 Q 9.5,72 0,72 Q -9.5,72 -9.5,58 Z"
       fill={LIMB}
       stroke={INK}
       strokeWidth={3}
       strokeLinejoin="round"
     />
     <g transform={`translate(0,72) rotate(${elbow})`}>
-      {/* lengan bawah: siku (0,0) -> pergelangan (0,66), sendi bola KECIL di siku */}
-      <circle cx={0} cy={0} r={5} fill={LIMB} stroke={INK} strokeWidth={2.5} />
+      {/* lengan bawah: siku (0,0) -> pergelangan (0,66), sendi bola di siku (v19 r 7, lebar ±9) */}
+      <circle cx={0} cy={0} r={7} fill={LIMB} stroke={INK} strokeWidth={2.5} />
       <path
-        d="M -6,0 L 6,0 L 6,54 Q 6,66 0,66 Q -6,66 -6,54 Z"
+        d="M -9,0 L 9,0 L 9,54 Q 9,66 0,66 Q -9,66 -9,54 Z"
         fill={LIMB}
         stroke={INK}
         strokeWidth={3}
@@ -477,54 +474,51 @@ const Arm: React.FC<{
  *  TEBAL membungkus bawah, 3 garis tali, tongue + kerah ankle. */
 const Leg: React.FC<{ hip: number; knee: number; flip?: boolean }> = ({ hip, knee, flip }) => (
   <g transform={`rotate(${hip})`}>
-    {/* paha: pinggul (0,0) -> lutut (0,108), sendi bola di pinggul */}
-    <circle cx={0} cy={0} r={7} fill={LIMB} stroke={INK} strokeWidth={2.5} />
+    {/* paha: pinggul (0,0) -> lutut (0,108), sendi bola di pinggul (v19 r 9, lebar ±10) */}
+    <circle cx={0} cy={0} r={9} fill={LIMB} stroke={INK} strokeWidth={2.5} />
     <path
-      d="M -7,0 L 7,0 L 7,96 Q 7,108 0,108 Q -7,108 -7,96 Z"
+      d="M -10,0 L 10,0 L 10,96 Q 10,108 0,108 Q -10,108 -10,96 Z"
       fill={PANTS}
       stroke={INK}
       strokeWidth={3}
       strokeLinejoin="round"
     />
     <g transform={`translate(0,108) rotate(${knee})`}>
-      {/* betis: lutut (0,0) -> pergelangan (0,108), sendi bola di lutut */}
-      <circle cx={0} cy={0} r={5} fill={LIMB} stroke={INK} strokeWidth={2.5} />
+      {/* betis: lutut (0,0) -> pergelangan (0,108), sendi bola di lutut (v19 r 7, lebar ±10) */}
+      <circle cx={0} cy={0} r={7} fill={LIMB} stroke={INK} strokeWidth={2.5} />
       <path
-        d="M -7,0 L 7,0 L 7,96 Q 7,108 0,108 Q -7,108 -7,96 Z"
+        d="M -10,0 L 10,0 L 10,96 Q 10,108 0,108 Q -10,108 -10,96 Z"
         fill={PANTS}
         stroke={INK}
         strokeWidth={3}
         strokeLinejoin="round"
       />
       {/* sepatu sneaker chunky: ujung ke arah luar (flip untuk kaki kiri).
-          Lokal: kerah -18, sol bawah +20 (= tanah). v18: tiap sepatu
-          digeser 16 unit ke luar (v17 15; celah antar sepatu 34 -> 36)
-          supaya dua sepatu berdampingan tidak menyatu; toe KURANG
-          BULAT lagi (tonjolan ke x 11, v17 12, muka depan datar
-          vertikal; sol depan ikut 11). */}
-      <g transform={`translate(${flip ? -16 : 16},108) scale(${flip ? -1 : 1},1)`}>
+          Lokal: kerah -20, sol bawah +22 (= tanah). v19: tiap sepatu
+          digeser 20 unit ke luar (v18 16); badan, kerah, tongue,
+          dan sol DIPERBESAR chunky (toe ke x 16, sol depan 16). */}
+      <g transform={`translate(${flip ? -20 : 20},108) scale(${flip ? -1 : 1},1)`}>
         {/* kerah ankle */}
-        <path d="M -15,-6 Q 0,-18 15,-6 L 15,4 L -15,4 Z" fill="#262626" stroke={INK} strokeWidth={3} strokeLinejoin="round" />
+        <path d="M -20,-6 Q 0,-20 20,-6 L 20,4 L -20,4 Z" fill="#262626" stroke={INK} strokeWidth={3} strokeLinejoin="round" />
         {/* tongue */}
-        <rect x={-3} y={-16} width={14} height={14} rx={4} fill="#333333" stroke={INK} strokeWidth={2.5} />
-        {/* badan atas: toe KURANG BULAT (tonjolan ke x 11, v17 12,
-            muka depan datar vertikal) */}
+        <rect x={-4} y={-16} width={18} height={14} rx={4} fill="#333333" stroke={INK} strokeWidth={2.5} />
+        {/* badan atas: toe BULAT chunky (tonjolan ke x 16) */}
         <path
-          d="M -16,-4 L 8,-4 C 10,-5 11,-2 11,6 L 11,14 L -18,14 C -24,8 -22,0 -16,-4 Z"
+          d="M -22,-4 L 12,-4 C 14,-5 16,-2 16,6 L 16,15 L -24,15 C -30,9 -28,0 -22,-4 Z"
           fill="#262626"
           stroke={INK}
           strokeWidth={3}
           strokeLinejoin="round"
         />
-        {/* 3 garis tali putih */}
+        {/* 3 garis tali putih (x 0..13) */}
         <g stroke="#fff" strokeWidth={3} strokeLinecap="round">
-          <line x1={0} y1={-1} x2={8} y2={-1} />
-          <line x1={0} y1={4} x2={9} y2={4} />
-          <line x1={2} y1={9} x2={10} y2={9} />
+          <line x1={0} y1={-1} x2={11} y2={-1} />
+          <line x1={0} y1={4} x2={12} y2={4} />
+          <line x1={2} y1={9} x2={13} y2={9} />
         </g>
         {/* sol putih TEBAL membungkus bawah */}
         <path
-          d="M -20,12 L 11,12 C 14,12 14,20 11,20 L -18,20 C -24,20 -24,14 -20,12 Z"
+          d="M -26,13 L 16,13 C 19,13 19,22 16,22 L -24,22 C -30,22 -30,15 -26,13 Z"
           fill="#f2f2f2"
           stroke={INK}
           strokeWidth={3}
@@ -539,28 +533,28 @@ const Leg: React.FC<{ hip: number; knee: number; flip?: boolean }> = ({ hip, kne
 
 const Torso: React.FC = () => (
   <g>
-    {/* kemeja putih + lengan pendek KECIL menempel bahu (keluar 11,
-        v4 14 — di v3 seperti sayap segitiga besar) */}
-    <path d="M -56,-366 L 56,-366 L 54,-236 L -54,-236 Z" fill="#fff" stroke={INK} strokeWidth={3.5} strokeLinejoin="round" />
-    <path d="M -56,-366 L -67,-354 L -63,-330 L -52,-332 Z" fill="#fff" stroke={INK} strokeWidth={3.5} strokeLinejoin="round" />
-    <path d="M 56,-366 L 67,-354 L 63,-330 L 52,-332 Z" fill="#fff" stroke={INK} strokeWidth={3.5} strokeLinejoin="round" />
+    {/* kemeja putih + lengan pendek menempel bahu (v19: keluar 11
+        dari x -92, mengikuti bahu yang dilebarkan) */}
+    <path d="M -92,-366 L 92,-366 L 90,-236 L -90,-236 Z" fill="#fff" stroke={INK} strokeWidth={3.5} strokeLinejoin="round" />
+    <path d="M -92,-366 L -103,-354 L -99,-330 L -88,-332 Z" fill="#fff" stroke={INK} strokeWidth={3.5} strokeLinejoin="round" />
+    <path d="M 92,-366 L 103,-354 L 99,-330 L 88,-332 Z" fill="#fff" stroke={INK} strokeWidth={3.5} strokeLinejoin="round" />
     {/* kerah kemeja */}
     <path d="M -16,-366 L -2,-349 L -2,-360 L -14,-368 Z" fill="#fff" stroke={INK} strokeWidth={3} strokeLinejoin="round" />
     <path d="M 16,-366 L 2,-349 L 2,-360 L 14,-368 Z" fill="#fff" stroke={INK} strokeWidth={3} strokeLinejoin="round" />
-    {/* rompi abu-abu: lebar 116 (~72% lebar kepala 160), taper ke
-        hem 28 tiap sisi (v17 29), sisi LEBIH MELENGKUNG ke dalam
-        (kontrol 39 -> 38, kurangi boxiness), bukaan V di dada
-        dipersempit (12, v5 14), belahan V kecil di hem bawah */}
+    {/* rompi abu-abu: lebar 184 (~115% lebar kepala 160), hem 68
+        tiap sisi, sisi HAMPIR LURUS sedikit melengkung ke dalam
+        (kontrol 76), bukaan V di dada (12), belahan V kecil di
+        hem bawah — v19: LEBAR BADAN, koreksi "kurus" v18 */}
     <path
-      d="M -58,-366 L -12,-366 L 0,-336 L 12,-366 L 58,-366 Q 38,-300 28,-236 L 3,-236 L 0,-244 L -3,-236 L -28,-236 Q -38,-300 -58,-366 Z"
+      d="M -92,-366 L -16,-366 L 0,-336 L 16,-366 L 92,-366 Q 76,-300 68,-236 L 3,-236 L 0,-244 L -3,-236 L -68,-236 Q -76,-300 -92,-366 Z"
       fill={VEST}
       stroke={INK}
       strokeWidth={3.5}
       strokeLinejoin="round"
     />
-    {/* garis reflektif putih (2) — dipersempit mengikuti taper */}
-    <rect x={-33} y={-302} width={66} height={9} fill={STRIPE} />
-    <rect x={-32} y={-274} width={64} height={9} fill={STRIPE} />
+    {/* garis reflektif putih (2) — v19 lebar 112/110 */}
+    <rect x={-56} y={-302} width={112} height={9} fill={STRIPE} />
+    <rect x={-55} y={-274} width={110} height={9} fill={STRIPE} />
     {/* dasi hitam PANJANG — digambar DI ATAS rompi (setelah rompi +
         stripes). Di v3 dasi digambar SEBELUM rompi sehingga rompi
         menutupnya dan hanya tersisa V kecil di leher. Hitam solid,
@@ -570,12 +564,12 @@ const Torso: React.FC = () => (
     <path d="M -6,-348 L 6,-348 L 8,-308 L 0,-300 L -8,-308 Z" fill={INK} />
     {/* resleting tengah (di bawah ujung dasi) */}
     <line x1={0} y1={-300} x2={0} y2={-236} stroke="#6e747a" strokeWidth={2} />
-    {/* kantong flap halus — digeser masuk mengikuti taper hem */}
-    <rect x={-29} y={-254} width={23} height={9} rx={2} fill={VEST_DARK} stroke={INK} strokeWidth={3} />
-    <rect x={7} y={-254} width={23} height={9} rx={2} fill={VEST_DARK} stroke={INK} strokeWidth={3} />
+    {/* kantong flap halus — v19 digeser keluar mengikuti hem lebar */}
+    <rect x={-50} y={-254} width={26} height={9} rx={2} fill={VEST_DARK} stroke={INK} strokeWidth={3} />
+    <rect x={24} y={-254} width={26} height={9} rx={2} fill={VEST_DARK} stroke={INK} strokeWidth={3} />
     {/* name tag DEDI — panel kanan (sesuai sheet) */}
-    <rect x={8} y={-332} width={32} height={12} fill="#fff" stroke={INK} strokeWidth={2.5} />
-    <text x={24} y={-323} fontSize={9} fontWeight={800} textAnchor="middle" fill={INK} fontFamily="Arial, sans-serif">
+    <rect x={32} y={-332} width={32} height={12} fill="#fff" stroke={INK} strokeWidth={2.5} />
+    <text x={48} y={-323} fontSize={9} fontWeight={800} textAnchor="middle" fill={INK} fontFamily="Arial, sans-serif">
       DEDI
     </text>
   </g>
@@ -608,12 +602,12 @@ export const DediRig: React.FC<DediRigProps> = ({
 }) => (
   <g transform={`translate(${x},${floor + bounce}) scale(${flip ? -scale : scale},${scale})`}>
     {/* bayangan lantai */}
-    <ellipse cx={0} cy={2} rx={92} ry={12} fill="#000" opacity={0.08} />
-    {/* kaki: pinggul di (±22,-236) */}
-    <g transform="translate(-22,-236)">
+    <ellipse cx={0} cy={2} rx={120} ry={12} fill="#000" opacity={0.08} />
+    {/* kaki: pinggul di (±30,-236) */}
+    <g transform="translate(-30,-236)">
       <Leg hip={hipL} knee={kneeL} flip />
     </g>
-    <g transform="translate(22,-236)">
+    <g transform="translate(30,-236)">
       <Leg hip={hipR} knee={kneeR} />
     </g>
     {/* leher */}
@@ -625,11 +619,11 @@ export const DediRig: React.FC<DediRigProps> = ({
     <g transform={`translate(0,-368) scale(0.95) rotate(${headTilt}) translate(0,368)`}>
       <Head mood={mood} />
     </g>
-    {/* lengan kiri (belakang) + kanan (depan): bahu di (±50,-342) */}
-    <g transform="translate(-50,-342)">
+    {/* lengan kiri (belakang) + kanan (depan): bahu di (±82,-342) */}
+    <g transform="translate(-82,-342)">
       <Arm shoulder={shoulderL} elbow={elbowL} wrist={wristL} hand={handL} held={heldL} />
     </g>
-    <g transform="translate(50,-342)">
+    <g transform="translate(82,-342)">
       <Arm shoulder={shoulderR} elbow={elbowR} wrist={wristR} hand={handR} held={heldR} />
     </g>
   </g>
