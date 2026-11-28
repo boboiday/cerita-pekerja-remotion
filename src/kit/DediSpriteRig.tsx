@@ -140,6 +140,10 @@ export type DediSpriteProps = {
   headTilt?: number;
   /** pantulan jalan, figure px (negatif = naik) */
   bounce?: number;
+  /** condong badan, derajat (pivot lantai) — 0 = tegak */
+  lean?: number;
+  /** ayunan dasi, derajat (pivot atas dasi) */
+  tieSwing?: number;
 };
 
 export const DediSprite: React.FC<DediSpriteProps> = ({
@@ -162,6 +166,8 @@ export const DediSprite: React.FC<DediSpriteProps> = ({
   heldL = "none",
   headTilt = 0,
   bounce = 0,
+  lean = 0,
+  tieSwing = 0,
 }) => {
   const floorEff = floor + bounce * S;
   const base = { x, floor: floorEff, S };
@@ -193,8 +199,20 @@ export const DediSprite: React.FC<DediSpriteProps> = ({
   // Kaki bengkok: sepatu tertinggal ke kiri di crop — di kaki kanan dibalik.
   const flipLegR = legR === "bent";
 
+  // Lean: putar seluruh figure di sekitar titik lantai (kaki tetap menempel).
+  // Wrapper menutupi kanvas penuh di (0,0) jadi koordinat Part tidak berubah.
   return (
-    <>
+    <div
+      style={{
+        position: "absolute",
+        left: 0,
+        top: 0,
+        width: "100%",
+        height: "100%",
+        transform: `rotate(${lean}deg)`,
+        transformOrigin: `${x}px ${floorEff}px`,
+      }}
+    >
       {/* kaki (di belakang rompi) */}
       <Part {...base} src={staticFile(`dedi-sprite/${legSpecL.file}`)}
         cropW={legSpecL.cropW} cropH={legSpecL.cropH} scaleX={legSpecL.scale} scaleY={legSpecL.scale}
@@ -215,7 +233,7 @@ export const DediSprite: React.FC<DediSpriteProps> = ({
         pivotCropX={46.5} pivotCropY={0} anchorX={69} anchorY={98} />
       <Part {...base} src={staticFile("dedi-sprite/tie-blade.png")}
         cropW={44} cropH={120} scaleX={0.4} scaleY={0.4}
-        pivotCropX={22} pivotCropY={0} anchorX={69} anchorY={120} />
+        pivotCropX={22} pivotCropY={0} anchorX={69} anchorY={120} rot={tieSwing} />
       {/* kepala (di atas rompi, kerah menutup sambungan leher) */}
       <Part {...base} src={staticFile(`dedi-sprite/${face.file}`)}
         cropW={face.cropW} cropH={face.cropH} scaleX={0.8} scaleY={0.8}
@@ -236,6 +254,6 @@ export const DediSprite: React.FC<DediSpriteProps> = ({
           pivotCropX={73.5} pivotCropY={52.5}
           anchorX={wristLFig.x + 8} anchorY={wristLFig.y + 12} rot={-15} />
       )}
-    </>
+    </div>
   );
 };
