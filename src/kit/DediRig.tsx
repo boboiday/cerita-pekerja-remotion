@@ -22,7 +22,7 @@ import React from "react";
  *  - Sendi bahu r 9->6, siku r 7->5, pinggul r 9->7, lutut r 7->5.
  *  - Sepatu: toe dipersempit (36->30) supaya dua sepatu tak menyatu.
  *  - Outline wajah 4->3.5.
- */
+ *
  * Sendi (pivot transform): bahu, siku, pinggul, lutut. Prop mood ganti
  * bagian wajah; prop hand ganti pose tangan; prop held ganti barang di tangan.
  *
