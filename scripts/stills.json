@@ -235,14 +235,14 @@
     "label": "Melambai"
    },
    {
-    "frame": 225,
+    "frame": 210,
     "label": "Jempol + tegas"
    },
    {
     "frame": 285,
-    "label": "Tahan · angguk"
+    "label": "Pegang helm · hero pose"
    }
   ],
-  "title": "DediRigDemo — Rig vektor Dedi (PILOT, DRAFT)"
+  "title": "DediRigDemo — Rig vektor Dedi (sheet modular baru, DRAFT)"
  }
 }
