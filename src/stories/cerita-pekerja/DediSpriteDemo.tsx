@@ -34,8 +34,9 @@ const Demo: React.FC = () => {
   const hipL = 16 * swing * walk;
   const hipR = -16 * swing * walk;
   // Kaki yang terangkat pakai kaki bengkok (lutut tertekuk) — hanya saat jalan.
+  // Saat berhenti (walk=0) kedua kaki lurus.
   const legL: DediSpriteLeg = walk && swing > 0 ? "bent" : "straightL";
-  const legR: DediSpriteLeg = walk && swing > 0 ? "straightR" : "bent";
+  const legR: DediSpriteLeg = walk && swing <= 0 ? "bent" : "straightR";
   const shoulderLWalk = -10 * swing * walk;
   const shoulderRWalk = 10 * swing * walk;
   const bounce = walk ? -5 * Math.abs(Math.sin(phase)) : 0;
