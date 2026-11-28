@@ -1,31 +1,33 @@
 import React from "react";
 
 /**
- * DediRig v13 — ronde 11 (MISMATCH-v12.md, skor 91% -> target >=95%).
+ * DediRig v14 — ronde 12 (MISMATCH-v13.md, skor 92% -> target >=95%).
  *
- * Perubahan vs v12 (sliver kiri masih daun kecil + strand masih pita):
- *  - SLIVER KIRI DIJINAKKAN LAGI: strand 3 DIPENDEKKAN (-77,-535 ->
- *    ujung -70,-533) dan DIPUTAR mengarah ke bawah mengikuti lekuk
- *    kepala, 12 unit DI DALAM siluet (tepi kiri di y -533 adalah
- *    x -82) — tidak lagi terbaca sebagai daun terpisah. Strand
- *    samping kiri siluet juga DIPENDEKKAN (ujung -448 -> -458) dan
- *    ditarik lebih rapat ke wajah supaya tidak menjuntai seperti pita.
- *  - STRAND BENTUK TERISI MERUNCING (3): strand 1 & 2 dibentuk
- *    ulang dari pita lebar selebar-seragam menjadi HELAIAN
- *    meruncing — pangkal lebar di kiri, menyapu kiri->kanan satu
- *    arah, berakhir RUNCING tepat di tepi siluet (84,-570 dan
- *    88,-546). 4 garis INK sejajar panjang yang membuat efek
- *    pita/garis-garis DIHAPUS, diganti 2 garis pemisah PENDEK di
- *    celah antar-strand + 2 highlight pendek di dalam badan strand.
- *  - DOME ATAS: apex -629 -> -631 di x 15, spike kanan sedikit
- *    lebih penuh — massa lebih tersapu ke satu sisi, siluet atas
- *    lebih dome.
- *  - Rompi: hem taper 80 -> 78, sisi lebih melengkung ke dalam.
- *  - Sepatu: toe kurang bulat lagi (tonjolan ke x 16, v12 18,
- *    muka depan lebih datar), tiap sepatu digeser 1 unit lagi ke
- *    luar (celah 24 -> 26, kurangi tumpang tindih).
- *  - Outline rambut ditipiskan: strokeWidth 1.0 -> 0.75.
- *  - Wajah/proporsi/warna: tidak diubah (sudah 91–93, sisa minor
+ * Perubahan vs v13:
+ *  - EKOR SILUET KIRI DIPOTONG (a): ujung bawah kiri -458 -> -502
+ *    (44 unit lebih pendek, berakhir setinggi pelipis, bukan pipi)
+ *    dan tonjolan luar maks -97 -> -91 — pita tipis yang menjuntai
+ *    bebas di samping wajah kini jadi massa samping yang mengikuti
+ *    lekuk kepala. Penutup fringe kiri ikut dipendekkan ke -502.
+ *  - STRAND 3 (sliver kiri) DITATA ULANG: dari daun kecil menunjuk
+ *    ke bawah-kiri menjadi helaian pendek yang berbaring mengikuti
+ *    garis fringe (pangkal -50,-540, ujung -64,-528), terselip di
+ *    dalam massa rambut, tidak lagi terbaca sebagai daun terpisah.
+ *  - 2 HELAIAN BERLAPIS BARU di ubun-ubun (b): S4 lapis tengah-kanan
+ *    (ujung runcing 70,-561, di dalam siluet) + S3 lapis bawah-kiri
+ *    (ujung runcing 26,-546, di atas gigi fringe) — keduanya
+ *    meruncing, menyapu kiri->kanan satu arah, ujung tidak mencapai
+ *    tepi siluet (staggered, bukan pita sejajar). +1 garis pemisah
+ *    pendek +1 highlight pendek di dalam S4.
+ *  - DOME ATAS (c): apex -631 -> -633 di x 16, spike puncak sedikit
+ *    lebih condong ke kanan — massa lebih tersapu ke satu sisi.
+ *  - Rompi: hem 36 -> 34 tiap sisi, sisi lebih melengkung ke dalam
+ *    (kontrol 46 -> 44), stripes + kantong ikut menyempit.
+ *  - Sepatu: toe kurang bulat lagi (tonjolan ke x 15, v13 16, muka
+ *    depan lebih datar), tiap sepatu digeser 1 unit lagi ke luar
+ *    (12, celah 26 -> 28, kurangi tumpang tindih).
+ *  - Outline rambut ditipiskan: strokeWidth 0.75 -> 0.6.
+ *  - Wajah/proporsi/warna: tidak diubah (sudah 92–94, sisa minor
  *    tidak terisolasi ke satu koordinat — dibiarkan agar tidak
  *    merusak yang sudah dekat).
  *
@@ -196,45 +198,55 @@ const Head: React.FC<{ mood: DediMood }> = ({ mood }) => (
     <ellipse cx={-68} cy={-452} rx={5} ry={8} fill={SKIN} stroke={INK} strokeWidth={3} />
     <ellipse cx={68} cy={-452} rx={5} ry={8} fill={SKIN} stroke={INK} strokeWidth={3} />
     {/* rambut — SATU siluet path, semua ujung MEMBULAT (kurva Q):
-        UBUN-UBUN BER-SPIKE v13: apex -631 di x 15 (v12 -629),
-        spike kanan sedikit lebih penuh — massa tersapu ke satu
-        sisi, siluet atas lebih dome; strand samping kiri
-        DIPENDEKKAN (ujung -458, v12 -448) dan ditarik rapat ke
-        wajah; sisi kiri 3 strand MENGALIR kurva-S lembut
-        (tonjolan maks ~-97), sisi kanan 2 strand pendek + 1 strand
+        UBUN-UBUN BER-SPIKE v14: apex -633 di x 16 (v13 -631),
+        spike puncak sedikit condong ke kanan — massa tersapu ke
+        satu sisi, siluet atas lebih dome; EKOR KIRI DIPOTONG
+        (ujung -502, v13 -458; tonjolan luar maks -91, v13 -97)
+        supaya tidak ada lagi pita tipis menjuntai di samping
+        wajah — massa samping kini berakhir setinggi pelipis dan
+        mengikuti lekuk kepala; sisi kiri 3 strand MENGALIR
+        kurva-S lembut, sisi kanan 2 strand pendek + 1 strand
         samping membulat sampai y -440, fringe SCALLOP BERVARIASI
         (gigi -524..-544; gigi x 38 di sisi sapuan DIPANJANGKAN ke
         -544, gigi terpanjang; gigi x 24 -> -538, x -28 -> -540;
-        lembah -500..-516). Outline 0.75 (v12 1.0). */}
+        lembah -500..-516). Outline 0.6 (v13 0.75). */}
     <path
-      d="M -85,-458 Q -97,-464 -92,-482 Q -89,-495 -80,-492 Q -91,-508 -86,-526 Q -82,-540 -71,-536 Q -82,-552 -74,-562 Q -69,-570 -61,-565 Q -55,-573 -48,-573 Q -57,-596 -50,-608 Q -44,-614 -37,-608 Q -31,-598 -28,-588 Q -26,-608 -20,-617 Q -14,-625 -7,-612 Q -2,-602 2,-590 Q 4,-612 8,-623 Q 15,-631 22,-617 Q 27,-605 29,-588 Q 33,-610 37,-617 Q 42,-624 49,-612 Q 52,-601 54,-584 Q 68,-580 80,-571 Q 88,-560 92,-546 Q 100,-532 94,-520 Q 88,-510 80,-512 Q 88,-496 86,-482 Q 84,-470 76,-466 Q 72,-452 66,-442 Q 60,-436 56,-448 Q 52,-462 48,-470 Q 43,-548 38,-544 Q 30,-502 24,-538 Q 18,-514 12,-528 Q 4,-500 0,-534 Q -8,-516 -14,-526 Q -22,-503 -28,-540 Q -36,-512 -42,-530 Q -50,-505 -56,-524 Q -64,-514 -70,-532 Q -76,-506 -80,-528 Q -83,-508 -83,-492 Q -84,-474 -85,-458 Z"
+      d="M -82,-502 Q -91,-506 -88,-520 Q -86,-532 -76,-530 Q -82,-542 -71,-536 Q -82,-552 -74,-562 Q -69,-570 -61,-565 Q -55,-573 -48,-573 Q -57,-596 -50,-608 Q -44,-614 -37,-608 Q -31,-598 -28,-588 Q -26,-608 -20,-617 Q -14,-625 -7,-612 Q -2,-602 2,-590 Q 4,-612 9,-624 Q 16,-633 23,-617 Q 27,-605 29,-588 Q 33,-610 37,-617 Q 42,-624 49,-612 Q 52,-601 54,-584 Q 68,-580 80,-571 Q 88,-560 92,-546 Q 100,-532 94,-520 Q 88,-510 80,-512 Q 88,-496 86,-482 Q 84,-470 76,-466 Q 72,-452 66,-442 Q 60,-436 56,-448 Q 52,-462 48,-470 Q 43,-548 38,-544 Q 30,-502 24,-538 Q 18,-514 12,-528 Q 4,-500 0,-534 Q -8,-516 -14,-526 Q -22,-503 -28,-540 Q -36,-512 -42,-530 Q -50,-505 -56,-524 Q -64,-514 -70,-532 Q -76,-506 -80,-528 Q -82,-516 -80,-510 Q -81,-505 -82,-502 Z"
       fill={HAIR}
       stroke={INK}
-      strokeWidth={0.75}
+      strokeWidth={0.6}
       strokeLinejoin="round"
     />
-    {/* tekstur strand ubun-ubun v13 — 3 STRAND BENTUK TERISI
-        MERUNCING (bukan pita lebar seragam): pangkal lebar di
-        kiri, menyapu kiri->kanan satu arah, berakhir RUNCING
-        tepat di tepi siluet — strand 1 atas (84,-570), strand 2
-        tengah (88,-546), strand 3 kiri DIPENDEKKAN + diputar ke
-        bawah mengikuti lekuk kepala (ujung -70,-533, 12 unit di
-        dalam siluet) supaya tidak terbaca sebagai daun terpisah.
-        Garis INK sejajar panjang v12 DIHAPUS (itu yang membuat
-        efek pita); tersisa 2 garis pemisah PENDEK di celah antar
-        strand + 2 highlight pendek di dalam badan strand. */}
+    {/* tekstur strand ubun-ubun v14 — 4 STRAND BENTUK TERISI
+        MERUNCING + 1 sliver kiri: strand 1 & 2 (v13, pangkal lebar
+        di kiri, menyapu kiri->kanan satu arah, berakhir RUNCING
+        tepat di tepi siluet) + 2 HELAIAN BARU berlapis: S4 lapis
+        tengah-kanan (ujung runcing 70,-561, DI DALAM siluet) dan
+        S3 lapis bawah-kiri (ujung runcing 26,-546, di atas gigi
+        fringe) — keduanya lebih pendek dari strand 1 & 2 dan
+        ujungnya staggered supaya terbaca sebagai lapisan yang
+        saling tumpang tindih, bukan pita sejajar. Sliver kiri
+        (S5) DITATA ULANG: helaian pendek berbaring mengikuti
+        garis fringe (ujung -64,-528), terselip di dalam massa.
+        Garis INK sejajar panjang v12 TETAP dihapus; tersisa
+        3 garis pemisah PENDEK di celah antar-strand + 3 highlight
+        pendek di dalam badan strand. */}
     <g fill={HAIR_HI} stroke={INK} strokeWidth={1.5} strokeLinejoin="round">
       <path d="M -60,-578 Q -12,-596 62,-586 Q 78,-580 84,-570 Q 56,-570 16,-576 Q -24,-582 -60,-578 Z" />
       <path d="M -46,-562 Q -4,-572 52,-560 Q 74,-554 88,-546 Q 64,-542 32,-547 Q -10,-553 -46,-562 Z" />
-      <path d="M -52,-538 Q -62,-540 -70,-533 Q -66,-525 -56,-523 Z" />
+      <path d="M -8,-574 Q 24,-580 54,-572 Q 66,-568 70,-561 Q 44,-562 16,-567 Q -2,-570 -8,-574 Z" />
+      <path d="M -58,-554 Q -24,-561 12,-554 Q 24,-551 26,-546 Q 2,-546 -22,-550 Q -44,-552 -58,-554 Z" />
+      <path d="M -50,-540 Q -60,-540 -64,-528 Q -58,-522 -52,-526 Q -48,-534 -50,-540 Z" />
     </g>
     <g stroke={INK} strokeWidth={2.5} strokeLinecap="round" fill="none" opacity={1}>
       <path d="M -50,-566 Q -14,-572 22,-568" />
       <path d="M -40,-542 Q -6,-547 28,-542" />
+      <path d="M -48,-548 Q -20,-552 6,-548" />
     </g>
     <g stroke={HAIR_HI} strokeWidth={3} strokeLinecap="round" fill="none" opacity={0.75}>
       <path d="M -40,-580 Q -8,-588 24,-582" />
       <path d="M -28,-556 Q 2,-561 30,-555" />
+      <path d="M 6,-573 Q 28,-577 48,-570" />
     </g>
     {/* pemisah strand samping KANAN v8 — 2 garis di dalam massa
         coklat polos (x 66..84, y -468..-520), tersapu mengikuti
@@ -467,19 +479,19 @@ const Leg: React.FC<{ hip: number; knee: number; flip?: boolean }> = ({ hip, kne
         strokeLinejoin="round"
       />
       {/* sepatu sneaker chunky: ujung ke arah luar (flip untuk kaki kiri).
-          Lokal: kerah -18, sol bawah +20 (= tanah). v13: tiap sepatu
-          digeser 11 unit ke luar (v12 10; celah antar sepatu 24 -> 26)
+          Lokal: kerah -18, sol bawah +20 (= tanah). v14: tiap sepatu
+          digeser 12 unit ke luar (v13 11; celah antar sepatu 26 -> 28)
           supaya dua sepatu berdampingan tidak menyatu; toe KURANG
-          BULAT lagi (tonjolan ke x 16, v12 18, muka depan lebih datar). */}
-      <g transform={`translate(${flip ? -11 : 11},108) scale(${flip ? -1 : 1},1)`}>
+          BULAT lagi (tonjolan ke x 15, v13 16, muka depan lebih datar). */}
+      <g transform={`translate(${flip ? -12 : 12},108) scale(${flip ? -1 : 1},1)`}>
         {/* kerah ankle */}
         <path d="M -15,-6 Q 0,-18 15,-6 L 15,4 L -15,4 Z" fill="#262626" stroke={INK} strokeWidth={3} strokeLinejoin="round" />
         {/* tongue */}
         <rect x={-3} y={-16} width={14} height={14} rx={4} fill="#333333" stroke={INK} strokeWidth={2.5} />
-        {/* badan atas: toe KURANG BULAT (tonjolan ke x 16, v12 18,
+        {/* badan atas: toe KURANG BULAT (tonjolan ke x 15, v13 16,
             muka depan lebih datar) */}
         <path
-          d="M -16,-4 L 8,-4 C 13,-5 16,-2 16,6 L 15,14 L -18,14 C -24,8 -22,0 -16,-4 Z"
+          d="M -16,-4 L 8,-4 C 12,-5 15,-2 15,6 L 14,14 L -18,14 C -24,8 -22,0 -16,-4 Z"
           fill="#262626"
           stroke={INK}
           strokeWidth={3}
@@ -488,12 +500,12 @@ const Leg: React.FC<{ hip: number; knee: number; flip?: boolean }> = ({ hip, kne
         {/* 3 garis tali putih */}
         <g stroke="#fff" strokeWidth={3} strokeLinecap="round">
           <line x1={0} y1={-1} x2={8} y2={-1} />
-          <line x1={0} y1={4} x2={10} y2={4} />
-          <line x1={2} y1={9} x2={11} y2={9} />
+          <line x1={0} y1={4} x2={9} y2={4} />
+          <line x1={2} y1={9} x2={10} y2={9} />
         </g>
         {/* sol putih TEBAL membungkus bawah */}
         <path
-          d="M -20,12 L 16,12 C 19,12 19,20 16,20 L -18,20 C -24,20 -24,14 -20,12 Z"
+          d="M -20,12 L 15,12 C 18,12 18,20 15,20 L -18,20 C -24,20 -24,14 -20,12 Z"
           fill="#f2f2f2"
           stroke={INK}
           strokeWidth={3}
@@ -517,19 +529,19 @@ const Torso: React.FC = () => (
     <path d="M -16,-366 L -2,-349 L -2,-360 L -14,-368 Z" fill="#fff" stroke={INK} strokeWidth={3} strokeLinejoin="round" />
     <path d="M 16,-366 L 2,-349 L 2,-360 L 14,-368 Z" fill="#fff" stroke={INK} strokeWidth={3} strokeLinejoin="round" />
     {/* rompi abu-abu: lebar 116 (~72% lebar kepala 160), taper ke
-        hem 78 (v12 80), sisi LEBIH MELENGKUNG ke dalam (kurangi
-        boxiness), bukaan V di dada dipersempit (12, v5 14),
-        belahan V kecil di hem bawah */}
+        hem 34 tiap sisi (v13 36), sisi LEBIH MELENGKUNG ke dalam
+        (kontrol 46 -> 44, kurangi boxiness), bukaan V di dada
+        dipersempit (12, v5 14), belahan V kecil di hem bawah */}
     <path
-      d="M -58,-366 L -12,-366 L 0,-336 L 12,-366 L 58,-366 Q 46,-300 36,-236 L 4,-236 L 0,-244 L -4,-236 L -36,-236 Q -46,-300 -58,-366 Z"
+      d="M -58,-366 L -12,-366 L 0,-336 L 12,-366 L 58,-366 Q 44,-300 34,-236 L 3,-236 L 0,-244 L -3,-236 L -34,-236 Q -44,-300 -58,-366 Z"
       fill={VEST}
       stroke={INK}
       strokeWidth={3.5}
       strokeLinejoin="round"
     />
     {/* garis reflektif putih (2) — dipersempit mengikuti taper */}
-    <rect x={-40} y={-302} width={80} height={9} fill={STRIPE} />
-    <rect x={-38} y={-274} width={76} height={9} fill={STRIPE} />
+    <rect x={-38} y={-302} width={76} height={9} fill={STRIPE} />
+    <rect x={-37} y={-274} width={74} height={9} fill={STRIPE} />
     {/* dasi hitam PANJANG — digambar DI ATAS rompi (setelah rompi +
         stripes). Di v3 dasi digambar SEBELUM rompi sehingga rompi
         menutupnya dan hanya tersisa V kecil di leher. Hitam solid,
@@ -540,8 +552,8 @@ const Torso: React.FC = () => (
     {/* resleting tengah (di bawah ujung dasi) */}
     <line x1={0} y1={-300} x2={0} y2={-236} stroke="#6e747a" strokeWidth={2} />
     {/* kantong flap halus — digeser masuk mengikuti taper hem */}
-    <rect x={-36} y={-254} width={24} height={9} rx={2} fill={VEST_DARK} stroke={INK} strokeWidth={3} />
-    <rect x={12} y={-254} width={24} height={9} rx={2} fill={VEST_DARK} stroke={INK} strokeWidth={3} />
+    <rect x={-34} y={-254} width={24} height={9} rx={2} fill={VEST_DARK} stroke={INK} strokeWidth={3} />
+    <rect x={10} y={-254} width={24} height={9} rx={2} fill={VEST_DARK} stroke={INK} strokeWidth={3} />
     {/* name tag DEDI — panel kanan (sesuai sheet) */}
     <rect x={8} y={-332} width={32} height={12} fill="#fff" stroke={INK} strokeWidth={2.5} />
     <text x={24} y={-323} fontSize={9} fontWeight={800} textAnchor="middle" fill={INK} fontFamily="Arial, sans-serif">
