@@ -284,7 +284,7 @@ const Shot02: React.FC<{ dur: number }> = ({ dur }) => {
         </g>
         <Stick x={x} floor={FLOOR} scale={0.95} look={YOGA} pose={pose} mood="hopeful" lookAt={lookRight ? 1 : 0.5} />
       </Canvas>
-      <KineticText words={["PEKERJA", "GUDANG,", "SEMINGGU"]} at={60} stagger={3} top={420} fontSize={64} accent={["SEMINGGU"]} />
+      <KineticText words={["PEKERJA", "GUDANG,", "SEMINGGU"]} at={60} stagger={3} top={680} fontSize={64} accent={["SEMINGGU"]} />
     </Camera>
   );
 };
@@ -298,11 +298,14 @@ const Shot03: React.FC<{ dur: number }> = ({ dur }) => {
     <Camera dur={dur} move="push-in" amount={0.05} origin="50% 50%">
       <Canvas bg="#f7f1e3">
         <WarehouseBg />
+        {/* meja kepala gudang (paket seragam beralas di atasnya) */}
+        <rect x={300} y={1180} width={420} height={26} fill="#6b4a38" stroke={C.ink} strokeWidth={5} />
+        <rect x={320} y={1206} width={380} height={194} fill="#4a3428" />
         {/* paket seragam di atas meja kepala gudang */}
         <g transform="translate(540,1120)">
           <UniformPackage />
         </g>
-        <g transform="translate(290,1280)">
+        <g transform="translate(480,1280)">
           <NameCard name="PAK ANTO" role="KEPALA GUDANG" />
         </g>
         <rect x={0} y={1400} width={1080} height={520} fill="#7a7568" />
@@ -319,7 +322,7 @@ const Shot03: React.FC<{ dur: number }> = ({ dur }) => {
         />
         <Stick x={820} floor={FLOOR} scale={0.95} look={ANTO} pose={{ ...STAND, armF: [1.2, 0.2], armB: [0.2, 0.1], lean: -0.03, headTilt: -0.08 }} mood="worried" lookAt={-0.8} />
       </Canvas>
-      <KineticText words={["RP250.000,", "POTONG", "GAJI"]} at={92} stagger={3} top={420} fontSize={64} accent={["RP250.000,"]} />
+      <KineticText words={["RP250.000,", "POTONG", "GAJI"]} at={92} stagger={3} top={420} fontSize={64} accent={["RP250.000,", "POTONG", "GAJI"]} />
     </Camera>
   );
 };
