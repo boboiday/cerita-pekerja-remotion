@@ -9,10 +9,12 @@ import React from "react";
  *    tengah-kiri ikut condong kanan; +1 spike membulat-runcing baru
  *    di tepi atas kanan (puncak -626 di x 50); tonjolan kiri atas
  *    direndahkan supaya massa terbaca tersapu ke satu sisi.
- *  - FRINGE HELAIAN TERSAPU (b): 2 gigi fringe kanan DIPANJANGKAN
- *    (x 38 -> tip 50,-554; x 24 -> tip 28,-545) dengan lembah
- *    di antaranya diperdalam (-498) supaya terbaca sebagai 2 helai
- *    tersapu, bukan scallop seragam. Gigi kiri tidak diubah.
+ *  - FRINGE HELAIAN TERSAPU (b): 3 gigi fringe kanan DIPANJANGKAN
+ *    dan DICONDONGKAN ke kanan (tip 56,-552; 46,-544; 34,-536 —
+ *    masing-masing ujung bergeser ke kanan dari lembahnya, lembah
+ *    di antaranya diperdalam ke -494..-506) supaya terbaca sebagai
+ *    3 helai tersapu bertingkat, bukan scallop seragam. Gigi kiri
+ *    tidak diubah.
  *  - +1 HELAIAN BERLAPIS S5 di ubun-ubun atas-tengah (c): bentuk
  *    terisi meruncing (ujung 30,-594, di dalam siluet, staggered
  *    terhadap S1/S4) + 1 highlight pendek di dalamnya.
@@ -204,12 +206,13 @@ const Head: React.FC<{ mood: DediMood }> = ({ mood }) => (
         tepat di gigi fringe paling kiri — tidak ada lagi pita tipis
         menjuntai di samping wajah; sisi kiri 3 strand MENGALIR
         kurva-S lembut, sisi kanan 2 strand pendek + 1 strand
-        samping membulat sampai y -440, fringe 2 HELAIAN TERSAPU
-        (gigi x 50 -> -554, x 28 -> -545, lembah -498 di antara;
-        gigi lain -524..-540; lembah -500..-516). Outline 0.5
+        samping membulat sampai y -440, fringe 3 HELAIAN TERSAPU
+        (gigi x 56 -> -552, x 46 -> -544, x 34 -> -536, masing-masing
+        ujung condong ke kanan dari lembahnya, lembah -494..-506 di
+        antara; gigi lain -524..-540; lembah -500..-516). Outline 0.5
         (v14 0.6). */}
     <path
-      d="M -80,-528 Q -89,-532 -86,-544 Q -83,-554 -73,-550 Q -79,-560 -70,-560 Q -69,-570 -61,-565 Q -55,-573 -48,-573 Q -57,-594 -51,-605 Q -45,-610 -38,-605 Q -32,-597 -29,-588 Q -25,-603 -18,-613 Q -11,-621 -3,-610 Q 1,-601 4,-591 Q 7,-611 13,-625 Q 20,-637 29,-620 Q 33,-607 35,-590 Q 39,-609 44,-618 Q 50,-626 57,-612 Q 59,-600 61,-586 Q 71,-580 80,-571 Q 88,-560 92,-546 Q 100,-532 94,-520 Q 88,-510 80,-512 Q 88,-496 86,-482 Q 84,-470 76,-466 Q 72,-452 66,-442 Q 60,-436 56,-448 Q 52,-462 48,-470 Q 52,-548 50,-554 Q 36,-498 28,-545 Q 20,-514 13,-529 Q 5,-500 0,-534 Q -8,-516 -14,-526 Q -22,-503 -28,-540 Q -36,-512 -42,-530 Q -50,-505 -56,-524 Q -64,-514 -70,-532 Q -76,-506 -80,-528 Z"
+      d="M -80,-528 Q -89,-532 -86,-544 Q -83,-554 -73,-550 Q -79,-560 -70,-560 Q -69,-570 -61,-565 Q -55,-573 -48,-573 Q -57,-594 -51,-605 Q -45,-610 -38,-605 Q -32,-597 -29,-588 Q -25,-603 -18,-613 Q -11,-621 -3,-610 Q 1,-601 4,-591 Q 7,-611 13,-625 Q 20,-637 29,-620 Q 33,-607 35,-590 Q 39,-609 44,-618 Q 50,-626 57,-612 Q 59,-600 61,-586 Q 71,-580 80,-571 Q 88,-560 92,-546 Q 100,-532 94,-520 Q 88,-510 80,-512 Q 88,-496 86,-482 Q 84,-470 76,-466 Q 72,-452 66,-442 Q 60,-436 56,-448 Q 52,-462 48,-470 Q 56,-546 56,-552 Q 40,-494 46,-544 Q 30,-506 34,-536 Q 16,-512 12,-528 Q 4,-500 0,-534 Q -8,-516 -14,-526 Q -22,-503 -28,-540 Q -36,-512 -42,-530 Q -50,-505 -56,-524 Q -64,-514 -70,-532 Q -76,-506 -80,-528 Z"
       fill={HAIR}
       stroke={INK}
       strokeWidth={0.5}
