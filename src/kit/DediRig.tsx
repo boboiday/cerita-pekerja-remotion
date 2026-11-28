@@ -1,27 +1,27 @@
 import React from "react";
 
 /**
- * DediRig v4 — ronde 2 (MISMATCH-v3.md, skor 61% -> target >=95%).
+ * DediRig v5 — ronde 3 (MISMATCH-v4.md, skor 68% -> target >=95%).
  *
- * Perubahan vs v3:
- *  - FRAMING: demo scale 1.35 -> 1.15 (0.85x) supaya kepala+rambut utuh.
- *  - Alis DIGAMBAR ULANG: batang TEBAL berisi (poligon 36x8, bukan garis
- *    4px), miring ke dalam, di y -500..-492 — DI BAWAH fringe (ujung
- *    fringe terdalam -508) dan DI ATAS mata (puncak -477).
- *  - Rambut DIGAMBAR ULANG 3 lapis: mahkota lebar berspike lebar, 2
- *    helaian samping LEBAR (26-32) berujung runcing melewati telinga,
- *    fringe tersapu tak beraturan (ujung -508..-530). Telinga digambar
- *    SETELAH rambut supaya mengintip di bawah helaian, seperti sheet.
- *  - Dasi DIPINDAH ke ATAS rompi (digambar setelah rompi+stripes):
- *    hitam solid dari kerah sampai tengah dada (ujung -300).
- *  - Jempol DIGAMBAR ULANG: kepalan LEBAR (30) + jempol TEBAL (15)
- *    miring -14° di sisi kepalan, alur jari kontras (fill kepalan
- *    #2e2e33, alur #101010 — sebelumnya alur INK di atas fill
- *    nyaris-hitam sehingga tak terlihat).
- *  - Lengan baju putih DIKECILKAN: menempel bahu (keluar 14, bukan 26).
- *  - Sendi bahu r 9->6, siku r 7->5, pinggul r 9->7, lutut r 7->5.
- *  - Sepatu: toe dipersempit (36->30) supaya dua sepatu tak menyatu.
- *  - Outline wajah 4->3.5.
+ * Perubahan vs v4:
+ *  - RAMBUT DIGAMBAR ULANG TOTAL sebagai SATU siluet path ditracing dari
+ *    tpl-hair.png: massa atas BULAT fluffy tersapu ke satu sisi, strand
+ *    berlapis saling tumpang tindih, fringe zigzag TIDAK beraturan
+ *    (ujung -507..-535, panjang bervariasi), strand samping meruncing
+ *    mengikuti lengkung kepala sampai y -439/-448. TIDAK ADA lagi
+ *    mahkota spike, garis seam melintang, atau plank tirai.
+ *  - Telinga KECIL (rx 5) digambar SEBELUM rambut supaya terselip di
+ *    bawah rambut, hanya mengintip.
+ *  - Alis DITIPISKAN jadi setengah tebal (8 -> 4) dan DIPERPENDEK
+ *    (36 -> 28), tetap miring.
+ *  - Wajah DIPERSEMPIT: rx 80 -> 70, ry 92 -> 98 (oval tegak).
+ *  - Jempol DIBALIK ARAH: dulu menjulur -y (ke arah siku) sehingga
+ *    terkubur di lengan saat lengan terangkat; kini menjulur +y
+ *    melewati kepalan (ujung y 50, lebar 19) — arah jempol tegak
+ *    saat lengan bawah menunjuk ke atas, seperti tpl-thumb.png.
+ *  - Rompi: taper pinggang (hem 108 -> 100), lengan baju mengecil
+ *    (keluar 14 -> 11), kerah dirapikan.
+ *  - Sepatu: toe diratakan (ujung x 30 -> 28, atap lebih lurus).
  *
  * Sendi (pivot transform): bahu, siku, pinggul, lutut. Prop mood ganti
  * bagian wajah; prop hand ganti pose tangan; prop held ganti barang di tangan.
@@ -74,18 +74,17 @@ const TONGUE = "#e86a6a";
 
 /* ---------------- wajah ---------------- */
 
-/** Alis BATANG TEBAL berisi (poligon 36x8) — sesuai sheet Normal/Happy:
- *  batang hitam tebal miring ke dalam (ujung dalam lebih rendah), BUKAN
- *  garis tipis. Posisi y -500..-492: di bawah fringe (ujung terdalam
- *  -508) dan di atas mata (puncak -477). Digambar SETELAH rambut supaya
- *  tidak tertutup. */
+/** Alis GARIS TIPIS (poligon 28x4, setengah tebal v4) — sesuai sheet
+ *  Normal/Happy: garis tipis miring ke dalam (ujung dalam lebih
+ *  rendah), BUKAN balok hitam. Posisi y -500..-496: di bawah fringe
+ *  (ujung terdalam -507) dan di atas mata (puncak -477). */
 const browBar = (mirror: boolean, y0: number, drop: number) => {
   const s = mirror ? -1 : 1;
   const pts: [number, number][] = [
-    [-52, y0],
-    [-16, y0 + drop],
-    [-16, y0 + drop + 8],
-    [-52, y0 + 8],
+    [-48, y0],
+    [-20, y0 + drop],
+    [-20, y0 + drop + 4],
+    [-48, y0 + 4],
   ];
   return <polygon points={pts.map(([x, y]) => `${s * x},${y}`).join(" ")} fill={INK} />;
 };
@@ -115,8 +114,8 @@ const Eyes: React.FC<{ mood: DediMood }> = ({ mood }) => {
   const ry = mood === "surprised" ? 21 : 19;
   return (
     <g>
-      <ellipse cx={-30} cy={-458} rx={8.5} ry={ry} fill={INK} />
-      <ellipse cx={30} cy={-458} rx={8.5} ry={ry} fill={INK} />
+      <ellipse cx={-27} cy={-458} rx={8.5} ry={ry} fill={INK} />
+      <ellipse cx={27} cy={-458} rx={8.5} ry={ry} fill={INK} />
     </g>
   );
 };
@@ -174,47 +173,41 @@ const Mouth: React.FC<{ mood: DediMood }> = ({ mood }) => {
   );
 };
 
-/** Kepala lengkap: wajah oval tegak + rambut 3 lapis + telinga + wajah.
- *  Pusat kepala (0,-478). Rambut menutup puncak sampai y -610.
- *  Urutan: wajah -> mahkota -> helaian samping -> fringe -> highlight
- *  -> TELINGA (mengintip di bawah helaian, seperti sheet) -> alis/mata/mulut. */
+/** Kepala lengkap: wajah oval tegak + rambut SATU siluet + telinga kecil
+ *  + wajah. Pusat kepala (0,-478). Rambut menutup puncak sampai y -603.
+ *  Urutan: wajah -> TELINGA KECIL (terselip di bawah rambut) -> SATU
+ *  siluet rambut (dome bulat fluffy + strand samping meruncing +
+ *  fringe zigzag tak beraturan, ditracing dari tpl-hair.png) ->
+ *  highlight strand -> alis/mata/mulut. TIDAK ADA garis seam dan
+ *  TIDAK ADA plank tirai. */
 const Head: React.FC<{ mood: DediMood }> = ({ mood }) => (
   <g>
-    {/* wajah: oval tegak 160 x 184 (rasio 1.15:1) */}
-    <ellipse cx={0} cy={-478} rx={80} ry={92} fill={SKIN} stroke={INK} strokeWidth={3.5} />
-    {/* rambut — mahkota: dome lebar dengan spike ATAS beralas lebar
-        (bukan segitiga tipis); alas bawah melengkung di y ~-532 */}
+    {/* wajah: oval tegak 140 x 196 (rasio 1.4:1, v4 160x184) */}
+    <ellipse cx={0} cy={-478} rx={70} ry={98} fill={SKIN} stroke={INK} strokeWidth={3.5} />
+    {/* telinga KECIL terselip di bawah rambut — digambar SEBELUM rambut
+        supaya hanya mengintip di bawah strand samping */}
+    <ellipse cx={-68} cy={-452} rx={5} ry={8} fill={SKIN} stroke={INK} strokeWidth={3} />
+    <ellipse cx={68} cy={-452} rx={5} ry={8} fill={SKIN} stroke={INK} strokeWidth={3} />
+    {/* rambut — SATU siluet path: massa atas BULAT fluffy tersapu ke
+        satu sisi (kiri), strand berlapis saling tumpang tindih dengan
+        ujung meruncing, strand samping mengikuti lengkung kepala turun
+        sampai y -439 (kanan) / -448 (kiri), fringe zigzag TIDAK
+        beraturan sepanjang dahi (ujung -507..-535, panjang bervariasi) */}
     <path
-      d="M -92,-486 L -98,-528 L -86,-540 L -98,-566 L -72,-554 L -66,-594 L -40,-572 L -30,-606 L -8,-580 L 2,-610 L 22,-582 L 42,-602 L 54,-576 L 76,-594 L 84,-568 L 100,-574 L 92,-542 L 98,-514 Q 0,-550 -92,-514 L -92,-486 Z"
+      d="M -92,-448 L -100,-488 L -87,-493 L -103,-521 L -80,-519 L -93,-553 L -66,-547 L -61,-581 L -37,-567 L -27,-599 L -5,-575 L 9,-603 L 31,-579 L 53,-597 L 63,-571 L 87,-585 L 85,-557 L 103,-547 L 89,-529 L 99,-503 L 81,-497 L 89,-453 L 71,-471 L 65,-439 L 49,-467 L 41,-513 L 30,-508 L 18,-529 L 5,-507 L -9,-531 L -23,-511 L -36,-535 L -50,-509 L -63,-530 L -76,-513 L -84,-487 Z"
       fill={HAIR}
       stroke={INK}
       strokeWidth={3}
       strokeLinejoin="round"
     />
-    {/* helaian samping LEBAR berlapis (lebar 26-32, ujung runcing),
-        mengalir ke bawah melewati telinga sampai y -396/-410 */}
-    <path d="M -102,-522 L -74,-522 L -70,-446 L -83,-396 L -96,-446 L -106,-498 Z" fill={HAIR} stroke={INK} strokeWidth={3} strokeLinejoin="round" />
-    <path d="M -84,-512 L -60,-512 L -58,-442 L -71,-410 L -83,-446 Z" fill={HAIR} stroke={INK} strokeWidth={3} strokeLinejoin="round" />
-    <path d="M 74,-522 L 102,-522 L 106,-498 L 96,-446 L 83,-396 L 70,-446 Z" fill={HAIR} stroke={INK} strokeWidth={3} strokeLinejoin="round" />
-    <path d="M 60,-512 L 84,-512 L 83,-446 L 71,-410 L 58,-442 Z" fill={HAIR} stroke={INK} strokeWidth={3} strokeLinejoin="round" />
-    {/* fringe tersapu ke satu sisi, zigzag TIDAK beraturan:
-        ujung -508..-530 (terdalam -508, di atas alis -500) */}
-    <path
-      d="M -88,-538 L -88,-518 L -72,-530 L -58,-512 L -42,-532 L -26,-510 L -8,-530 L 8,-508 L 26,-528 L 42,-510 L 58,-526 L 72,-512 L 88,-524 L 88,-538 Q 0,-554 -88,-538 Z"
-      fill={HAIR}
-      stroke={INK}
-      strokeWidth={3}
-      strokeLinejoin="round"
-    />
-    {/* highlight strand coklat muda — di dalam mahkota (y <= -552) */}
+    {/* highlight strand coklat muda — garis lengkung tersapu, di dalam
+        massa rambut, mengikuti arah sapuan ke kiri */}
     <g stroke={HAIR_HI} strokeWidth={3} strokeLinecap="round" fill="none" opacity={0.75}>
-      <path d="M -64,-562 Q -18,-582 36,-578" />
-      <path d="M -50,-552 Q 0,-574 54,-562" />
-      <path d="M 14,-592 Q 52,-576 84,-556" />
+      <path d="M -70,-560 Q -30,-580 20,-576" />
+      <path d="M -58,-540 Q -10,-566 44,-556" />
+      <path d="M 10,-588 Q 46,-574 78,-552" />
+      <path d="M -78,-522 Q -58,-502 -38,-518" />
     </g>
-    {/* telinga — setelah rambut supaya mengintip di bawah helaian */}
-    <ellipse cx={-80} cy={-462} rx={8} ry={12} fill={SKIN} stroke={INK} strokeWidth={3} />
-    <ellipse cx={80} cy={-462} rx={8} ry={12} fill={SKIN} stroke={INK} strokeWidth={3} />
     <Brows mood={mood} />
     <Eyes mood={mood} />
     <Mouth mood={mood} />
@@ -276,17 +269,19 @@ const Hand: React.FC<{ pose: DediHand }> = ({ pose }) => {
     );
   }
   if (pose === "jempol") {
-    // Ditracing dari tpl-thumb.png / sheet jempol: kepalan LEBAR (30)
-    // dengan 3 alur jari + SATU jempol TEBAL (lebar 15, jelas lebih lebar
-    // dari lengan bawah 12) yang miring -14° menjauhi sumbu lengan,
-    // menjulang 38 unit di atas kepalan, pangkal menyatu dengan kepalan.
-    // Di v3 jempol setipis lengan bawah dan sejajar dengannya sehingga
-    // terbaca sebagai dua pil vertikal + bola.
+    // Ditracing dari tpl-thumb.png: kepalan (30) + SATU jempol TEGAK
+    // LEBAR (19, lebih lebar dari lengan bawah 12) yang menjulur +y
+    // MELEWATI kepalan sampai y 50 — arah jempol tegak saat lengan
+    // bawah menunjuk ke atas. Di v4 jempol menjulur -y (ke arah siku)
+    // sehingga terkubur di lengan saat lengan terangkat untuk
+    // thumbs-up, dan di shot-04 tidak terbaca sama sekali. Pose
+    // thumbs-up di demo kini meluruskan lengan bawah ke atas
+    // (bahu -120, siku -60) supaya jempol menunjuk ke atas layar.
     return (
       <g stroke={INK} strokeWidth={3} strokeLinejoin="round" fill={FIST_FILL}>
-        <rect x={-26} y={-38} width={15} height={46} rx={7.5} transform="rotate(-14 -18 -15)" />
+        <rect x={-24} y={8} width={19} height={42} rx={9.5} transform="rotate(-10 -14 28)" />
         <rect x={-15} y={0} width={30} height={28} rx={10} />
-        <path d="M -11,0 Q -17,-10 -15,-22" stroke="#101010" strokeWidth={2.5} fill="none" strokeLinecap="round" />
+        <path d="M -20,14 Q -14,18 -6,14" stroke="#101010" strokeWidth={2.5} fill="none" strokeLinecap="round" />
         <FistGrooves />
       </g>
     );
@@ -442,10 +437,10 @@ const Leg: React.FC<{ hip: number; knee: number; flip?: boolean }> = ({ hip, kne
         <path d="M -15,-6 Q 0,-18 15,-6 L 15,4 L -15,4 Z" fill="#262626" stroke={INK} strokeWidth={3} strokeLinejoin="round" />
         {/* tongue */}
         <rect x={-3} y={-16} width={14} height={14} rx={4} fill="#333333" stroke={INK} strokeWidth={2.5} />
-        {/* badan atas: toe lebih ramping (ujung x 30, bukan 36) supaya
-            dua sepatu berdampingan tidak terlihat menyatu */}
+        {/* badan atas: toe diratakan (ujung x 28, atap lebih lurus)
+            supaya dua sepatu berdampingan tidak terlihat menyatu */}
         <path
-          d="M -16,-4 L 8,-4 C 26,-4 32,2 30,11 L 28,14 L -18,14 C -24,8 -22,0 -16,-4 Z"
+          d="M -16,-4 L 10,-4 C 24,-4 29,1 28,10 L 27,14 L -18,14 C -24,8 -22,0 -16,-4 Z"
           fill="#262626"
           stroke={INK}
           strokeWidth={3}
@@ -474,26 +469,26 @@ const Leg: React.FC<{ hip: number; knee: number; flip?: boolean }> = ({ hip, kne
 
 const Torso: React.FC = () => (
   <g>
-    {/* kemeja putih + lengan pendek KECIL menempel bahu (keluar 14,
-        bukan 26 — di v3 seperti sayap segitiga besar) */}
+    {/* kemeja putih + lengan pendek KECIL menempel bahu (keluar 11,
+        v4 14 — di v3 seperti sayap segitiga besar) */}
     <path d="M -56,-366 L 56,-366 L 54,-236 L -54,-236 Z" fill="#fff" stroke={INK} strokeWidth={3.5} strokeLinejoin="round" />
-    <path d="M -56,-366 L -70,-352 L -66,-326 L -52,-332 Z" fill="#fff" stroke={INK} strokeWidth={3.5} strokeLinejoin="round" />
-    <path d="M 56,-366 L 70,-352 L 66,-326 L 52,-332 Z" fill="#fff" stroke={INK} strokeWidth={3.5} strokeLinejoin="round" />
+    <path d="M -56,-366 L -67,-354 L -63,-330 L -52,-332 Z" fill="#fff" stroke={INK} strokeWidth={3.5} strokeLinejoin="round" />
+    <path d="M 56,-366 L 67,-354 L 63,-330 L 52,-332 Z" fill="#fff" stroke={INK} strokeWidth={3.5} strokeLinejoin="round" />
     {/* kerah kemeja */}
-    <path d="M -18,-366 L -2,-346 L -2,-360 L -16,-368 Z" fill="#fff" stroke={INK} strokeWidth={3} strokeLinejoin="round" />
-    <path d="M 18,-366 L 2,-346 L 2,-360 L 16,-368 Z" fill="#fff" stroke={INK} strokeWidth={3} strokeLinejoin="round" />
-    {/* rompi abu-abu: lebar 116 (~72% lebar kepala 160), taper ringan
-        ke hem 108, bukaan V di dada, belahan V kecil di hem bawah */}
+    <path d="M -16,-366 L -2,-349 L -2,-360 L -14,-368 Z" fill="#fff" stroke={INK} strokeWidth={3} strokeLinejoin="round" />
+    <path d="M 16,-366 L 2,-349 L 2,-360 L 14,-368 Z" fill="#fff" stroke={INK} strokeWidth={3} strokeLinejoin="round" />
+    {/* rompi abu-abu: lebar 116 (~72% lebar kepala 160), taper ke
+        hem 100, bukaan V di dada, belahan V kecil di hem bawah */}
     <path
-      d="M -58,-366 L -14,-366 L 0,-338 L 14,-366 L 58,-366 L 54,-236 L 6,-236 L 0,-244 L -6,-236 L -54,-236 Z"
+      d="M -58,-366 L -14,-366 L 0,-338 L 14,-366 L 58,-366 L 50,-236 L 5,-236 L 0,-244 L -5,-236 L -50,-236 Z"
       fill={VEST}
       stroke={INK}
       strokeWidth={3.5}
       strokeLinejoin="round"
     />
     {/* garis reflektif putih (2) */}
-    <rect x={-55} y={-302} width={110} height={9} fill={STRIPE} />
-    <rect x={-54} y={-274} width={108} height={9} fill={STRIPE} />
+    <rect x={-52} y={-302} width={104} height={9} fill={STRIPE} />
+    <rect x={-51} y={-274} width={102} height={9} fill={STRIPE} />
     {/* dasi hitam PANJANG — digambar DI ATAS rompi (setelah rompi +
         stripes). Di v3 dasi digambar SEBELUM rompi sehingga rompi
         menutupnya dan hanya tersisa V kecil di leher. Hitam solid,
