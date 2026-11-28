@@ -4,8 +4,13 @@ import { DediRig, type DediHand, type DediHeld, type DediMood } from "../../kit/
 import { C, FONT } from "../../kit/style";
 
 /**
- * DediRigDemo v3 — v4: scale karakter 1.35 -> 1.15 (0.85x, MISMATCH-v3
+ * DediRigDemo v5 — v4: scale karakter 1.35 -> 1.15 (0.85x, MISMATCH-v3
  * item 1 FRAMING: kepala/rambut v3 terpotong tepi atas frame).
+ * v5: pose JEMPOL diperbaiki (bahu -120, siku -60: lengan bawah
+ * lurus ke ATAS supaya jempol +y menunjuk ke atas layar — di v4
+ * lengan bawah menunjuk ke bawah sehingga jempol terkubur) dan pose
+ * HERO diperbaiki (helm ke depan perut, tangan kanan di pinggang,
+ * kepala sedikit miring santai, seperti sheet hero).
  * Demo tetap 5 shot yang sama, 10 detik.
  *
  * BUKAN episode tayang dan BELUM dipakai episode mana pun. Bukti rig bekerja:
@@ -56,16 +61,20 @@ const Demo: React.FC = () => {
   const nod = f >= 240 ? 3 * Math.sin(((f - 240) / 12) * Math.PI) : 0;
 
   const shoulderR =
-    shoulderRWalk * (1 - wave) * (1 - thumbActive)
+    shoulderRWalk * (1 - wave) * (1 - thumbActive) * (1 - helm)
     + -150 * wave
-    + -130 * thumbActive * (1 - wave);
+    + -120 * thumbActive * (1 - wave)
+    + -55 * helm;
   const elbowR =
-    8 * walk * (1 - wave) * (1 - thumbActive)
+    8 * walk * (1 - wave) * (1 - thumbActive) * (1 - helm)
     + -25 * wave
-    + 130 * thumbActive * (1 - wave);
+    + -60 * thumbActive * (1 - wave)
+    + 102 * helm;
 
-  const shoulderL = shoulderLWalk * (1 - helm) + 20 * helm;
-  const elbowL = 8 * walk * (1 - helm) + 30 * helm;
+  // Hero: helm ke depan perut (bahu -35, siku -85: lengan bawah
+  // melipat ke tengah perut), tangan kanan di pinggang (di atas).
+  const shoulderL = shoulderLWalk * (1 - helm) + -35 * helm;
+  const elbowL = 8 * walk * (1 - helm) + -85 * helm;
 
   const label =
     f < 90
@@ -112,7 +121,7 @@ const Demo: React.FC = () => {
           hipR={hipR}
           kneeL={kneeL}
           kneeR={kneeR}
-          headTilt={nod}
+          headTilt={nod + 3 * helm}
           bounce={bounce}
         />
       </svg>
