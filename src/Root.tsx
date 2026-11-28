@@ -13,10 +13,7 @@ import { EP19Test, EP19TEST_TOTAL } from "./stories/cerita-pekerja/EP19Test";
 import { EP20, EP20_TOTAL } from "./stories/cerita-pekerja/EP20";
 import { EP21, EP21_TOTAL } from "./stories/cerita-pekerja/EP21";
 import { EP22, EP22_TOTAL } from "./stories/cerita-pekerja/EP22";
-import { CharacterModels, CHARACTER_MODELS_TOTAL } from "./stories/cerita-pekerja/CharacterModels";
-import { DediRigDemo, DEDI_RIG_DEMO_TOTAL } from "./stories/cerita-pekerja/DediRigDemo";
-import { DediSpriteDemo, DEDI_SPRITE_DEMO_TOTAL } from "./stories/cerita-pekerja/DediSpriteDemo";
-import { StickyTrial, STICKY_TRIAL_TOTAL } from "./stories/cerita-pekerja/StickyTrial";
+import { EP23, EP23_TOTAL } from "./stories/cerita-pekerja/EP23";
 import { KitDemo, KIT_TOTAL } from "./stories/cerita-pekerja/KitDemo";
 
 /** Every episode is a 1080x1920 (9:16) composition. Samples are 30 fps; full episodes are 24 fps (EP15 is 12 fps). */
@@ -39,14 +36,7 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="EP20" component={EP20} durationInFrames={EP20_TOTAL} fps={24} width={1080} height={1920} />
     <Composition id="EP21" component={EP21} durationInFrames={EP21_TOTAL} fps={24} width={1080} height={1920} />
     <Composition id="EP22" component={EP22} durationInFrames={EP22_TOTAL} fps={24} width={1080} height={1920} />
-    {/* CharacterModels = DRAFT PREVIEW 5 karakter (Dedi, Wulan, Bambang, Putri, Yanto). Bukan episode tayang — belum dipakai episode mana pun. */}
-    <Composition id="CharacterModels" component={CharacterModels} durationInFrames={CHARACTER_MODELS_TOTAL} {...SHORT} />
-    {/* DediRigDemo = DRAFT PREVIEW rig vektor Dedi (PILOT, ditracing dari referensi). Bukan episode tayang. */}
-    <Composition id="DediRigDemo" component={DediRigDemo} durationInFrames={DEDI_RIG_DEMO_TOTAL} {...SHORT} />
-    {/* DediSpriteDemo = DRAFT PREVIEW rig sprite Dedi (crop sheet modular ASLI, bukan gambar ulang). Bukan episode tayang. */}
-    <Composition id="DediSpriteDemo" component={DediSpriteDemo} durationInFrames={DEDI_SPRITE_DEMO_TOTAL} {...SHORT} />
-    {/* StickyTrial = TRIAL gaya The Sticky ("Penjara Bintang Lima"). Preview saja, bukan untuk diposting. */}
-    <Composition id="StickyTrial" component={StickyTrial} durationInFrames={STICKY_TRIAL_TOTAL} {...SHORT} />
+    <Composition id="EP23" component={EP23} durationInFrames={EP23_TOTAL} fps={24} width={1080} height={1920} />
     <Composition id="KitDemo" component={KitDemo} durationInFrames={KIT_TOTAL} {...SHORT} />
   </>
 );

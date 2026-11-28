@@ -179,148 +179,49 @@
   ],
   "title": "EP22 — Tidak Didaftarkan BPJS"
  },
- "CharacterModels": {
+ "EP23": {
   "cover": {
-   "frame": 30,
+   "frame": 200,
    "hook": [
-    "5 KARAKTER",
-    "CERITA PEKERJA"
+    "GAJI DIPOTONG",
+    "64%"
    ],
-   "pill": "DRAFT PREVIEW"
+   "pill": "PASAL 65"
   },
   "shots": [
    {
-    "frame": 30,
-    "label": "Dedi · Operator pabrik, Bekasi"
+    "frame": 120,
+    "label": "S01 · Slip gaji Rp2.250.000"
    },
    {
-    "frame": 90,
-    "label": "Wulan · Kasir minimarket, Yogyakarta"
+    "frame": 380,
+    "label": "S02 · Jalan ke minimarket"
    },
    {
-    "frame": 150,
-    "label": "Bambang · Kuli bangunan, Jakarta"
+    "frame": 560,
+    "label": "S03 · Kas selisih Rp1.250.000"
    },
    {
-    "frame": 210,
-    "label": "Putri · Staf admin, Bandung"
+    "frame": 780,
+    "label": "S04 · Slip dipotong 64%"
    },
    {
-    "frame": 270,
-    "label": "Yanto · Driver ojol, Surabaya"
+    "frame": 1030,
+    "label": "S05 · Rina juga sama"
+   },
+   {
+    "frame": 1192,
+    "label": "S06 · Salinan Pasal 65"
+   },
+   {
+    "frame": 1400,
+    "label": "S07 · Kartu hukum Pasal 65"
+   },
+   {
+    "frame": 1660,
+    "label": "S08 · End card"
    }
   ],
-  "title": "CharacterModels — 5 Karakter Cerita Pekerja (DRAFT)"
- },
- "DediRigDemo": {
-  "cover": {
-   "frame": 150,
-   "hook": [
-    "RIG VEKTOR",
-    "DEDI"
-   ],
-   "pill": "DRAFT PREVIEW"
-  },
-  "shots": [
-   {
-    "frame": 45,
-    "label": "Jalan masuk"
-   },
-   {
-    "frame": 105,
-    "label": "Berhenti · senyum"
-   },
-   {
-    "frame": 150,
-    "label": "Melambai"
-   },
-   {
-    "frame": 210,
-    "label": "Jempol + tegas"
-   },
-   {
-    "frame": 285,
-    "label": "Pegang helm · hero pose"
-   }
-  ],
-  "title": "DediRigDemo — Rig vektor Dedi (sheet modular baru, DRAFT)"
- },
- "DediSpriteDemo": {
-  "cover": {
-   "frame": 150,
-   "hook": [
-    "RIG SPRITE",
-    "DEDI"
-   ],
-   "pill": "DRAFT PREVIEW"
-  },
-  "shots": [
-   {
-    "frame": 45,
-    "label": "Jalan masuk"
-   },
-   {
-    "frame": 105,
-    "label": "Berhenti · senyum"
-   },
-   {
-    "frame": 150,
-    "label": "Melambai"
-   },
-   {
-    "frame": 210,
-    "label": "Jempol + tegas"
-   },
-   {
-    "frame": 285,
-    "label": "Pegang helm · hero pose"
-   }
-  ],
-  "title": "DediSpriteDemo — Rig sprite Dedi (aset modular asli, DRAFT)"
- },
- "StickyTrial": {
-  "cover": {
-   "frame": 460,
-   "hook": [
-    "PENJARA",
-    "BINTANG LIMA"
-   ],
-   "pill": "TRIAL"
-  },
-  "shots": [
-   {
-    "frame": 75,
-    "label": "L1 · Sipir: bebas, boleh pulang"
-   },
-   {
-    "frame": 180,
-    "label": "L2 · Udin: mau di sini aja"
-   },
-   {
-    "frame": 270,
-    "label": "L3 · Sipir bingung, Udin duduk"
-   },
-   {
-    "frame": 390,
-    "label": "L4 · Udin: makan gratis"
-   },
-   {
-    "frame": 525,
-    "label": "L5 · Sipir marah"
-   },
-   {
-    "frame": 645,
-    "label": "L6 · Udin: pelayanan lebih bagus"
-   },
-   {
-    "frame": 745,
-    "label": "L7 · Sipir nunjuk: keluar sana"
-   },
-   {
-    "frame": 815,
-    "label": "L8 · Udin ketawa"
-   }
-  ],
-  "title": "StickyTrial — Penjara Bintang Lima (TRIAL gaya The Sticky)"
+  "title": "EP23 — Mengganti Barang Perusahaan"
  }
 }
