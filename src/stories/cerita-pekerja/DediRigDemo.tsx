@@ -43,10 +43,11 @@ const Demo: React.FC = () => {
   // --- jempol + tegas 180..240 ---
   const thumb = interpolate(f, [180, 195], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const mood: DediMood = f < 100 ? "neutral" : f < 195 ? "smile" : "determined";
-  const handR: DediHand = wave > 0.5 ? "telapak" : thumb > 0.5 ? "jempol" : "kepal";
 
-  // --- pegang helm 240..300 ---
+  // --- pegang helm 240..300 (jempol memudar saat helm masuk) ---
   const helm = interpolate(f, [240, 255], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const thumbActive = thumb * (1 - helm);
+  const handR: DediHand = wave > 0.5 ? "telapak" : thumbActive > 0.5 ? "jempol" : "kepal";
   const heldL: DediHeld = helm > 0.5 ? "helm" : "none";
   const handL: DediHand = helm > 0.5 ? "kepal" : "telapak";
 
@@ -54,13 +55,13 @@ const Demo: React.FC = () => {
   const nod = f >= 240 ? 3 * Math.sin(((f - 240) / 12) * Math.PI) : 0;
 
   const shoulderR =
-    shoulderRWalk * (1 - wave) * (1 - thumb)
+    shoulderRWalk * (1 - wave) * (1 - thumbActive)
     + -150 * wave
-    + -35 * thumb * (1 - wave);
+    + -72 * thumbActive * (1 - wave);
   const elbowR =
-    8 * walk * (1 - wave) * (1 - thumb)
+    8 * walk * (1 - wave) * (1 - thumbActive)
     + -25 * wave
-    + -10 * thumb * (1 - wave);
+    + -18 * thumbActive * (1 - wave);
 
   const shoulderL = shoulderLWalk * (1 - helm) + 20 * helm;
   const elbowL = 8 * walk * (1 - helm) + 30 * helm;
