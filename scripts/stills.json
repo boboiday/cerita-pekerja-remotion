@@ -211,5 +211,38 @@
    }
   ],
   "title": "CharacterModels — 5 Karakter Cerita Pekerja (DRAFT)"
+ },
+ "DediRigDemo": {
+  "cover": {
+   "frame": 150,
+   "hook": [
+    "RIG VEKTOR",
+    "DEDI"
+   ],
+   "pill": "DRAFT PREVIEW"
+  },
+  "shots": [
+   {
+    "frame": 45,
+    "label": "Jalan masuk"
+   },
+   {
+    "frame": 105,
+    "label": "Berhenti · senyum"
+   },
+   {
+    "frame": 150,
+    "label": "Melambai"
+   },
+   {
+    "frame": 225,
+    "label": "Jempol + tegas"
+   },
+   {
+    "frame": 285,
+    "label": "Tahan · angguk"
+   }
+  ],
+  "title": "DediRigDemo — Rig vektor Dedi (PILOT, DRAFT)"
  }
 }
