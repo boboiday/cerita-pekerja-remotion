@@ -247,9 +247,9 @@ export const Udin: React.FC<{
           <rect x={-46} y={-150} width={92} height={34} rx={6} fill="#fdf8ea" stroke={C.ink} strokeWidth={4} />
           <text x={0} y={-126} fontFamily="monospace" fontWeight={800} fontSize={22} fill={C.ink} textAnchor="middle">UDIN</text>
           {/* lengan kiri (pegang koran) */}
-          <Limb px={-70} py={-180} len={120} w={30} deg={paperUp ? -38 : 18} color="#e8702a" />
+          <Limb px={-70} py={-180} len={120} w={30} deg={lerpLocal(-38, 18, sitT)} color="#e8702a" />
           {/* lengan kanan */}
-          <Limb px={70} py={-180} len={120} w={30} deg={paperUp ? 38 : -14} color="#d95f1e" />
+          <Limb px={70} py={-180} len={120} w={30} deg={lerpLocal(38, -14, sitT)} color="#d95f1e" />
           {/* kepala */}
           <g transform={`rotate(${headTilt})`}>
             <ellipse cx={0} cy={-268} rx={56} ry={62} fill="#e8b98a" stroke={C.ink} strokeWidth={6} />
