@@ -223,5 +223,50 @@
    }
   ],
   "title": "EP23 — Mengganti Barang Perusahaan"
+ },
+ "EP24": {
+  "cover": {
+   "frame": 150,
+   "hook": [
+    "SERAGAM BAYAR",
+    "SENDIRI?"
+   ],
+   "pill": "APD GRATIS"
+  },
+  "shots": [
+   {
+    "frame": 120,
+    "label": "S01 · Slip gaji Rp250.000"
+   },
+   {
+    "frame": 300,
+    "label": "S02 · Jalan ke gudang"
+   },
+   {
+    "frame": 560,
+    "label": "S03 · Paket seragam Rp250.000"
+   },
+   {
+    "frame": 820,
+    "label": "S04 · Dompet tinggal ongkos"
+   },
+   {
+    "frame": 1030,
+    "label": "S05 · Irfan juga sama"
+   },
+   {
+    "frame": 1192,
+    "label": "S06 · Salinan Pasal 2"
+   },
+   {
+    "frame": 1360,
+    "label": "S07 · Kartu hukum Pasal 2"
+   },
+   {
+    "frame": 1600,
+    "label": "S08 · End card"
+   }
+  ],
+  "title": "EP24 — Seragam Bayar Sendiri"
  }
 }
