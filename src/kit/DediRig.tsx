@@ -67,7 +67,6 @@ const INK = "#1b1b1b";
 const SKIN = "#fffdf5";
 const HAIR = "#6b4226";
 const HAIR_HI = "#8a5a33";
-const HAIR_DARK = "#4a2c17";
 const VEST = "#9aa0a6";
 const VEST_DARK = "#878d94";
 const STRIPE = "#eef0f2";
@@ -212,22 +211,19 @@ const Head: React.FC<{ mood: DediMood }> = ({ mood }) => (
         jatuh melewati telinga (ujung -400/-408), fringe zigzag bervariasi
         (titik -496..-500, lembah -516..-520). */}
     <path
-      d="M -88,-400 L -102,-434 L -90,-442 L -106,-464 L -88,-468 L -102,-494 L -82,-492 L -90,-524 L -66,-508 L -68,-544 L -44,-524 L -38,-596 L -12,-572 L 0,-606 L 22,-576 L 44,-600 L 60,-574 L 78,-594 L 88,-566 L 104,-574 L 96,-542 L 112,-528 L 96,-508 L 108,-484 L 92,-472 L 100,-448 L 86,-440 L 90,-408 L 78,-434 L 68,-458 L 60,-496 L 48,-516 L 34,-498 L 22,-518 L 8,-500 L -6,-520 L -20,-500 L -34,-518 L -48,-500 L -62,-516 L -74,-494 L -84,-448 Z"
+      d="M -88,-400 L -102,-434 L -90,-442 L -112,-466 L -88,-468 L -108,-498 L -82,-492 L -90,-524 L -66,-508 L -68,-544 L -44,-524 L -40,-604 L -12,-572 L 0,-606 L 22,-576 L 46,-596 L 60,-574 L 78,-594 L 88,-566 L 104,-574 L 96,-542 L 108,-522 L 96,-508 L 104,-482 L 92,-472 L 100,-448 L 86,-440 L 90,-408 L 78,-434 L 68,-458 L 60,-502 L 48,-516 L 34,-492 L 22,-518 L 8,-504 L -6,-520 L -20,-494 L -34,-518 L -48,-503 L -62,-516 L -74,-494 L -84,-448 Z"
       fill={HAIR}
       stroke={INK}
       strokeWidth={3.5}
       strokeLinejoin="round"
     />
-    {/* highlight strand coklat muda mengikuti arah sapuan */}
+    {/* highlight strand coklat muda mengikuti arah sapuan — dijaga tetap
+        di dalam massa rambut (di atas garis fringe, y <= -528) supaya
+        tidak tercetak di atas kulit wajah */}
     <g stroke={HAIR_HI} strokeWidth={3} strokeLinecap="round" fill="none" opacity={0.75}>
-      <path d="M -70,-522 Q -30,-560 30,-556" />
-      <path d="M -62,-484 Q -10,-512 52,-502" />
-      <path d="M 18,-582 Q 58,-562 88,-532" />
-    </g>
-    {/* garis pemisah strand (coklat gelap) */}
-    <g stroke={HAIR_DARK} strokeWidth={2.5} strokeLinecap="round" fill="none" opacity={0.6}>
-      <path d="M -78,-500 Q -50,-540 -6,-548" />
-      <path d="M 40,-540 Q 70,-520 92,-492" />
+      <path d="M -66,-540 Q -20,-570 34,-564" />
+      <path d="M -52,-528 Q 0,-552 56,-540" />
+      <path d="M 16,-578 Q 56,-560 86,-536" />
     </g>
     <Brows mood={mood} />
     <Eyes mood={mood} />
@@ -508,8 +504,8 @@ const Torso: React.FC = () => (
     <rect x={-48} y={-254} width={26} height={9} rx={2} fill={VEST_DARK} stroke={INK} strokeWidth={3} />
     <rect x={22} y={-254} width={26} height={9} rx={2} fill={VEST_DARK} stroke={INK} strokeWidth={3} />
     {/* name tag DEDI — panel kanan (sesuai sheet) */}
-    <rect x={16} y={-332} width={32} height={12} fill="#fff" stroke={INK} strokeWidth={2.5} />
-    <text x={32} y={-323} fontSize={9} fontWeight={800} textAnchor="middle" fill={INK} fontFamily="Arial, sans-serif">
+    <rect x={8} y={-332} width={32} height={12} fill="#fff" stroke={INK} strokeWidth={2.5} />
+    <text x={24} y={-323} fontSize={9} fontWeight={800} textAnchor="middle" fill={INK} fontFamily="Arial, sans-serif">
       DEDI
     </text>
   </g>
