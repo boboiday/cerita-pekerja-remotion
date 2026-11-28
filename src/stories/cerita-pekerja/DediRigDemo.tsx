@@ -4,8 +4,9 @@ import { DediRig, type DediHand, type DediHeld, type DediMood } from "../../kit/
 import { C, FONT } from "../../kit/style";
 
 /**
- * DediRigDemo v2 — DRAFT PREVIEW demo gerak rig vektor Dedi (ditracing dari
- * sheet modular BARU dedi-modular-breakdown.jpg).
+ * DediRigDemo v3 — v4: scale karakter 1.35 -> 1.15 (0.85x, MISMATCH-v3
+ * item 1 FRAMING: kepala/rambut v3 terpotong tepi atas frame).
+ * Demo tetap 5 shot yang sama, 10 detik.
  *
  * BUKAN episode tayang dan BELUM dipakai episode mana pun. Bukti rig bekerja:
  *  0–90   jalan masuk (kaki mengayun di pinggul + lutut, lengan mengayun)
@@ -97,7 +98,7 @@ const Demo: React.FC = () => {
         <DediRig
           x={x}
           floor={1500}
-          scale={1.35}
+          scale={1.15}
           mood={mood}
           handL={handL}
           handR={handR}
