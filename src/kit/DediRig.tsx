@@ -287,8 +287,9 @@ const Hand: React.FC<{ pose: DediHand }> = ({ pose }) => {
     return (
       <g {...s}>
         <rect x={-12} y={2} width={24} height={26} rx={9} />
-        {/* jempol menunjuk +y (menjauhi pergelangan, keluar dari kepalan) */}
-        <rect x={-4.5} y={18} width={9} height={28} rx={4.5} transform="rotate(-12 0 30)" />
+        {/* jempol: menunjuk -y (ke arah siku) tapi DI SAMPING kepalan,
+            supaya kelihatan di samping lengan bawah, bukan tertutup lengan */}
+        <rect x={-17} y={-28} width={9} height={30} rx={4.5} transform="rotate(-8 -12 -12)" />
         <circle cx={-7} cy={6} r={3} fill={INK} />
         <circle cx={0} cy={5} r={3} fill={INK} />
         <circle cx={7} cy={6} r={3} fill={INK} />
