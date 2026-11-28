@@ -218,9 +218,11 @@ const Head: React.FC<{ mood: DediMood }> = ({ mood }) => (
     <ellipse cx={95} cy={-428} rx={9} ry={13} fill={SKIN} stroke={INK} strokeWidth={4} />
     {/* wajah: kepala besar bulat */}
     <ellipse cx={0} cy={-445} rx={98} ry={90} fill={SKIN} stroke={INK} strokeWidth={6} />
-    {/* rambut spike: massa besar menyapu ke kanan, poni bergerigi di dahi */}
+    {/* rambut spike: massa besar menyapu ke kanan, poni bergerigi di dahi.
+        Puncak spike melewati puncak kepala (y -535) supaya tidak ada
+        pita putih di atas rambut — sesuai sheet (rambut menutupi puncak). */}
     <path
-      d="M -100,-428 L -114,-470 L -94,-458 L -106,-500 L -80,-474 L -84,-514 L -60,-480 L -54,-524 L -32,-486 L -20,-528 L 2,-490 L 20,-526 L 40,-492 L 62,-522 L 76,-490 L 98,-510 L 94,-472 L 112,-464 L 98,-430 L 80,-450 L 62,-436 L 44,-452 L 26,-438 L 8,-454 L -10,-440 L -28,-454 L -46,-440 L -64,-452 L -82,-438 Z"
+      d="M -102,-430 L -118,-478 L -96,-462 L -112,-508 L -84,-480 L -92,-526 L -64,-490 L -58,-540 L -34,-498 L -22,-544 L 0,-502 L 18,-538 L 40,-500 L 60,-534 L 76,-496 L 96,-518 L 92,-478 L 116,-468 L 100,-432 L 78,-452 L 60,-434 L 42,-452 L 24,-436 L 6,-454 L -12,-438 L -30,-454 L -48,-438 L -66,-452 L -84,-436 Z"
       fill={HAIR}
       stroke={INK}
       strokeWidth={5}
@@ -285,7 +287,7 @@ const Hand: React.FC<{ pose: DediHand }> = ({ pose }) => {
     return (
       <g {...s}>
         <rect x={-12} y={2} width={24} height={26} rx={9} />
-        <rect x={-3} y={-18} width={7} height={22} rx={3.5} transform="rotate(-12 0 -7)" />
+        <rect x={-4} y={-22} width={9} height={26} rx={4.5} transform="rotate(-12 0 -9)" />
         <circle cx={-7} cy={6} r={3} fill={INK} />
         <circle cx={0} cy={5} r={3} fill={INK} />
         <circle cx={7} cy={6} r={3} fill={INK} />
