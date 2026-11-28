@@ -244,5 +244,38 @@
    }
   ],
   "title": "DediRigDemo — Rig vektor Dedi (sheet modular baru, DRAFT)"
+ },
+ "DediSpriteDemo": {
+  "cover": {
+   "frame": 150,
+   "hook": [
+    "RIG SPRITE",
+    "DEDI"
+   ],
+   "pill": "DRAFT PREVIEW"
+  },
+  "shots": [
+   {
+    "frame": 45,
+    "label": "Jalan masuk"
+   },
+   {
+    "frame": 105,
+    "label": "Berhenti · senyum"
+   },
+   {
+    "frame": 150,
+    "label": "Melambai"
+   },
+   {
+    "frame": 210,
+    "label": "Jempol + tegas"
+   },
+   {
+    "frame": 285,
+    "label": "Pegang helm · hero pose"
+   }
+  ],
+  "title": "DediSpriteDemo — Rig sprite Dedi (aset modular asli, DRAFT)"
  }
 }
