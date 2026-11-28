@@ -208,14 +208,20 @@ const Limb: React.FC<{
 // UDIN — tahanan, jumpsuit oranye. hip di (x, hipY). sitT 0 = berbaring, 1 = duduk.
 // ---------------------------------------------------------------------------
 export type UdinMood = "relaxed" | "smile" | "surprised" | "laugh";
+const lerpLocal = (a: number, b: number, t: number) => a + (b - a) * t;
 export const Udin: React.FC<{
   x: number; hipY: number; sitT: number; mood: UdinMood;
-  headTilt?: number; bounce?: number; paperUp?: boolean; laughShake?: number;
-}> = ({ x, hipY, sitT, mood, headTilt = 0, bounce = 0, paperUp = true, laughShake = 0 }) => {
+  headTilt?: number; bounce?: number; laughShake?: number;
+}> = ({ x, hipY, sitT, mood, headTilt = 0, bounce = 0, laughShake = 0 }) => {
   const torsoDeg = -72 + 72 * sitT; // berbaring -> duduk
   const legOp = sitT < 0.5 ? 1 : 0; // kaki lurus (berbaring) vs tertekuk (duduk)
   const legOp2 = 1 - legOp;
   const shake = laughShake * 3;
+  // Koran: dipegang di depan muka saat berbaring -> diletakkan di ranjang
+  // sebelah kanan saat duduk (ikut sitT, jadi terlihat ditaruh saat bangun).
+  const paperX = lerpLocal(0, 150, sitT);
+  const paperY = lerpLocal(-330, -105, sitT);
+  const paperRot = lerpLocal(0, 8, sitT);
   return (
     <div style={{ position: "absolute", left: x, top: hipY + bounce, width: 0, height: 0 }}>
       <svg width={520} height={620} viewBox="-260 -320 520 620" style={{ position: "absolute", left: -260, top: -320, overflow: "visible" }}>
@@ -251,8 +257,8 @@ export const Udin: React.FC<{
             <path d="M -56 -272 Q -58 -330 -20 -336 Q -6 -352 10 -334 Q 34 -348 48 -326 Q 60 -312 56 -272 Q 30 -300 -6 -298 Q -40 -300 -56 -272 Z" fill="#1d1d1f" stroke={C.ink} strokeWidth={4} />
             <Face mood={mood} cx={0} cy={-268} s={1} />
           </g>
-          {/* koran (di tangan saat berbaring) */}
-          <g opacity={paperUp ? 1 : 0.25} transform={`translate(0 -330) rotate(${paperUp ? 0 : 55})`}>
+          {/* koran: dipegang saat berbaring, ditaruh di ranjang saat duduk */}
+          <g transform={`translate(${paperX} ${paperY}) rotate(${paperRot})`}>
             <rect x={-70} y={-46} width={140} height={92} rx={6} fill="#fdf8ea" stroke={C.ink} strokeWidth={5} />
             <rect x={-70} y={-46} width={140} height={22} fill="#1d1d1f" />
             <text x={0} y={-30} fontFamily="monospace" fontWeight={800} fontSize={13} fill="#fdf8ea" textAnchor="middle">KORAN PAGI</text>

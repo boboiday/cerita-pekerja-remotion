@@ -127,9 +127,8 @@ const Trial: React.FC = () => {
   const breathAmp = seg(f, 60, 90);
   const breath = -2 * Math.sin((f * 2 * Math.PI) / 60) * breathAmp;
 
-  // ---- UDIN: berbaring (sitT 0) -> duduk saat L3 (224-314), koran turun ----
+  // ---- UDIN: berbaring (sitT 0) -> duduk saat L3 (224-314), koran ditaruh di ranjang ----
   const sitT = easeInOutCubic(seg(f, 224, 314));
-  const paperUp = f < 260;
   const udinMood: "relaxed" | "smile" | "surprised" | "laugh" =
     f < 325 ? "relaxed" : f < 453 ? "smile" : f < 587 ? "surprised" : f < 695 ? "smile" : f < 782 ? "surprised" : "laugh";
   const udinHead: number =
@@ -157,7 +156,6 @@ const Trial: React.FC = () => {
           mood={udinMood}
           headTilt={udinHead}
           bounce={breath}
-          paperUp={paperUp}
           laughShake={laughShake}
         />
         <PakSipir
